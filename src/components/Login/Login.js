@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '@/common/context/AuthContext';
+import { useAuth } from '../../common/context/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = React.useState('');
@@ -8,7 +8,6 @@ export default function Login() {
   const [isLogginIn, setIsLogginIn] = React.useState(false);
 
   const { login, signup, currentUser } = useAuth();
-  console.log(currentUser.email);
 
   async function submitHandler() {
     if (!email || !password) setError('Please fill all the fields');
