@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import Login from '../components/Login/Login.js';
 import Head from 'next/head';
-import { useAuth } from '@/common/context/AuthContext';
+import { useAuth } from '../common/context/AuthContext';
 import UserDashboard from '../components/UserDashboard/UserDashboard.js';
 
 const inter = Inter({ subsets: ['latin'] });
