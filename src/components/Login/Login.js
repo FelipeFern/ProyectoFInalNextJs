@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '@/common/context/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = React.useState('');
@@ -6,8 +7,21 @@ export default function Login() {
   const [error, setError] = React.useState(null);
   const [isLogginIn, setIsLogginIn] = React.useState(false);
 
-  function submitHandler() {
+  const { login, signup, currentUser } = useAuth();
+  console.log(currentUser.email);
+
+  async function submitHandler() {
     if (!email || !password) setError('Please fill all the fields');
+    if (isLogginIn) {
+      try {
+        await login(email, password);
+      } catch (error) {
+        setError('Incorrect email or password');
+      }
+      return;
+    } else {
+      await signup(email, password);
+    }
   }
 
   return (
@@ -21,17 +35,17 @@ export default function Login() {
         onChange={(e) => setEmail(e.target.value)}
         type='text'
         placeholder='Email Address'
-        className='outline-none p-2 w-full max-w-md'
+        className='outline-none p-2 w-full max-w-md text-slate-900'
       />
       <input
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         type='password'
         placeholder='Password'
-        className='outline-none p-2 w-full max-w-md color:black'
+        className='outline-none p-2 w-full max-w-md text-slate-900'
       />
       <button
-        className='p-2 py-2 w-full border border-white border-solid'
+        className='p-2 py-2 w-full border border-white border-solid max-w-md'
         onClick={submitHandler}
       >
         Submit
