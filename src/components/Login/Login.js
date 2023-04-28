@@ -23,7 +23,14 @@ export default function Login() {
       }
       return;
     }
-    await signup(email, password);
+    let userData = {
+      email,
+      password,
+      nombre: 'Felipe',
+      apellido: 'Fernandez',
+      sectorOmic: 'Atencion al cliente',
+    };
+    await signup(userData);
   }
 
   return (
