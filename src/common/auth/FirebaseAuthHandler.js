@@ -1,13 +1,18 @@
-import { isEmpty } from 'class-validator';
-import { getRepository } from 'fireorm';
-import { UserAuth } from '../fireorm/fireorm-models.type';
-import { db } from '../db/firebase';
-import { collection, setDoc } from 'firebase/firestore';
+import {isEmpty} from 'class-validator';
+import {db} from '../db/firebase';
+import {collection, setDoc} from 'firebase/firestore';
 
 /**
  * Handles authorization for Firebase adapter
  */
 export default function FirebaseAuthHandler() {
+  async function saveUserRole(user) {
+    const newUser = await converUserToRemoteUser(user);
+
+    const usersRef = collection(db, 'users');
+    await setDoc(usersRef, newUser, {merge: true});
+  }
+
   return {
     /**
      * Create new user and save it on the DB.
@@ -22,9 +27,13 @@ export default function FirebaseAuthHandler() {
 
       const usersRef = collection(db, 'users');
 
-      await setDoc(usersRef, data).then((docRef) => console.log(docRef));
+      let user = await setDoc(usersRef, data).then((docRef) =>
+        console.log(docRef)
+      );
 
-      return remoteUser;
+      const userWRole = await this.assingRole(user, 'base');
+
+      return userWRole;
     },
 
     async getUserById(id) {
@@ -56,11 +65,33 @@ export default function FirebaseAuthHandler() {
         ...partialUser,
       };
 
-      await setDoc(usersRef, updatedUser, { merge: true }).then((docRef) =>
+      await setDoc(usersRef, updatedUser, {merge: true}).then((docRef) =>
         console.log(docRef)
       );
 
       return updatedUser;
+    },
+
+    async assingRole(user, roleId) {
+      const currentRoles = user.roles;
+
+      if (hasRole(user, roleId)) {
+        return user;
+      }
+
+      const rolesRef = collection(db, 'roles');
+      const role = query(rolesRef, where('id', '==', roleId));
+
+      if (!role) return user;
+
+      const newRoles = [...currentRoles, role];
+
+      const userWithRoles = user;
+      userWithRoles.roles = newRoles;
+
+      await saveInRemote(userWithRoles);
+
+      return userWithRoles;
     },
   };
 }
