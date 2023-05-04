@@ -1,6 +1,6 @@
 import {isEmpty} from 'class-validator';
 import {db} from '../db/firebase';
-import {collection, setDoc} from 'firebase/firestore';
+import {collection, setDoc, query} from 'firebase/firestore';
 
 /**
  * Handles authorization for Firebase adapter
