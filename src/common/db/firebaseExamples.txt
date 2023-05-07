@@ -1,0 +1,23 @@
+Agregar un doc con el id
+======
+try {
+    const collectionRef = collection(db, 'denunciantes');
+    const docRef = await addDoc(collectionRef, obj);
+    const id = docRef.id;
+    await updateDoc(doc(collectionRef, id), { id });
+    console.log(`Document created with ID: ${id}`);
+} catch (error) {
+    console.error('Error creating document: ', error);
+}
+
+
+==================================================
+addDoc              const docRef = await addDoc(collectionRef, obj);
+updateDoc           await updateDoc(doc(collectionRef, id), { id });
+getDocs             const localidadDocs = await getDocs(localidadRef);
+	                const localidades = localidadDocs.docs.map((doc) => doc.data());
+
+
+collection          const tipoConsultaRef = collection(db, 'tipoConsulta');
+         
+

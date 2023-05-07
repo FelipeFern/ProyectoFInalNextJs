@@ -1,8 +1,9 @@
 export const permissionName = {
-  // PAGE permissions
+	// PAGE permissions
 
-  // API permissions
-  API_users: 'API_users',
+	// API permissions
+	API_users: 'API_users',
+	API_Seeders: 'API_Seeders',
 };
 
 //   // PAGE permissions
