@@ -1,12 +1,12 @@
-import React, {useContext, useState, useEffect, useRef} from 'react';
-import {auth, db} from '../db/firebase';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { auth, db } from '../db/firebase';
 import {
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	signOut,
 	onAuthStateChanged,
 } from 'firebase/auth';
-import {doc, getDoc, setDoc} from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Login from '../../components/Login/Login.js';
 
 const authContext = React.createContext();
@@ -15,7 +15,7 @@ export function useAuth() {
 	return useContext(authContext);
 }
 
-export function AuthProvider({children}) {
+export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -23,7 +23,7 @@ export function AuthProvider({children}) {
 
 	function signup(userDetails) {
 		console.log('entre');
-		const {nombre, apellido, sectorOmic, email, password} = userDetails;
+		const { nombre, apellido, sectorOmic, email, password } = userDetails;
 
 		return (
 			createUserWithEmailAndPassword(auth, email, password)
@@ -36,6 +36,7 @@ export function AuthProvider({children}) {
 						sectorOmic: sectorOmic,
 						roles: ['empleadoOmic'],
 						todos: [],
+						createdAt: new Date(),
 					});
 				})
 				//we need to catch the whole sign up process if it fails too.

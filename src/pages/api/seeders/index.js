@@ -116,7 +116,7 @@ async function uploadConsultas(consultasRef, data) {
 	const empleadoAsignadoRef = collection(db, 'users');
 	const empleadoAsignadoQuery = query(
 		empleadoAsignadoRef,
-		where('nombre', '==', 'Felipe')
+		where('nombre', '==', 'Homero')
 	);
 	const empleadoAsignado = await getDocs(empleadoAsignadoQuery);
 	const empleadoAsignadoId = empleadoAsignado.docs[0].data().id;
