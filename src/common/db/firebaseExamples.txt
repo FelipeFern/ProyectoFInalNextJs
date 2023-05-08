@@ -10,6 +10,15 @@ try {
     console.error('Error creating document: ', error);
 }
 
+========================== Query Where ======================
+	const tipoConsultaRef = collection(db, 'tipoConsulta');
+	const tipoConsultaQuery = query(
+		tipoConsultaRef,
+		where('nombre', '==', 'Consulta')
+	);
+	const tipoConsulta = await getDocs(tipoConsultaQuery);
+	const tipoConsultaId = tipoConsulta.docs[0].data().id;
+
 
 ==================================================
 addDoc              const docRef = await addDoc(collectionRef, obj);

@@ -6,6 +6,8 @@ import {
 	getDocs,
 	setDoc,
 	updateDoc,
+	query,
+	where,
 } from 'firebase/firestore';
 import { db } from '../../../common/db/firebase.js';
 import {
@@ -15,6 +17,7 @@ import {
 	sectorOmic,
 	users,
 	denunciantes,
+	consultas,
 } from '../../../common/seeders/data.js';
 import { HTTPMethod } from '../../../common/api/methods.js';
 import APIRouteHelper from '../../../common/api/APIRouteHelper';
@@ -29,20 +32,27 @@ export default async function (req, res) {
 }
 
 async function onGET(req, res) {
-	const localidadRef = collection(db, 'localidad');
-	await addDocumentsToCollection(localidadRef, localidad);
+	try {
+		// const localidadRef = collection(db, 'localidad');
+		// await addDocumentsToCollection(localidadRef, localidad);
 
-	const tipoConsultaRef = collection(db, 'tipoConsulta');
-	addDocumentsToCollection(tipoConsultaRef, tipoConsulta);
+		// const tipoConsultaRef = collection(db, 'tipoConsulta');
+		// addDocumentsToCollection(tipoConsultaRef, tipoConsulta);
 
-	const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
-	await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
+		// const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
+		// await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
 
-	// const sectorOmicRef = collection(db, 'sectorOmic');
-	// addDocumentsToCollection(sectorOmicRef, sectorOmic);
+		// const sectorOmicRef = collection(db, 'sectorOmic');
+		// addDocumentsToCollection(sectorOmicRef, sectorOmic);
 
-	const denunciantesRef = collection(db, 'denunciantes');
-	seedWithLocalidad(denunciantesRef, denunciantes);
+		// const denunciantesRef = collection(db, 'denunciantes');
+		// seedWithLocalidad(denunciantesRef, denunciantes);
+
+		const consultasRef = collection(db, 'consultas');
+		uploadConsultas(consultasRef, consultas);
+	} catch (error) {
+		res.status(400).json({ error });
+	}
 
 	res.status(200).json({ data: 'Data uploaded in the DB.' });
 }
@@ -81,19 +91,60 @@ async function seedWithLocalidad(collectionRef, data) {
 	}
 }
 
-// Ejemplo de actualizar algo en el array:>
+async function uploadConsultas(consultasRef, data) {
+	const estadoConsultaColRef = collection(db, 'estadoConsulta');
+	const tipoConsultaRef = collection(db, 'tipoConsulta');
+	const tipoConsultaQuery = query(
+		tipoConsultaRef,
+		where('nombre', '==', 'Consulta')
+	);
+	const tipoConsulta = await getDocs(tipoConsultaQuery);
+	const tipoConsultaId = tipoConsulta.docs[0].data().id;
 
-// import {doc, updateDoc} from 'firebase/firestore';
-// import {db} from '../db/firebase';
+	const sectorOmicRef = collection(db, 'sectorOmic');
+	const sectorOmicQuery = query(
+		sectorOmicRef,
+		where('nombre', '==', 'Administracion-Consultas')
+	);
+	const sectorOmic = await getDocs(sectorOmicQuery);
+	const sectorOmicId = sectorOmic.docs[0].data().id;
 
-// const ciudadRef = doc(db, 'ciudades', 'idDeLaCiudad');
+	const empleadoAsignadoRef = collection(db, 'users');
+	const empleadoAsignadoQuery = query(
+		empleadoAsignadoRef,
+		where('nombre', '==', 'Felipe')
+	);
+	const empleadoAsignado = await getDocs(empleadoAsignadoQuery);
+	const empleadoAsignadoId = empleadoAsignado.docs[0].data().id;
 
-// // Agregar un nuevo denunciante
-// const nuevoDenunciante = {
-//   nombre: 'Juan',
-//   telefono: '123456789'
-// };
+	let estadoConsulta = {
+		nombre: 'En proceso',
+		descripcion: 'La consulta se encuentra en proceso',
+		tipoConsulta: tipoConsultaId,
+		sectorOmic: sectorOmicId,
+		empleadoAsignado: empleadoAsignadoId,
+	};
 
-// await updateDoc(ciudadRef, {
-//   denunciantes: [...denunciantes, nuevoDenunciante]
-// });
+	for (let obj of data) {
+		const estadoConsultaRef = await addDoc(
+			estadoConsultaColRef,
+			estadoConsulta
+		);
+		const estadoConsultaId = estadoConsultaRef.id;
+		await updateDoc(doc(estadoConsultaColRef, estadoConsultaId), {
+			id: estadoConsultaId,
+		});
+		let arrayEstadosConsultas = [estadoConsultaId];
+		const docRef = await addDoc(consultasRef, {
+			...obj,
+			ultimoEstadoConsulta: estadoConsultaId,
+			estadosConsultas: arrayEstadosConsultas,
+		});
+		const id = docRef.id;
+		await updateDoc(doc(consultasRef, id), { id });
+
+		await updateDoc(doc(estadoConsultaColRef, estadoConsultaId), {
+			consulta: id,
+		});
+	}
+}

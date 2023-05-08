@@ -203,3 +203,24 @@ export const denunciantes = [
 		// localidad: 'Bahia Blanca',
 	},
 ];
+
+export const estadoConsulta = [
+	{
+		nombre: 'En proceso',
+		descripcion: 'La consulta se encuentra en proceso',
+		// consulta: consulta.id,
+		// tipoConsulta: tipoConsulta.id,
+		// sectorOmic: sectorOmic.id,
+		// empleadoAsignado: empleado.id,
+	},
+];
+
+export const consultas = [
+	{
+		archivos: [],
+		// ultimoEstadoConsulta: estadoConsulta.id,
+		estadosConsulta: [],
+		// empresaDenunciada: empresasDenunciadas.id,
+		// denunciante: denunciantes.id,
+	},
+];
