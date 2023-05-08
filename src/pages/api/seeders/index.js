@@ -60,7 +60,10 @@ async function onGET(req, res) {
 async function addDocumentsToCollection(collectionRef, data) {
 	for (let obj of data) {
 		try {
-			const docRef = await addDoc(collectionRef, obj);
+			const docRef = await addDoc(collectionRef, {
+				obj,
+				createdAt: new Date(),
+			});
 			const id = docRef.id;
 			await updateDoc(doc(collectionRef, id), { id });
 			console.log(`Document created with ID: ${id}`);
@@ -81,6 +84,7 @@ async function seedWithLocalidad(collectionRef, data) {
 			const docRef = await addDoc(collectionRef, {
 				obj,
 				localidad: localidadId,
+				createdAt: new Date(),
 			});
 			const id = docRef.id;
 			await updateDoc(doc(collectionRef, id), { id });
@@ -126,10 +130,10 @@ async function uploadConsultas(consultasRef, data) {
 	};
 
 	for (let obj of data) {
-		const estadoConsultaRef = await addDoc(
-			estadoConsultaColRef,
-			estadoConsulta
-		);
+		const estadoConsultaRef = await addDoc(estadoConsultaColRef, {
+			estadoConsulta,
+			createdAt: new Date(),
+		});
 		const estadoConsultaId = estadoConsultaRef.id;
 		await updateDoc(doc(estadoConsultaColRef, estadoConsultaId), {
 			id: estadoConsultaId,
@@ -139,6 +143,7 @@ async function uploadConsultas(consultasRef, data) {
 			...obj,
 			ultimoEstadoConsulta: estadoConsultaId,
 			estadosConsultas: arrayEstadosConsultas,
+			createdAt: new Date(),
 		});
 		const id = docRef.id;
 		await updateDoc(doc(consultasRef, id), { id });
