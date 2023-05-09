@@ -62,6 +62,7 @@ async function onPUT(req, res) {
 			localidad: localidadId,
 			createdAt: new Date(),
 		});
+		console.log(docRef);
 		const id = docRef.id;
 		await updateDoc(doc(collectionRef, id), { id });
 		console.log(`Document created with ID: ${id}`);
