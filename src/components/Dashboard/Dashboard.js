@@ -13,6 +13,7 @@ import { Link, Routes } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import HeaderDashboard from './HeaderDashboard';
 import Content from './Content';
+import ResultsCards from './ResultsCards';
 
 export default function Dashboard() {
 	const [openSidebar, setOpenSidebar] = useState(false);
@@ -108,6 +109,7 @@ export default function Dashboard() {
 			<div className=' col-span-5'>
 				<HeaderDashboard />
 				<Content />
+				<ResultsCards />
 			</div>
 		</div>
 	);
