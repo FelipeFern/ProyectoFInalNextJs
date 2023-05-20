@@ -14,9 +14,11 @@ import React, { useEffect, useState } from 'react';
 import HeaderDashboard from './HeaderDashboard';
 import Content from './Content';
 import ResultsCards from './ResultsCards';
+import Cards from './Cards';
 
 export default function Dashboard() {
 	const [openSidebar, setOpenSidebar] = useState(false);
+	const hoverCollor = 'bg-purple-500';
 
 	useEffect(() => {
 		document.title = 'Dashboard';
@@ -30,7 +32,7 @@ export default function Dashboard() {
 		<div className='min-h-screen grid grid-col-1 lg:grid-cols-6'>
 			{/* Sidebar */}
 			<div
-				className={`fixed lg:static top-0 w-[80%] md:w-[40%] lg:w-full z-50 bg-white transition-all ${
+				className={`fixed lg:static top-0 w-[81%] md:w-[40%] lg:w-full z-50 bg-white transition-all ${
 					openSidebar ? '-left-0' : '-left-full'
 				}  w-full h-full overflow-y-scroll col-span-1 p-8 border-r`}
 			>
@@ -45,7 +47,7 @@ export default function Dashboard() {
 							<li>
 								<Link
 									to='/'
-									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
+									className={`flex items-center gap-4  hover:{$hoverCollor} p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold`}
 								>
 									<RiMapPin2Line /> Localidades
 								</Link>
@@ -101,15 +103,16 @@ export default function Dashboard() {
 			{/* Btn menu movil */}
 			<button
 				onClick={() => handleSidebar()}
-				className=' block lg:hidden absolute bottom-4 right-4 bg-purple-600 text-white p-2 rounded-full text-2xl'
+				className=' block lg:hidden fixed bottom-4 right-4 bg-purple-600 text-white p-2 rounded-full text-2xl z-40'
 			>
 				{openSidebar ? <RiCloseLine /> : <RiMenu2Line />}
 			</button>
 			{/* Content */}
-			<div className=' col-span-5'>
+			<div className=' col-span-5 bg-gray-200'>
 				<HeaderDashboard />
 				<Content />
 				<ResultsCards />
+				<Cards />
 			</div>
 		</div>
 	);

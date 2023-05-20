@@ -30,9 +30,9 @@ const Content = () => {
 						<select
 							type='text'
 							placeholder='Buscar'
-							className='bg-white p-2 outline-none pl-8 pr-4 w-full '
+							className='bg-white p-2 outline-none pl-8 pr-4 w-full hover:cursor-pointer '
 						>
-							<option value='' disabled selected hiden>
+							<option value='' disabled selected hidden>
 								Filter options
 							</option>
 							<option>Localidad</option>
@@ -46,7 +46,7 @@ const Content = () => {
 						<select
 							type='text'
 							selec='Buscar'
-							className='bg-white p-2 outline-none pl-8 pr-4 w-full '
+							className='bg-white p-2 outline-none pl-8 pr-4 w-full hover:cursor-pointer'
 						>
 							<option>Values</option>
 						</select>
