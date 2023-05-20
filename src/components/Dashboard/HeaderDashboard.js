@@ -9,7 +9,7 @@ import {
 
 const HeaderDashboard = () => {
 	return (
-		<header className='flex flex-col md:flex-row gap-4 items-center justify-between  p-4 lg:pr-12 lg:pl-12  w-full'>
+		<header className='flex flex-col md:flex-row gap-4 items-center justify-between  p-4 md:pl-8 md:pr-8 lg:pr-12 lg:pl-12  w-full'>
 			{/* Search */}
 			<form className='md:w-[45%] lg:w-[30%] w-full order-1 md:order-none'>
 				<div className='relative '>
