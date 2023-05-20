@@ -7,6 +7,7 @@ import {
 	RiLogoutBoxRLine,
 	RiMenu2Line,
 	RiCloseLine,
+	RiMapPin2Line,
 } from 'react-icons/ri';
 import { Link, Routes } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
@@ -45,7 +46,7 @@ export default function Dashboard() {
 									to='/'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
-									<RiBuilding4Line /> Localidades
+									<RiMapPin2Line /> Localidades
 								</Link>
 							</li>
 							<li>
