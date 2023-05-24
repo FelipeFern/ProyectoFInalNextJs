@@ -26,16 +26,10 @@ export default function Dashboard() {
 	}, []);
 
 	return (
-		<div className='min-h-screen grid grid-col-1 lg:grid-cols-6'>
-			{/* Sidebar */}
-			<Sidebar />
-			{/* Content */}
-			<div className=' col-span-5 bg-gray-200'>
-				<HeaderDashboard />
-				<Content />
-				<ResultsCards />
-				<Cards />
-			</div>
+		<div>
+			<Content />
+			<ResultsCards />
+			<Cards />
 		</div>
 	);
 }

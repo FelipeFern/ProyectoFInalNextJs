@@ -1,6 +1,5 @@
 import Dashboard from '@/components/Dashboard/Dashboard';
 import { AuthProvider } from '../common/context/AuthContext';
-import Layout from '../components/Layout/Layout';
 import '../styles/globals.css';
 import { BrowserRouter } from 'react-router-dom';
 import React, { useEffect } from 'react';
@@ -13,12 +12,12 @@ export default function App({ Component, pageProps }) {
 	// 		</Layout>
 	// 	</AuthProvider>
 	// );
-	useEffect(() => {
-		document.title = 'Dashboard';
-	}, []);
+	// useEffect(() => {
+	// 	document.title = 'Dashboard';
+	// }, []);
 	return (
 		<BrowserRouter>
-			<Dashboard />
+			<Component {...pageProps} />
 		</BrowserRouter>
 	);
 }

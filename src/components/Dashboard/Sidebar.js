@@ -28,7 +28,7 @@ export default function Sidebar() {
 		<>
 			{/* Sidebar */}
 			<div
-				className={`fixed lg:static top-0 w-[81%] md:w-[40%] lg:w-full z-50 bg-white transition-all ${
+				className={`fixed lg:static top-0 w-[80%] md:w-[40%] lg:w-full z-50 bg-white transition-all ${
 					openSidebar ? '-left-0' : '-left-full'
 				}  w-full h-full overflow-y-scroll col-span-1 p-8 border-r`}
 			>
