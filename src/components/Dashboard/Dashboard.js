@@ -10,11 +10,11 @@ import {
 	RiMapPin2Line,
 } from 'react-icons/ri';
 import { Link, Routes } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import HeaderDashboard from './HeaderDashboard';
 import Content from './Content';
 import ResultsCards from './ResultsCards';
-import Cards from './Cards';
+import Card from './Cards';
 import Sidebar from './Sidebar';
 
 export default function Dashboard() {
@@ -24,7 +24,6 @@ export default function Dashboard() {
 		<div>
 			<Content />
 			<ResultsCards />
-			<Cards />
 		</div>
 	);
 }

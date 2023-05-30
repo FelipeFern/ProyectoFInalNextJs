@@ -31,17 +31,13 @@ export default async function (req, res) {
 
 async function onGET(req, res) {
 	try {
-		const usersRef = collection(db, 'users');
-		const usersQuery = query(usersRef, where('id', '==', uid));
-		const usersDocs = await getDoc(usersQuery);
-		if (usersDocs.exists() === false) {
+		const docRef = doc(db, 'users', uid);
+		const userDoc = await getDoc(docRef);
+		if (!userDoc.exists()) {
 			res.status(404).json({ error: 'User not found' });
 			return;
 		}
-
-		const data = usersDocs.docs[0].data();
-
-		res.status(200).json({ data });
+		res.status(200).json({ data: userDoc.data });
 	} catch (error) {
 		res.status(400).json({ error });
 	}

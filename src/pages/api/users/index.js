@@ -1,5 +1,5 @@
-import { HTTPMethod } from '../../common/api/methods';
-import { permissionName } from '../../common/types/permissions';
+import { HTTPMethod } from '../../../common/api/methods';
+import { permissionName } from '../../../common/types/permissions';
 import {
 	collection,
 	doc,
@@ -10,8 +10,8 @@ import {
 	docs,
 	getDocs,
 } from 'firebase/firestore';
-import APIRouteHelper from '../../common/api/APIRouteHelper';
-import { db } from '../../common/db/firebase';
+import APIRouteHelper from '../../../common/api/APIRouteHelper';
+import { db } from '../../../common/db/firebase';
 
 export default async function (req, res) {
 	return new APIRouteHelper(req, res, permissionName.API_users)
@@ -26,7 +26,6 @@ export default async function (req, res) {
 
 async function onGET(req, res) {
 	try {
-		let users = [];
 		const usersRef = collection(db, 'users');
 
 		const usersDocs = await getDocs(usersRef);
