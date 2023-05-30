@@ -31,8 +31,9 @@ const Content = () => {
 							type='text'
 							placeholder='Buscar'
 							className='bg-white p-2 outline-none pl-8 pr-4 w-full hover:cursor-pointer '
+							defaultValue={''}
 						>
-							<option value='' disabled selected hidden>
+							<option value='' disabled hidden>
 								Filter options
 							</option>
 							<option>Localidad</option>

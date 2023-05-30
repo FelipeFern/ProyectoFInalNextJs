@@ -9,16 +9,14 @@ import {
 	RiCloseLine,
 	RiMapPin2Line,
 } from 'react-icons/ri';
-import { Link, Routes } from 'react-router-dom';
+// import { Link, Routes } from 'react-router-dom';
+import Link from 'next/link';
+
 import React, { useEffect, useState } from 'react';
 
 export default function Sidebar() {
 	const [openSidebar, setOpenSidebar] = useState(false);
 	const hoverColor = 'bg-purple-500';
-
-	useEffect(() => {
-		document.title = 'Dashboard';
-	}, []);
 
 	const handleSidebar = () => {
 		setOpenSidebar(!openSidebar);
@@ -42,7 +40,7 @@ export default function Sidebar() {
 						<ul>
 							<li>
 								<Link
-									to='/'
+									href='/'
 									className={`flex items-center gap-4  hover:${hoverColor} p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold`}
 								>
 									<RiMapPin2Line /> Localidades
@@ -50,7 +48,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									to='/'
+									href='/'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiTable2 /> Sector OMIC
@@ -58,7 +56,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									to='/'
+									href='/'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiBriefcase3Line /> Empresas
@@ -66,7 +64,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									to='/'
+									href='/'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiFileUserLine /> Empleados
@@ -87,7 +85,7 @@ export default function Sidebar() {
 							</button>
 						</div>
 						<Link
-							to='/'
+							href='/'
 							className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 						>
 							<RiLogoutBoxRLine /> Logout

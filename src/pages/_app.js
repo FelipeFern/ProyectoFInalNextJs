@@ -12,12 +12,5 @@ export default function App({ Component, pageProps }) {
 	// 		</Layout>
 	// 	</AuthProvider>
 	// );
-	// useEffect(() => {
-	// 	document.title = 'Dashboard';
-	// }, []);
-	return (
-		<BrowserRouter>
-			<Component {...pageProps} />
-		</BrowserRouter>
-	);
+	return <Component {...pageProps} />;
 }

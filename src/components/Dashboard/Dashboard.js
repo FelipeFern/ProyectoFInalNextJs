@@ -18,12 +18,7 @@ import Cards from './Cards';
 import Sidebar from './Sidebar';
 
 export default function Dashboard() {
-	const [openSidebar, setOpenSidebar] = useState(false);
 	const hoverCollor = 'bg-purple-500';
-
-	useEffect(() => {
-		document.title = 'Dashboard';
-	}, []);
 
 	return (
 		<div>

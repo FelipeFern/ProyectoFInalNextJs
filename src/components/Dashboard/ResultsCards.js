@@ -5,22 +5,21 @@ const ResultsCards = () => {
 				We found<span className='font-semibold'> {532}</span> consultas
 			</p>
 
-			<p className='text-gray-600 flex items-center gap-2'>
+			<div className='text-gray-600 flex items-center gap-2'>
 				Sort by
 				<div className='relative '>
 					<select
 						type='text'
 						placeholder='Buscar'
 						className='bg-white p-2 outline-none pl-4 pr-4 w-full hover:cursor-pointer rounded-full'
+						defaultValue={''}
 					>
-						<option value='' selected>
-							Date
-						</option>
+						<option value=''>Date</option>
 						<option>Localidad</option>
 						<option>Nombre</option>
 					</select>
 				</div>
-			</p>
+			</div>
 		</div>
 	);
 };

@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import { RiDropboxFill } from 'react-icons/ri';
 
 const Cards = () => {
@@ -6,7 +8,7 @@ const Cards = () => {
 		<div className='lg:pr-12 lg:pl-12  md:pr-8 md:pl-8 p-4'>
 			{/* Card */}
 			<Link
-				to='/'
+				href='/'
 				className='bg-white rounded-2xl p-8 flex gap-8 flex-col md:flex-row w-full drop-shadow-lg items-center border-2 border-transparent hover:border-purple-400 transition-all mb-4'
 			>
 				{/* Icon */}
@@ -38,7 +40,7 @@ const Cards = () => {
 				</div>
 			</Link>
 			<Link
-				to='/'
+				href='/'
 				className='bg-white rounded-2xl p-8 flex gap-8 flex-col md:flex-row w-full drop-shadow-lg items-center border-2 border-transparent hover:border-purple-400 transition-all mb-4'
 			>
 				{/* Icon */}
@@ -70,7 +72,7 @@ const Cards = () => {
 				</div>
 			</Link>
 			<Link
-				to='/'
+				href='/'
 				className='bg-white rounded-2xl p-8 flex gap-8 flex-col md:flex-row w-full drop-shadow-lg items-center border-2 border-transparent hover:border-purple-400 transition-all mb-4'
 			>
 				{/* Icon */}
@@ -102,7 +104,7 @@ const Cards = () => {
 				</div>
 			</Link>
 			<Link
-				to='/'
+				href='/'
 				className='bg-white rounded-2xl p-8 flex gap-8 flex-col md:flex-row w-full drop-shadow-lg items-center border-2 border-transparent hover:border-purple-400 transition-all mb-4'
 			>
 				{/* Icon */}

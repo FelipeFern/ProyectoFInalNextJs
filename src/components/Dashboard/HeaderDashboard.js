@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import {
 	RiNotification3Line,
 	RiArrowDownSLine,
@@ -25,13 +27,13 @@ const HeaderDashboard = () => {
 			<nav className='w-full md:w-[55%] lg:w-[70%] flex justify-center md:justify-end '>
 				<ul className='flex items-center gap-4'>
 					<li>
-						<Link to='/' className='relative'>
+						<Link href='/' className='relative'>
 							<RiNotification3Line className='text-xl' />
 							<RiCheckboxBlankCircleFill className='absolute -right-1 -top-1 text-xs text-red-500' />
 						</Link>
 					</li>
 					<li>
-						<Link className='flex gap-1 items-center' to='/'>
+						<Link className='flex gap-1 items-center' href='/'>
 							Felipe Fernandez
 							<RiArrowDownSLine />
 						</Link>

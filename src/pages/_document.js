@@ -2,20 +2,17 @@ import { Html, Head, Main, NextScript } from 'next/document';
 import { useEffect } from 'react';
 
 export default function Document() {
-	useEffect(() => {
-		document.title = 'Dashboard';
-	}, []);
 	return (
 		<Html lang='en'>
 			<Head>
-				{/* <link rel='preconnect' href='https://fonts.googleapis.com' />
+				<link rel='preconnect' href='https://fonts.googleapis.com' />
 				<link
 					rel='preconnect'
 					href='https://fonts.gstatic.com'
 					crossOrigin='true'
 				/>
 				<link
-					href='href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800&display=swap&family=Varela+Round&display=swap'
+					href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;1,100;1,200;1,300&family=Varela+Round&display=swap'
 					rel='stylesheet'
 				></link>
 
@@ -25,7 +22,7 @@ export default function Document() {
 					integrity='sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=='
 					crossOrigin='anonymous'
 					referrerPolicy='no-referrer'
-				/> */}
+				/>
 			</Head>
 			<body>
 				<Main />
