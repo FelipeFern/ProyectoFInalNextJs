@@ -23,7 +23,7 @@
 
 import Dashboard from '@/components/Dashboard/Dashboard';
 import Head from 'next/head';
-import MainLayout from '@/components/Layout/MainLayout';
+import MainLayout from '@/components/OldComponents/Layout/MainLayout';
 
 export default function Home() {
 	return (

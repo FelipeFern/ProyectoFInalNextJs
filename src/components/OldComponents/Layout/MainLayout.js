@@ -1,5 +1,5 @@
-import HeaderDashboard from '../Dashboard/HeaderDashboard';
-import Sidebar from '../Dashboard/Sidebar';
+import HeaderDashboard from '../../Header/HeaderDashboard';
+import Sidebar from '../../Sidebar/Sidebar';
 
 export default function MainLayout({ children }) {
 	return (

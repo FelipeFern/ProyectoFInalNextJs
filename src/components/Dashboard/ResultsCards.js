@@ -70,18 +70,6 @@ const ResultsCards = () => {
 					salary='8.8 - 13.7k PLN'
 					posted='2 days ago'
 				/>
-				<Card
-					name='Felipe Fernandez'
-					location='Warzawa'
-					salary='8.8 - 13.7k PLN'
-					posted='2 days ago'
-				/>
-				<Card
-					name='Felipe Fernandez'
-					location='Warzawa'
-					salary='8.8 - 13.7k PLN'
-					posted='2 days ago'
-				/>
 			</div>
 		</>
 	);
