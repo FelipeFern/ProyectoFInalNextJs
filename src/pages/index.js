@@ -23,17 +23,12 @@
 
 import Dashboard from '@/components/Dashboard/Dashboard';
 import Head from 'next/head';
-import MainLayout from '@/components/OldComponents/Layout/MainLayout';
+import MainLayout from '@/components/Layout/MainLayout';
 
 export default function Home() {
 	return (
 		<>
-			<Head>
-				<title>OMIC</title>
-			</Head>
-			<MainLayout>
-				<Dashboard />
-			</MainLayout>
+			<h1>Home</h1>
 		</>
-	);
+	)
 }

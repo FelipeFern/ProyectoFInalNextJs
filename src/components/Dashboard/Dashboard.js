@@ -11,7 +11,6 @@ import {
 } from 'react-icons/ri';
 import { Link, Routes } from 'react-router-dom';
 import React, { useState } from 'react';
-import HeaderDashboard from '../Header/HeaderDashboard';
 import Content from './Content';
 import ResultsCards from './ResultsCards';
 import Card from './Cards';

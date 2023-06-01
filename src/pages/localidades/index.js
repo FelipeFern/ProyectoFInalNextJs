@@ -5,8 +5,7 @@ import ResultsCards from '@/components/Dashboard/ResultsCards';
 export default function Dashboard() {
 	return (
 		<div>
-			<Content />
-			<ResultsCards />
+			<h1>Dashboard</h1>
 		</div>
 	);
 }
