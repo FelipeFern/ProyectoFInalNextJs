@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import Dashboard from '@/components/Dashboard/Dashboard';
 import Head from 'next/head';
 import MainLayout from '@/components/Layout/MainLayout';
+import { initFirebaseClient } from '@/common/db/firebase';
 
 export default function App({ Component, pageProps }) {
 	// return (
@@ -14,6 +15,9 @@ export default function App({ Component, pageProps }) {
 	// 		</Layout>
 	// 	</AuthProvider>
 	// );
+
+	initFirebaseClient();
+
 	return (
 		<>
 			<Head>
