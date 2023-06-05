@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
-import Content from '@/components/Dashboard/Content';
-import ResultsCards from '@/components/Dashboard/ResultsCards';
+import React, { useState, useEffect } from 'react';
+import Dashboard from '@/components/Dashboard/Dashboard';
 
-export default function Dashboard() {
+export default function Localidades() {
+	const [localidades, setLocalidades] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		try {
+			const fetchData = async () => {
+				setLoading(true);
+				const response = await fetch('/api/localidades');
+				const data = await response.json();
+				setLocalidades(data.data);
+				setLoading(false);
+			};
+
+			fetchData().catch((error) => {
+				console.error(error);
+				setLoading(false);
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}, []);
+
 	return (
 		<div>
-			<h1>Dashboard</h1>
+			<Dashboard results={localidades} />
 		</div>
 	);
 }

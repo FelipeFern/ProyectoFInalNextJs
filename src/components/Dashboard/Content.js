@@ -1,12 +1,90 @@
-import Link from 'react-router-dom';
 import {
 	RiSearchLine,
 	RiArrowDownLine,
 	RiFilter3Fill,
 	RiCloseLine,
 } from 'react-icons/ri';
+import React, { useState, useEffect } from 'react';
 
-const Content = () => {
+const Content = ({ filtersToShow, handleFilters }) => {
+	const [filterKeySelected, setFilterKeySelected] = useState('');
+	const [filterValueSelected, setFilterValueSelected] = useState('');
+	const [filterValuesToShow, setFilterValuesToShow] = useState([]);
+	const [allFiltersToShow, setAllFiltersToShow] = useState([]);
+	const [filtersCreated, setFiltersCreated] = useState([]);
+
+	const handleSelectKeyChange = (event) => {
+		let filterKey = event.target.value;
+		setFilterKeySelected(filterKey);
+		setFilterValuesToShow([]);
+		setFilterValuesToShow(filtersToShow[filterKey]);
+	};
+
+	const handleFilterValueChange = (event) => {
+		let filterValue = event.target.value;
+		setFilterValueSelected(filterValue);
+	};
+
+	// Hacer que esta funcon se active cuando clickeo en el boton que tengo que agregar.
+	function createFilter() {
+		createNewFilter(filterKeySelected, filterValueSelected);
+	}
+
+	function convertWord(palabra) {
+		const palabras = palabra.split(/(?=[A-Z])/);
+		const resultado = palabras.map(
+			(palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1)
+		);
+		return resultado.join(' ');
+	}
+
+	function createNewFilter(filterKey, filterValues) {
+		// Verificar si ya existe un filtro con la misma clave
+		const existingFilter = filtersCreated.find(
+			(filter) => filter.key === filterKey
+		);
+
+		// Si existe, no se agrega el filtro nuevamente
+		if (existingFilter) {
+			console.log('El filtro ya existe');
+			return;
+		}
+
+		const newFilter = {
+			key: filterKey,
+			value: filterValues,
+		};
+		const newArray = [...filtersCreated, newFilter];
+		setFiltersCreated(newArray);
+		handleFilters(newArray);
+	}
+
+	const removeFilter = (value) => {
+		let filterValue = value;
+		let filters = filtersCreated;
+		filters = filters.filter((filter) => filter.value !== filterValue);
+
+		setFiltersCreated(filters);
+		handleFilters(filters);
+	};
+
+	const removeAllFilters = () => {
+		console.log('entre');
+		setFiltersCreated([]);
+		handleFilters([]);
+	};
+
+	useEffect(() => {
+		const values = Object.keys(filtersToShow).map((key) => [
+			key,
+			filtersToShow[key],
+		]);
+		if (values.length > 0) {
+			values.sort((a, b) => a[0].localeCompare(b[0]));
+			setAllFiltersToShow(values);
+		}
+	}, [filtersToShow, filtersCreated]);
+
 	return (
 		<div className='lg:p-12 p-4 md:p-8 bg-gray-200'>
 			<div className='mb-8'>
@@ -32,12 +110,16 @@ const Content = () => {
 							placeholder='Buscar'
 							className='bg-white p-2 outline-none pl-8 pr-4 w-full hover:cursor-pointer '
 							defaultValue={''}
+							onChange={handleSelectKeyChange}
 						>
 							<option value='' disabled hidden>
 								Filter options
 							</option>
-							<option>Localidad</option>
-							<option>All</option>
+							{allFiltersToShow.map((filterValue) => (
+								<option key={filterValue[0]} value={filterValue[0]}>
+									{convertWord(filterValue[0])}
+								</option>
+							))}
 						</select>
 					</div>
 				</form>
@@ -48,8 +130,17 @@ const Content = () => {
 							type='text'
 							selec='Buscar'
 							className='bg-white p-2 outline-none pl-8 pr-4 w-full hover:cursor-pointer'
+							onChange={handleFilterValueChange}
+							defaultValue={''}
 						>
-							<option>Values</option>
+							<option value='' disabled hidden>
+								Values
+							</option>
+							{filterValuesToShow.map((filterValue) => (
+								<option key={filterValue} value={filterValue}>
+									{filterValue}
+								</option>
+							))}
 						</select>
 					</div>
 				</form>
@@ -58,27 +149,37 @@ const Content = () => {
 			{/* Spans Filters */}
 
 			<div className='flex items-center gap-4 flex-wrap'>
-				<span className='bg-white flex items-center gap-4 py-2 px-4 rounded-full '>
-					<button className='bg-gray-500 p-1 rounded-full text-gray-300 text-sm'>
-						<RiCloseLine />
+				<span className='bg-white flex items-center gap-4 py-2 px-4 rounded-full lg:ml-auto lg:order-last'>
+					<button className='text-gray-500' onClick={createFilter}>
+						{''} Apply filter{' '}
 					</button>
-					<span className='text-gray-500'> {''} Bahia Blanca </span>
 				</span>
-				<span className='bg-white flex items-center gap-4 py-2 px-4 rounded-full '>
-					<button className='bg-gray-500 p-1 rounded-full text-gray-300 text-sm'>
-						<RiCloseLine />
+
+				{filtersCreated.map((filterValue) => (
+					<span
+						className='bg-white flex items-center gap-4 py-2 px-4 rounded-full '
+						key={filterValue.value}
+					>
+						<button
+							className='bg-gray-500 p-1 rounded-full text-gray-300 text-sm'
+							onClick={() => removeFilter(filterValue.value)}
+						>
+							<RiCloseLine />
+						</button>
+						<span className='text-gray-500'>
+							{''} {filterValue.value}{' '}
+						</span>
+					</span>
+				))}
+				{filtersCreated.length > 0 && filtersCreated && (
+					<button
+						className='ml-4 rounded-full text-gray-500 '
+						key={'ClearAll'}
+						onClick={removeAllFilters}
+					>
+						{''} Clear all
 					</button>
-					<span className='text-gray-500'> {''} Felipe Fernandez </span>
-				</span>
-				<span className='bg-white flex items-center gap-4 py-2 px-4 rounded-full '>
-					<button className='bg-gray-500 p-1 rounded-full text-gray-300 text-sm'>
-						<RiCloseLine />
-					</button>
-					<span className='text-gray-500'> {''} Activo </span>
-				</span>
-				<button className='ml-4 rounded-full text-gray-500 '>
-					{''} Clear all
-				</button>
+				)}
 			</div>
 		</div>
 	);

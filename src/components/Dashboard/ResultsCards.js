@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
 import Card from './Cards';
 
-const ResultsCards = () => {
+const ResultsCards = ({ results }) => {
 	const [cards, setCards] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		try {
-			const fetchData = async () => {
-				setLoading(true);
-				const response = await fetch('/api/users');
-				const data = await response.json();
-				setCards(data.data);
-				setLoading(false);
-			};
+			setLoading(true);
+			if (results.length > 0) {
+				setCards(results);
+			}
+			setLoading(false);
 
-			fetchData().catch((error) => {
-				console.error(error);
-				setLoading(false);
-			});
+			setLoading(false);
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [results]);
 
 	return (
 		<>
 			<div className='lg:p-12 lg:pb-8 p-4 md:p-8 bg-gray-200 flex items-center justify-between'>
 				<p className='text-gray-600'>
-					We found<span className='font-semibold'> {532}</span> consultas
+					We found<span className='font-semibold'> {results.length}</span>{' '}
+					consultas
 				</p>
 
 				<div className='text-gray-600 flex items-center gap-2'>
@@ -57,7 +53,7 @@ const ResultsCards = () => {
 						<Card
 							key={index + 1}
 							name={card.nombre}
-							location={card.apellido}
+							location={card.codigoPostal}
 							salary={card.id}
 							posted={card.sectorOmic}
 						/>
