@@ -40,7 +40,7 @@ export default function Sidebar() {
 						<ul>
 							<li>
 								<Link
-									href='/'
+									href='/localidades'
 									className={`flex items-center gap-4  hover:${hoverColor} p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold`}
 								>
 									<RiMapPin2Line /> Localidades

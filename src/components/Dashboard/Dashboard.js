@@ -74,7 +74,7 @@ export default function Dashboard({ results, handleFilters }) {
 				filtersToShow={filtersToShow}
 			/>
 
-			<ResultsCards results={filteredResults} />
+			<ResultsCards results={filteredResults} filtersToShow={filtersToShow} />
 		</div>
 	);
 }

@@ -25,7 +25,6 @@ const Content = ({ filtersToShow, handleFilters }) => {
 		setFilterValueSelected(filterValue);
 	};
 
-	// Hacer que esta funcon se active cuando clickeo en el boton que tengo que agregar.
 	function createFilter() {
 		createNewFilter(filterKeySelected, filterValueSelected);
 	}

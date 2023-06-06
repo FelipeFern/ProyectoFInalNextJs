@@ -1,44 +1,103 @@
 import { useEffect, useState } from 'react';
 import Card from './Cards';
 
-const ResultsCards = ({ results }) => {
+const ResultsCards = ({ results, filtersToShow }) => {
 	const [cards, setCards] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [sortByOptions, setSortByOptions] = useState([]);
+	const [sortBy, setSortBy] = useState('');
+
+	function convertWord(palabra) {
+		const palabras = palabra.split(/(?=[A-Z])/);
+		const resultado = palabras.map(
+			(palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1)
+		);
+		return resultado.join(' ');
+	}
+
+	const handleSortValue = (event) => {
+		let filterKey = event.target.value;
+		setSortBy(filterKey);
+		let values = [...cards];
+		// values.sort(
+		// 	(a, b) => parseInt(a[filterKey], 10) - parseInt(b[filterKey], 10)
+		// );
+
+		values.sort((a, b) => {
+			if (Array.isArray(a[filterKey]) && Array.isArray(b[filterKey])) {
+				// Ordenar por la longitud de los arreglos
+				return a[filterKey].length - b[filterKey].length;
+			} else if (
+				typeof a[filterKey] === 'number' &&
+				typeof b[filterKey] === 'number'
+			) {
+				// Ordenar números de forma numérica
+				return a[filterKey] - b[filterKey];
+			} else {
+				// Ordenar cadenas de texto de forma alfabética
+				return a[filterKey].localeCompare(b[filterKey]);
+			}
+		});
+		setCards(values);
+	};
 
 	useEffect(() => {
 		try {
 			setLoading(true);
 			if (results.length > 0) {
-				setCards(results);
+				let cardValues = results.sort((a, b) =>
+					a.nombre.localeCompare(b.nombre)
+				);
+				setCards(cardValues);
 			}
 			setLoading(false);
+
+			const values = Object.keys(filtersToShow).map((key) => [
+				key,
+				filtersToShow[key],
+			]);
+			if (values.length > 0) {
+				values.sort((a, b) => {
+					if (a[0] === 'nombre' && b[0] !== 'nombre') {
+						return -1; // a debe ir antes que b
+					} else if (a[0] !== 'nombre' && b[0] === 'nombre') {
+						return 1; // b debe ir antes que a
+					} else {
+						return 0; // no se cambia el orden
+					}
+				});
+				setSortByOptions(values);
+			}
 
 			setLoading(false);
 		} catch (error) {
 			console.error(error);
 		}
-	}, [results]);
+	}, [results, filtersToShow]);
 
 	return (
 		<>
 			<div className='lg:p-12 lg:pb-8 p-4 md:p-8 bg-gray-200 flex items-center justify-between'>
 				<p className='text-gray-600'>
-					We found<span className='font-semibold'> {results.length}</span>{' '}
-					consultas
+					Se han encontrado{' '}
+					<span className='font-semibold'> {results.length}</span> resultados
 				</p>
 
 				<div className='text-gray-600 flex items-center gap-2'>
-					Sort by
+					Ordenar por
 					<div className='relative '>
 						<select
 							type='text'
 							placeholder='Buscar'
 							className='bg-white p-2 outline-none pl-4 pr-4 w-full hover:cursor-pointer rounded-full'
-							defaultValue={''}
+							defaultValue={'Nombre'}
+							onChange={handleSortValue}
 						>
-							<option value=''>Date</option>
-							<option>Localidad</option>
-							<option>Nombre</option>
+							{sortByOptions.map((optionValue) => (
+								<option key={optionValue[0]} value={optionValue[0]}>
+									{convertWord(optionValue[0])}
+								</option>
+							))}
 						</select>
 					</div>
 				</div>
@@ -53,9 +112,11 @@ const ResultsCards = ({ results }) => {
 						<Card
 							key={index + 1}
 							name={card.nombre}
-							location={card.codigoPostal}
-							salary={card.id}
-							posted={card.sectorOmic}
+							subTitle={'Código postal: ' + card.codigoPostal}
+							purple={card.codigoPostal}
+							green={card.codigoPostal}
+							rightTitle={'Cantidad de empresas:'}
+							rightSubTitle={'Cantidad de denunciantes:'}
 						/>
 					))
 				)}

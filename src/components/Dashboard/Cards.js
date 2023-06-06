@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { RiDropboxFill } from 'react-icons/ri';
 
-const Card = ({ name, location, salary, posted }) => {
+const Card = ({ name, subTitle, purple, green, rightTitle, rightSubTitle }) => {
 	return (
 		<>
 			{/* Card */}
@@ -21,20 +21,20 @@ const Card = ({ name, location, salary, posted }) => {
 						{name}
 
 						<span className='text-xs py-1 px-2 bg-purple-100 rounded-full text-purple-600 font-bold'>
-							{salary}
+							{purple}
 						</span>
 						<span className='text-xs py-1 px-2 bg-green-100 rounded-full text-green-600 font-bold'>
-							{location}
+							{green}
 						</span>
 					</h1>
-					<p className='text-gray-500'> Dropbox --- Warzawa</p>
+					<p className='text-gray-500'> {subTitle}</p>
 				</div>
 				{/* Right Side */}
 				<div className='w-full md:w-[20%] '>
 					<h3 className='text-xl flex items-center gap-4 mb-2 text-gray-600 font-medium'>
-						{salary}
+						{rightTitle}
 					</h3>
-					<p className='text-gray-600 '> 2 days ago</p>
+					<p className='text-gray-600 '> {rightSubTitle}</p>
 				</div>
 			</Link>
 		</>
