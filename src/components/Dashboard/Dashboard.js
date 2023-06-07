@@ -46,17 +46,6 @@ export default function Dashboard({ results, handleFilters }) {
 
 	useEffect(() => {
 		setFilteredResults(results);
-		// if (filters.length === 0) {
-		// 	let filteredResultsAux = results;
-		// 	for (let filter of filters) {
-		// 		let filterName = filter[0];
-		// 		let filterValue = filter[1];
-		// 		filteredResultsAux = filteredResultsAux.filter(
-		// 			(result) => result[filterName] === filterValue
-		// 		);
-		// 	}
-		// 	setFilteredResults(filteredResultsAux);
-		// }
 
 		if (filters.length > 0) {
 			applyFilters(filters);

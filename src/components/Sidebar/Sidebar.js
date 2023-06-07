@@ -9,7 +9,6 @@ import {
 	RiCloseLine,
 	RiMapPin2Line,
 } from 'react-icons/ri';
-// import { Link, Routes } from 'react-router-dom';
 import Link from 'next/link';
 
 import React, { useState } from 'react';

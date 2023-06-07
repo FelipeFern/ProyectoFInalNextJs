@@ -19,9 +19,6 @@ const ResultsCards = ({ results, filtersToShow }) => {
 		let filterKey = event.target.value;
 		setSortBy(filterKey);
 		let values = [...cards];
-		// values.sort(
-		// 	(a, b) => parseInt(a[filterKey], 10) - parseInt(b[filterKey], 10)
-		// );
 
 		values.sort((a, b) => {
 			if (Array.isArray(a[filterKey]) && Array.isArray(b[filterKey])) {
