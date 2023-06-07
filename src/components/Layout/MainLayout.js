@@ -3,13 +3,14 @@ import Sidebar from '../Sidebar/Sidebar';
 
 export default function MainLayout({ children }) {
 	return (
-		<div className='min-h-screen grid grid-col-1 lg:grid-cols-6'>
+		<div className='min-h-screen grid grid-cols-1 lg:grid-cols-6'>
 			{/* Sidebar */}
 			<Sidebar />
 			{/* Content */}
 			<div className=' col-span-5 bg-gray-200'>
 				<HeaderDashboard />
-				{children}
+				<div className='h-[90vh] overflow-y-scroll'>{children}</div>
+				{/* {children} */}
 			</div>
 		</div>
 	);
