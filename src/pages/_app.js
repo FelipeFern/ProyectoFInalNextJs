@@ -2,7 +2,7 @@ import { AuthProvider } from '../common/context/AuthContext';
 import '../styles/globals.css';
 import { BrowserRouter } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import Dashboard from '@/components/Dashboard/Dashboard';
+import Dashboard from '@/components/DashboardLocalidades/Dashboard';
 import Head from 'next/head';
 import MainLayout from '@/components/Layout/MainLayout';
 import { initFirebaseClient } from '@/common/db/firebase';

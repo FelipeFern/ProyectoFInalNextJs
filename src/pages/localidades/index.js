@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '@/components/Dashboard/Dashboard';
+import Dashboard from '@/components/DashboardLocalidades/Dashboard';
 
 export default function Localidades() {
 	const [localidades, setLocalidades] = useState([]);

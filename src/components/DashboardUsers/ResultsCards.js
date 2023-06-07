@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Card from './Cards';
+import Card from '../ResultCard/Cards';
 
 const ResultsCards = ({ results, filtersToShow }) => {
 	const [cards, setCards] = useState([]);
@@ -43,7 +43,7 @@ const ResultsCards = ({ results, filtersToShow }) => {
 			setLoading(true);
 			if (results.length > 0) {
 				let cardValues = results.sort((a, b) =>
-					a.nombre.localeCompare(b.nombre)
+					a.apellido.localeCompare(b.apellido)
 				);
 				setCards(cardValues);
 			}
@@ -55,9 +55,9 @@ const ResultsCards = ({ results, filtersToShow }) => {
 			]);
 			if (values.length > 0) {
 				values.sort((a, b) => {
-					if (a[0] === 'nombre' && b[0] !== 'nombre') {
+					if (a[0] === 'apellido' && b[0] !== 'apellido') {
 						return -1; // a debe ir antes que b
-					} else if (a[0] !== 'nombre' && b[0] === 'nombre') {
+					} else if (a[0] !== 'apellido' && b[0] === 'apellido') {
 						return 1; // b debe ir antes que a
 					} else {
 						return 0; // no se cambia el orden
@@ -77,7 +77,7 @@ const ResultsCards = ({ results, filtersToShow }) => {
 			<div className='lg:p-12 lg:pb-8 p-4 md:p-8 bg-gray-200 flex items-center justify-between'>
 				<p className='text-gray-600'>
 					Se han encontrado{' '}
-					<span className='font-semibold'> {results.length}</span> resultados
+					<span className='font-semibold'> {results.length} </span> resultados
 				</p>
 
 				<div className='text-gray-600 flex items-center gap-2'>
@@ -87,7 +87,7 @@ const ResultsCards = ({ results, filtersToShow }) => {
 							type='text'
 							placeholder='Buscar'
 							className='bg-white p-2 outline-none pl-4 pr-4 w-full hover:cursor-pointer rounded-full'
-							defaultValue={'Nombre'}
+							defaultValue={'Apellido'}
 							onChange={handleSortValue}
 						>
 							{sortByOptions.map((optionValue) => (
@@ -108,22 +108,15 @@ const ResultsCards = ({ results, filtersToShow }) => {
 					cards.map((card, index) => (
 						<Card
 							key={index + 1}
-							name={card.nombre}
-							subTitle={'Código postal: ' + card.codigoPostal}
-							purple={card.codigoPostal}
-							green={card.codigoPostal}
-							rightTitle={'Cantidad de empresas:'}
+							name={card.apellido + ' ' + card.nombre}
+							subTitle={'Sector: ' + card.sectorOmic}
+							purple={card.roles[0]}
+							green={card.roles[0]}
+							rightTitle={'Cantidad de reclamos ' + card.roles.length}
 							rightSubTitle={'Cantidad de denunciantes:'}
 						/>
 					))
 				)}
-
-				<Card
-					name='Felipe Fernandez 2'
-					location='Warzawa'
-					salary='8.8 - 13.7k PLN'
-					posted='2 days ago'
-				/>
 			</div>
 		</>
 	);

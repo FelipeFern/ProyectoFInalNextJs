@@ -63,7 +63,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/'
+									href='/users'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiFileUserLine /> Empleados

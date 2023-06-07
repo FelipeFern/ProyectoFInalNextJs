@@ -95,7 +95,7 @@ const Content = ({ filtersToShow, handleFilters }) => {
 	return (
 		<div className='lg:p-12 p-4 md:p-8 bg-gray-200'>
 			<div className='mb-8'>
-				<h1 className='text-3xl font-semibold'>Job Board</h1>
+				<h1 className='text-3xl font-semibold'>Tablero de Empleados</h1>
 			</div>
 			{/* Filters */}
 			<div className='grid grid-cols-1 md:grid-cols-4 gap-4 items-center mb-6'>

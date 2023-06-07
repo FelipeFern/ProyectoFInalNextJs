@@ -21,7 +21,7 @@
 // 	);
 // }
 
-import Dashboard from '@/components/Dashboard/Dashboard';
+import Dashboard from '@/components/DashboardLocalidades/Dashboard';
 import Head from 'next/head';
 import MainLayout from '@/components/Layout/MainLayout';
 
@@ -30,5 +30,5 @@ export default function Home() {
 		<>
 			<h1>Home</h1>
 		</>
-	)
+	);
 }
