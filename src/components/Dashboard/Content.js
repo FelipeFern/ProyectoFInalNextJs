@@ -26,7 +26,13 @@ const Content = ({ filtersToShow, handleFilters }) => {
 	};
 
 	function createFilter() {
-		createNewFilter(filterKeySelected, filterValueSelected);
+		if (
+			filterValueSelected !== undefined &&
+			filterValueSelected !== null &&
+			filterValueSelected !== ''
+		) {
+			createNewFilter(filterKeySelected, filterValueSelected);
+		}
 	}
 
 	function convertWord(palabra) {
@@ -80,6 +86,8 @@ const Content = ({ filtersToShow, handleFilters }) => {
 		]);
 		if (values.length > 0) {
 			values.sort((a, b) => a[0].localeCompare(b[0]));
+			console.log(values);
+			values.filter((value) => value[1].length > 0);
 			setAllFiltersToShow(values);
 		}
 	}, [filtersToShow, filtersCreated]);
@@ -150,7 +158,7 @@ const Content = ({ filtersToShow, handleFilters }) => {
 			<div className='flex items-center gap-4 flex-wrap'>
 				<span className='bg-white flex items-center gap-4 py-2 px-4 rounded-full lg:ml-auto lg:order-last'>
 					<button className='text-gray-500' onClick={createFilter}>
-						{''} Apply filter{' '}
+						{''} Aplicar filtro{' '}
 					</button>
 				</span>
 

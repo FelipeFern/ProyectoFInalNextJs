@@ -35,8 +35,17 @@ export default function Dashboard({ results, handleFilters }) {
 				if (key !== 'id') {
 					if (!(key in nuevoArreglo)) {
 						nuevoArreglo[key] = [obj[key]];
-					} else if (!nuevoArreglo[key].includes(obj[key])) {
-						nuevoArreglo[key].push(obj[key]);
+					} else if (
+						!nuevoArreglo[key].includes(obj[key]) &&
+						obj[key] !== undefined
+					) {
+						if (Array.isArray(obj[key])) {
+							if (obj[key].length > 0) {
+								nuevoArreglo[key].push(obj[key]);
+							}
+						} else {
+							nuevoArreglo[key].push(obj[key]);
+						}
 					}
 				}
 			}
