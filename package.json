@@ -10,6 +10,7 @@
 		"seeders": "npx tsx src/common/seeders/seed.js"
 	},
 	"dependencies": {
+		"@szhsin/react-menu": "github:szhsin/react-menu",
 		"autoprefixer": "10.4.14",
 		"class-validator": "^0.14.0",
 		"eslint": "8.39.0",
