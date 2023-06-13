@@ -4,83 +4,68 @@ function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [nombre, setNombre] = useState('');
-	const [apellido, setApellido] = useState('');
-	const [dni, setDni] = useState('');
-	const [cuil, setCuil] = useState('');
-	const [telefonoCelular, setTelefonoCelular] = useState('');
-	const [telefonoFijo, setTelefonoFijo] = useState('');
-	const [direccionCalle, setDireccionCalle] = useState('');
-	const [direccionNumero, setDireccionNumero] = useState('');
-	const [direccionPiso, setDireccionPiso] = useState('');
-	const [email, setEmail] = useState('');
+
+	const [datosPersonales, setDatosPersonales] = useState({
+		nombre: '',
+		apellido: '',
+		dni: '',
+		cuil: '',
+		telefonoCelular: '',
+		telefonoFijo: '',
+		direccionCalle: '',
+		direccionNumero: '',
+		direccionPiso: '',
+		email: '',
+	});
 
 	const [localidad, setLocalidad] = useState('');
 	const [empresa, setEmpresa] = useState('');
 	const [tipoConsulta, setTipoConsulta] = useState('');
 
-	const [nombreError, setNombreError] = useState('');
-	const [dniError, setDniError] = useState('');
-	const [cuilError, setCuilError] = useState('');
-	const [telefononCelularError, setTelefonCelularError] = useState('');
-	const [telefonoFijoError, setTelefonoFijoError] = useState('');
-	const [direccionError, setDireccionError] = useState('');
-	const [emailError, setEmailError] = useState('');
-	const [localidadError, setLocalidadError] = useState('');
+	const [errores, setErrores] = useState({
+		nombreError: '',
+		dniError: '',
+		cuilError: '',
+		telefonoCelularError: '',
+		telefonoFijoError: '',
+		direccionError: '',
+		emailError: '',
+		localidadError: '',
+	});
 
 	const handleInputChange = (event) => {
 		const target = event.target;
 		const name = target.name;
 		const value = target.value;
 
-		switch (name) {
-			case 'nombre':
-				setNombre(value);
-				break;
-			case 'apellido':
-				setApellido(value);
-				break;
-			case 'dni':
-				setDni(value);
-				break;
-			case 'cuil':
-				setCuil(value);
-				break;
-			case 'telefonoCelular':
-				setTelefonoCelular(value);
-				break;
-			case 'telefonoFijo':
-				setTelefonoFijo(value);
-				break;
-			case 'direccionCalle':
-				setDireccionCalle(value);
-				break;
-			case 'direccionNumer':
-				setDireccionNumero(value);
-				break;
-			case 'direccionPiso':
-				setDireccionPiso(value);
-				break;
-			case 'email':
-				setEmail(value);
-				break;
-			case 'localidad':
-				setLocalidad(value);
-				break;
-			case 'empresa':
-				setEmpresa(value);
-				break;
-			case 'tipoConsulta':
-				setTipoConsulta(value);
-				break;
-			// Otros casos para actualizar otros estados...
-			default:
-				break;
+		if (name === 'localidad') {
+			setLocalidad(value);
+		} else if (name === 'empresa') {
+			setEmpresa(value);
+		} else if (name === 'tipoConsulta') {
+			setTipoConsulta(value);
+		} else {
+			setDatosPersonales((prevDatosPersonales) => ({
+				...prevDatosPersonales,
+				[name]: value,
+			}));
 		}
 	};
 
-	const saveConsulta = (e) => {
-		e.preventDefault();
+	const saveConsulta = (event) => {
+		event.preventDefault();
+		if (datosPersonales.dni !== 'ada') {
+			setErrores((prevErrors) => ({
+				...prevErrors,
+				dniError: 'Tiene que tener 5 digitos',
+			}));
+		} else {
+			setErrores((prevErrors) => ({
+				...prevErrors,
+				dniError: '',
+			}));
+		}
+		console.log('errores', errores);
 		console.log('Consulta guardada');
 	};
 
@@ -150,7 +135,7 @@ function index() {
 							<input
 								type='text'
 								name='nombre'
-								value={nombre}
+								value={datosPersonales.nombre}
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
 								placeholder='Nombre(s)'
 								onChange={handleInputChange}
@@ -160,13 +145,13 @@ function index() {
 							<input
 								type='text'
 								name='apellido'
-								value={apellido}
+								value={datosPersonales.apellido}
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 								placeholder='Apellido(s)'
 								onChange={handleInputChange}
 							/>
 						</div>
-						{nombreError !== '' && (
+						{errores.nombreError !== '' && (
 							<div className='text-red-500'>
 								Error: El dni tiene que tener 5 digitos.{' '}
 							</div>
@@ -185,11 +170,11 @@ function index() {
 							type='text'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='DNI'
-							name='DNI'
-							value={dni}
+							name='dni'
+							value={datosPersonales.dni}
 							onChange={handleInputChange}
 						/>
-						{dniError !== '' && (
+						{errores.dniError !== '' && (
 							<div className='text-red-500'>
 								Error: El dni tiene que tener 5 digitos.{' '}
 							</div>
@@ -207,7 +192,7 @@ function index() {
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='CUIL'
 							name='cuil'
-							value={cuil}
+							value={datosPersonales.cuil}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -225,7 +210,7 @@ function index() {
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='Teléfono celular'
 							name='telefonoCelular'
-							value={telefonoCelular}
+							value={datosPersonales.telefonoCelular}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -241,7 +226,7 @@ function index() {
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='Teléfono Fijo'
 							name='telefonoFijo'
-							value={telefonoFijo}
+							value={datosPersonales.telefonoFijo}
 							onChange={handleInputChange}
 						/>
 					</div>
@@ -260,7 +245,7 @@ function index() {
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
 								placeholder='Dirección'
 								name='direccionCalle'
-								value={direccionCalle}
+								value={datosPersonales.direccionCalle}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -270,7 +255,7 @@ function index() {
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 								placeholder='Número'
 								name='direccionNumero'
-								value={direccionNumero}
+								value={datosPersonales.direccionNumero}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -280,7 +265,7 @@ function index() {
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 								placeholder='Piso'
 								name='direccionPiso'
-								value={direccionPiso}
+								value={datosPersonales.direccionPiso}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -299,7 +284,7 @@ function index() {
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='Email'
 							name='email'
-							value={email}
+							value={datosPersonales.email}
 							onChange={handleInputChange}
 						/>
 					</div>
