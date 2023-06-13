@@ -11,7 +11,7 @@ import {
 
 const HeaderDashboard = () => {
 	return (
-		<header className='flex flex-col md:flex-row gap-4 items-center justify-between  p-4 md:pl-8 md:px-8 lg:px-12 lg:pl-12  w-full bg-white'>
+		<header className='flex flex-col md:flex-row gap-4 items-center justify-between  p-4 md:pl-8 md:px-8 lg:px-12 lg:pl-12  w-full bg-gray-200'>
 			{/* Search */}
 			<form className='md:w-[45%] lg:w-[30%] w-full order-1 md:order-none'>
 				<div className='relative '>
@@ -19,7 +19,7 @@ const HeaderDashboard = () => {
 					<input
 						type='text'
 						placeholder='Buscar'
-						className='bg-gray-200 p-2 outline-none rounded-lg pl-8 pr-4 w-full'
+						className='bg-white p-2 outline-none rounded-lg pl-8 pr-4 w-full'
 					/>
 				</div>
 			</form>

@@ -19,6 +19,15 @@ function index() {
 	const [empresa, setEmpresa] = useState('');
 	const [tipoConsulta, setTipoConsulta] = useState('');
 
+	const [nombreError, setNombreError] = useState('');
+	const [dniError, setDniError] = useState('');
+	const [cuilError, setCuilError] = useState('');
+	const [telefononCelularError, setTelefonCelularError] = useState('');
+	const [telefonoFijoError, setTelefonoFijoError] = useState('');
+	const [direccionError, setDireccionError] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [localidadError, setLocalidadError] = useState('');
+
 	const handleInputChange = (event) => {
 		const target = event.target;
 		const name = target.name;
@@ -26,7 +35,6 @@ function index() {
 
 		switch (name) {
 			case 'nombre':
-				console.log('nombre', value);
 				setNombre(value);
 				break;
 			case 'apellido':
@@ -53,10 +61,27 @@ function index() {
 			case 'direccionPiso':
 				setDireccionPiso(value);
 				break;
+			case 'email':
+				setEmail(value);
+				break;
+			case 'localidad':
+				setLocalidad(value);
+				break;
+			case 'empresa':
+				setEmpresa(value);
+				break;
+			case 'tipoConsulta':
+				setTipoConsulta(value);
+				break;
 			// Otros casos para actualizar otros estados...
 			default:
 				break;
 		}
+	};
+
+	const saveConsulta = (e) => {
+		e.preventDefault();
+		console.log('Consulta guardada');
 	};
 
 	useEffect(() => {
@@ -83,13 +108,13 @@ function index() {
 		} catch (error) {
 			console.error(error);
 		}
-	}, []);
+	}, [tipoConsulta]);
 
 	return (
 		<div className='bg-white p-8 rounded-xl mb-8'>
 			<h1 className='text-xl text-titles'>Cargar nueva consulta</h1>
 			<hr className='my-6 border-gray-500/30' />
-			<form>
+			<form onSubmit={saveConsulta}>
 				{/* <div className='flex items-center mb-8'>
 					<div className='w-1/4'>
 						<p>Avatar</p>
@@ -113,6 +138,7 @@ function index() {
 						</p>
 					</div>
 				</div> */}
+				{/* NOMBRE */}
 				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-8'>
 					<div className='w-full md:w-1/4'>
 						<p>
@@ -140,8 +166,14 @@ function index() {
 								onChange={handleInputChange}
 							/>
 						</div>
+						{nombreError !== '' && (
+							<div className='text-red-500'>
+								Error: El dni tiene que tener 5 digitos.{' '}
+							</div>
+						)}
 					</div>
 				</div>
+				{/* DNI */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
 					<div className='w-full md:w-1/4'>
 						<p>
@@ -157,8 +189,14 @@ function index() {
 							value={dni}
 							onChange={handleInputChange}
 						/>
+						{dniError !== '' && (
+							<div className='text-red-500'>
+								Error: El dni tiene que tener 5 digitos.{' '}
+							</div>
+						)}
 					</div>
 				</div>
+				{/* CUIL */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
 					<div className='w-full md:w-1/4'>
 						<p>CUIL</p>
@@ -257,9 +295,12 @@ function index() {
 					</div>
 					<div className='flex-1'>
 						<input
-							type='mail'
+							type='email'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 							placeholder='Email'
+							name='email'
+							value={email}
+							onChange={handleInputChange}
 						/>
 					</div>
 				</div>
@@ -273,9 +314,11 @@ function index() {
 					<div className='flex-1 '>
 						<select
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-							defaultValue={'default'}
+							name='localidad'
+							value={localidad}
+							onChange={handleInputChange}
 						>
-							<option value='default' disabled hidden>
+							<option value='' disabled hidden>
 								Localidad
 							</option>
 							{localidades.map((localidad) => (
@@ -286,32 +329,7 @@ function index() {
 						</select>
 					</div>
 				</div>
-				{/* Empresa */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
-					<div className='w-full md:w-1/4'>
-						<p>
-							Empresa <span className='text-red-500'>*</span>
-						</p>
-					</div>
-					<div className='flex-1 '>
-						<select
-							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-							defaultValue={'default'}
-						>
-							<option value='default' disabled hidden>
-								Seleccione el pais
-							</option>
-							<option value='Argentina' className='text-blue'>
-								Argentina
-							</option>
-							<option value='Colombia'>Colombia</option>
-							<option value='México'>Mexico</option>
-							<option value='Perú'>Perú</option>
-							<option value='Uruguay'>Uruguay</option>
-							<option value='Venezuela'>Venezuela</option>
-						</select>
-					</div>
-				</div>
+
 				{/* Tipo de consulta */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
 					<div className='w-full md:w-1/4'>
@@ -322,9 +340,11 @@ function index() {
 					<div className='flex-1 '>
 						<select
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-							defaultValue={'default'}
+							name='tipoConsulta'
+							value={tipoConsulta}
+							onChange={handleInputChange}
 						>
-							<option value='default' disabled hidden>
+							<option value='' disabled hidden>
 								Seleccione el tipo de consulta
 							</option>
 							<option value='ReintegroDeDinero'>Reintegro de dinero</option>
@@ -341,7 +361,52 @@ function index() {
 						</select>
 					</div>
 				</div>
-
+				{/* Otro tipo de consulta */}
+				{tipoConsulta === 'otro' && (
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+						<div className='w-full md:w-1/4'>
+							<p>
+								Otro tipo de consulta <span className='text-red-500'>*</span>
+							</p>
+						</div>
+						<div className='flex-1'>
+							<input
+								type='text'
+								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+								placeholder='Descripción'
+							/>
+						</div>
+					</div>
+				)}
+				{/* Empresa */}
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+					<div className='w-full md:w-1/4'>
+						<p>
+							Empresa <span className='text-red-500'>*</span>
+						</p>
+					</div>
+					<div className='flex-1 '>
+						<select
+							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
+							name='empresa'
+							value={empresa}
+							onChange={handleInputChange}
+						>
+							<option value='' disabled hidden>
+								Seleccione el pais
+							</option>
+							<option value='Argentina' className='text-blue'>
+								Argentina
+							</option>
+							<option value='Colombia'>Colombia</option>
+							<option value='México'>Mexico</option>
+							<option value='Perú'>Perú</option>
+							<option value='Uruguay'>Uruguay</option>
+							<option value='Venezuela'>Venezuela</option>
+						</select>
+					</div>
+				</div>
+				{/* Descripcion */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
 					<div className='w-full md:w-1/4'>
 						<p>
@@ -356,24 +421,11 @@ function index() {
 						/>
 					</div>
 				</div>
+				{/* Documentos */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
 					<div className='w-full md:w-1/4'>
 						<p>
-							Tipo de Consulta <span className='text-red-500'>*</span>
-						</p>
-					</div>
-					<div className='flex-1'>
-						<input
-							type='text'
-							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-							placeholder='Nombre(s)'
-						/>
-					</div>
-				</div>
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
-					<div className='w-full md:w-1/4'>
-						<p>
-							País <span className='text-red-500'>*</span>
+							Documentos <span className='text-red-500'>*</span>
 						</p>
 					</div>
 					<div className='flex-1 '>
@@ -387,33 +439,13 @@ function index() {
 						</select>
 					</div>
 				</div>
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
-					<div className='w-full md:w-1/4'>
-						<p>
-							Ciudad <span className='text-red-500'>*</span>
-						</p>
-					</div>
-					<div className='flex-1'>
-						<select className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'>
-							<option value='Barquisiméto'>Barquisiméto</option>
-							<option value='Bogotá'>Bogotá</option>
-							<option value='Buga'>Buga</option>
-							<option value='Chihuahua'>Chihuahua</option>
-							<option value='Ciudad de México'>Ciudad de México</option>
-							<option value='Lima'>Lima</option>
-							<option value='Montevideo'>Montevideo</option>
-							<option value='Caracas'>Caracas</option>
-							<option value='Venezuela'>Venezuela</option>
-						</select>
-					</div>
+				<hr className='my-8 border-gray-500/30' />
+				<div className='flex justify-end'>
+					<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>
+						Guardar
+					</button>
 				</div>
 			</form>
-			<hr className='my-8 border-gray-500/30' />
-			<div className='flex justify-end'>
-				<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>
-					Guardar
-				</button>
-			</div>
 		</div>
 	);
 }
