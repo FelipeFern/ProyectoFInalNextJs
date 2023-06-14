@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/validator';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -54,19 +55,9 @@ function index() {
 
 	const saveConsulta = (event) => {
 		event.preventDefault();
-		if (datosPersonales.dni !== 'ada') {
-			setErrores((prevErrors) => ({
-				...prevErrors,
-				dniError: 'Tiene que tener 5 digitos',
-			}));
-		} else {
-			setErrores((prevErrors) => ({
-				...prevErrors,
-				dniError: '',
-			}));
-		}
-		console.log('errores', errores);
-		console.log('Consulta guardada');
+
+		let errors = validateDataNuevaConsulta(datosPersonales);
+		setErrores(errors);
 	};
 
 	useEffect(() => {
@@ -124,42 +115,43 @@ function index() {
 					</div>
 				</div> */}
 				{/* NOMBRE */}
-				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-8'>
+				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Nombre completo <span className='text-red-500'>*</span>
 						</p>
 					</div>
-					<div className='flex-1 flex items-center gap-4'>
-						<div className='w-full'>
-							<input
-								type='text'
-								name='nombre'
-								value={datosPersonales.nombre}
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
-								placeholder='Nombre(s)'
-								onChange={handleInputChange}
-							/>
-						</div>
-						<div className='w-full'>
-							<input
-								type='text'
-								name='apellido'
-								value={datosPersonales.apellido}
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Apellido(s)'
-								onChange={handleInputChange}
-							/>
-						</div>
-						{errores.nombreError !== '' && (
-							<div className='text-red-500'>
-								Error: El dni tiene que tener 5 digitos.{' '}
+					<div className='flex-1 '>
+						<div className='flex items-center gap-4'>
+							<div className='w-full'>
+								<input
+									type='text'
+									name='nombre'
+									value={datosPersonales.nombre}
+									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
+									placeholder='Nombre(s)'
+									onChange={handleInputChange}
+								/>
 							</div>
+							<div className='w-full'>
+								<input
+									type='text'
+									name='apellido'
+									value={datosPersonales.apellido}
+									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									placeholder='Apellido(s)'
+									onChange={handleInputChange}
+								/>
+							</div>
+						</div>
+
+						{errores.nombreError !== '' && (
+							<div className='text-red-500 '>Error: {errores.nombreError}</div>
 						)}
 					</div>
 				</div>
 				{/* DNI */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							DNI <span className='text-red-500'>*</span>
@@ -175,14 +167,12 @@ function index() {
 							onChange={handleInputChange}
 						/>
 						{errores.dniError !== '' && (
-							<div className='text-red-500'>
-								Error: El dni tiene que tener 5 digitos.{' '}
-							</div>
+							<div className='text-red-500'>Error: {errores.dniError}</div>
 						)}
 					</div>
 				</div>
 				{/* CUIL */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>CUIL</p>
 					</div>
@@ -195,10 +185,14 @@ function index() {
 							value={datosPersonales.cuil}
 							onChange={handleInputChange}
 						/>
+
+						{errores.cuilError !== '' && (
+							<div className='text-red-500 '>Error: {errores.cuilError}</div>
+						)}
 					</div>
 				</div>
 				{/* Telefono Celular */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Teléfono Celular <span className='text-red-500'>*</span>
@@ -213,10 +207,15 @@ function index() {
 							value={datosPersonales.telefonoCelular}
 							onChange={handleInputChange}
 						/>
+						{errores.telefonoCelularError !== '' && (
+							<div className='text-red-500 '>
+								Error: {errores.telefonoCelularError}
+							</div>
+						)}
 					</div>
 				</div>
 				{/* Telefono Fijo */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>Teléfono Fijo</p>
 					</div>
@@ -229,10 +228,15 @@ function index() {
 							value={datosPersonales.telefonoFijo}
 							onChange={handleInputChange}
 						/>
+						{errores.telefonoFijoError !== '' && (
+							<div className='text-red-500 '>
+								Error: {errores.telefonoFijoError}
+							</div>
+						)}
 					</div>
 				</div>
 				{/* Domicilio */}
-				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-8'>
+				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Domicilio Constituido <span className='text-red-500'>*</span>
@@ -272,7 +276,7 @@ function index() {
 					</div>
 				</div>
 				{/* Email */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Email <span className='text-red-500'>*</span>
@@ -287,10 +291,13 @@ function index() {
 							value={datosPersonales.email}
 							onChange={handleInputChange}
 						/>
+						{errores.emailError !== '' && (
+							<div className='text-red-500 '>Error: {errores.emailError}</div>
+						)}
 					</div>
 				</div>
 				{/* Localidad */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Localidad <span className='text-red-500'>*</span>
@@ -312,11 +319,16 @@ function index() {
 								</option>
 							))}
 						</select>
+						{errores.localidadError !== '' && (
+							<div className='text-red-500 '>
+								Error: {errores.localidadError}
+							</div>
+						)}
 					</div>
 				</div>
 
 				{/* Tipo de consulta */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Tipo de Consulta <span className='text-red-500'>*</span>
@@ -348,7 +360,7 @@ function index() {
 				</div>
 				{/* Otro tipo de consulta */}
 				{tipoConsulta === 'otro' && (
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
 							<p>
 								Otro tipo de consulta <span className='text-red-500'>*</span>
@@ -364,7 +376,7 @@ function index() {
 					</div>
 				)}
 				{/* Empresa */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Empresa <span className='text-red-500'>*</span>
@@ -392,7 +404,7 @@ function index() {
 					</div>
 				</div>
 				{/* Descripcion */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Descripción <span className='text-red-500'>*</span>
@@ -407,7 +419,7 @@ function index() {
 					</div>
 				</div>
 				{/* Documentos */}
-				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-8'>
+				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
 							Documentos <span className='text-red-500'>*</span>
