@@ -39,8 +39,8 @@ async function onGET(req, res) {
 		// const tipoConsultaRef = collection(db, 'tipoConsulta');
 		// addDocumentsToCollection(tipoConsultaRef, tipoConsulta);
 
-		// const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
-		// await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
+		const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
+		await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
 
 		// const sectorOmicRef = collection(db, 'sectorOmic');
 		// addDocumentsToCollection(sectorOmicRef, sectorOmic);
@@ -48,8 +48,8 @@ async function onGET(req, res) {
 		// const denunciantesRef = collection(db, 'denunciantes');
 		// seedWithLocalidad(denunciantesRef, denunciantes);
 
-		const consultasRef = collection(db, 'consultas');
-		uploadConsultas(consultasRef, consultas);
+		// const consultasRef = collection(db, 'consultas');
+		// uploadConsultas(consultasRef, consultas);
 	} catch (error) {
 		res.status(400).json({ error });
 	}
@@ -82,7 +82,7 @@ async function seedWithLocalidad(collectionRef, data) {
 			let randonLocalidad = Math.floor(Math.random() * localidades.length);
 			let localidadId = localidades[randonLocalidad].id;
 			const docRef = await addDoc(collectionRef, {
-				obj,
+				...obj,
 				localidad: localidadId,
 				createdAt: new Date(),
 			});
