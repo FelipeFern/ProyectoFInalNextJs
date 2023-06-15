@@ -13,9 +13,9 @@ function index() {
 		cuil: '',
 		telefonoCelular: '',
 		telefonoFijo: '',
-		direccionCalle: '',
-		direccionNumero: '',
-		direccionPiso: '',
+		domicilioCalle: '',
+		domicilioNumero: '',
+		domicilioPiso: '',
 		email: '',
 	});
 
@@ -29,9 +29,11 @@ function index() {
 		cuilError: '',
 		telefonoCelularError: '',
 		telefonoFijoError: '',
-		direccionError: '',
+		domicilioError: '',
 		emailError: '',
 		localidadError: '',
+		tipoConsultaError:'',
+		empresaError: '',
 	});
 
 	const handleInputChange = (event) => {
@@ -56,7 +58,7 @@ function index() {
 	const saveConsulta = (event) => {
 		event.preventDefault();
 
-		let errors = validateDataNuevaConsulta(datosPersonales);
+		let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa, tipoConsulta);
 		setErrores(errors);
 	};
 
@@ -129,7 +131,7 @@ function index() {
 									name='nombre'
 									value={datosPersonales.nombre}
 									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
-									placeholder='Nombre(s)'
+									placeholder='Nombre(s) *'
 									onChange={handleInputChange}
 								/>
 							</div>
@@ -139,14 +141,14 @@ function index() {
 									name='apellido'
 									value={datosPersonales.apellido}
 									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-									placeholder='Apellido(s)'
+									placeholder='Apellido(s) *'
 									onChange={handleInputChange}
 								/>
 							</div>
 						</div>
 
 						{errores.nombreError !== '' && (
-							<div className='text-red-500 '>Error: {errores.nombreError}</div>
+							<div className='text-red-500 '> {errores.nombreError}</div>
 						)}
 					</div>
 				</div>
@@ -161,13 +163,13 @@ function index() {
 						<input
 							type='text'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-							placeholder='DNI'
+							placeholder='DNI *'
 							name='dni'
 							value={datosPersonales.dni}
 							onChange={handleInputChange}
 						/>
 						{errores.dniError !== '' && (
-							<div className='text-red-500'>Error: {errores.dniError}</div>
+							<div className='text-red-500'> {errores.dniError}</div>
 						)}
 					</div>
 				</div>
@@ -180,14 +182,14 @@ function index() {
 						<input
 							type='text'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-							placeholder='CUIL'
+							placeholder='CUIL *'
 							name='cuil'
 							value={datosPersonales.cuil}
 							onChange={handleInputChange}
 						/>
 
 						{errores.cuilError !== '' && (
-							<div className='text-red-500 '>Error: {errores.cuilError}</div>
+							<div className='text-red-500 '> {errores.cuilError}</div>
 						)}
 					</div>
 				</div>
@@ -202,14 +204,14 @@ function index() {
 						<input
 							type='text'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-							placeholder='Teléfono celular'
+							placeholder='Teléfono celular *'
 							name='telefonoCelular'
 							value={datosPersonales.telefonoCelular}
 							onChange={handleInputChange}
 						/>
 						{errores.telefonoCelularError !== '' && (
 							<div className='text-red-500 '>
-								Error: {errores.telefonoCelularError}
+								 {errores.telefonoCelularError}
 							</div>
 						)}
 					</div>
@@ -230,7 +232,7 @@ function index() {
 						/>
 						{errores.telefonoFijoError !== '' && (
 							<div className='text-red-500 '>
-								Error: {errores.telefonoFijoError}
+								 {errores.telefonoFijoError}
 							</div>
 						)}
 					</div>
@@ -242,14 +244,15 @@ function index() {
 							Domicilio Constituido <span className='text-red-500'>*</span>
 						</p>
 					</div>
-					<div className='flex-1 flex items-center gap-4'>
-						<div className='md:w-1/2 w-full'>
+					<div className='flex-1 '>
+						<div className='flex items-center gap-4'>
+							<div className='md:w-1/2 w-full'>
 							<input
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
-								placeholder='Dirección'
-								name='direccionCalle'
-								value={datosPersonales.direccionCalle}
+								placeholder='Dirección *'
+								name='domicilioCalle'
+								value={datosPersonales.domicilioCalle}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -257,9 +260,9 @@ function index() {
 							<input
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Número'
-								name='direccionNumero'
-								value={datosPersonales.direccionNumero}
+								placeholder='Número *'
+								name='domicilioNumero'
+								value={datosPersonales.domicilioNumero}
 								onChange={handleInputChange}
 							/>
 						</div>
@@ -268,11 +271,17 @@ function index() {
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
 								placeholder='Piso'
-								name='direccionPiso'
-								value={datosPersonales.direccionPiso}
+								name='domicilioPiso'
+								value={datosPersonales.domicilioPiso}
 								onChange={handleInputChange}
 							/>
 						</div>
+						</div>
+
+						{errores.domicilioError !== '' && (
+							<div className='text-red-500 '> {errores.domicilioError}</div>
+						)}
+						
 					</div>
 				</div>
 				{/* Email */}
@@ -292,7 +301,7 @@ function index() {
 							onChange={handleInputChange}
 						/>
 						{errores.emailError !== '' && (
-							<div className='text-red-500 '>Error: {errores.emailError}</div>
+							<div className='text-red-500 '> {errores.emailError}</div>
 						)}
 					</div>
 				</div>
@@ -321,7 +330,7 @@ function index() {
 						</select>
 						{errores.localidadError !== '' && (
 							<div className='text-red-500 '>
-								Error: {errores.localidadError}
+								 {errores.localidadError}
 							</div>
 						)}
 					</div>
@@ -356,6 +365,11 @@ function index() {
 							</option>
 							<option value='otro'>Otros</option>
 						</select>
+						{errores.tipoConsultaError !== '' && (
+							<div className='text-red-500 '>
+								 {errores.tipoConsultaError}
+							</div>
+						)}
 					</div>
 				</div>
 				{/* Otro tipo de consulta */}
@@ -390,7 +404,7 @@ function index() {
 							onChange={handleInputChange}
 						>
 							<option value='' disabled hidden>
-								Seleccione el pais
+								Seleccione la empresa
 							</option>
 							<option value='Argentina' className='text-blue'>
 								Argentina
@@ -401,6 +415,11 @@ function index() {
 							<option value='Uruguay'>Uruguay</option>
 							<option value='Venezuela'>Venezuela</option>
 						</select>
+						{errores.empresaError !== '' && (
+							<div className='text-red-500 '>
+								 {errores.empresaError}
+							</div>
+						)}
 					</div>
 				</div>
 				{/* Descripcion */}
