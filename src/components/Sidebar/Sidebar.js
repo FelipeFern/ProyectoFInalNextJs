@@ -47,7 +47,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/'
+									href='/consultas'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiTable2 /> Sector OMIC
@@ -55,7 +55,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/'
+									href='/nuevaconsulta'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiBriefcase3Line /> Empresas
@@ -67,6 +67,14 @@ export default function Sidebar() {
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiFileUserLine /> Empleados
+								</Link>
+							</li>
+							<li>
+								<Link
+									href='/nuevaconsulta'
+									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
+								>
+									<RiFileUserLine /> Nueva Consulta
 								</Link>
 							</li>
 						</ul>

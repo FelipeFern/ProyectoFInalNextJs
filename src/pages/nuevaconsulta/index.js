@@ -4,6 +4,7 @@ import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/val
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
+	const [tiposConsultas, setTiposConsultas] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const [datosPersonales, setDatosPersonales] = useState({
@@ -71,11 +72,23 @@ function index() {
 				let localidadesArray = data.data.sort((a, b) =>
 					a.nombre.localeCompare(b.nombre)
 				);
-
 				setLocalidades(localidadesArray);
-				response = await fetch('/api/localidades');
+
+				response = await fetch('/api/empresas');
 				data = await response.json();
-				setEmpresas(data.data);
+				let empresasArray = data.data.sort((a, b) =>
+				a.nombre.localeCompare(b.nombre)
+				);
+				setEmpresas(empresasArray);
+
+
+				response = await fetch('/api/solicitudes/tiposSolicitudes');
+				data = await response.json();
+				let tiposArray = data.data.sort((a, b) =>
+				a.nombre.localeCompare(b.nombre)
+				);
+				setTiposConsultas(tiposArray);
+				
 				setLoading(false);
 			};
 
@@ -93,29 +106,7 @@ function index() {
 			<h1 className='text-xl text-titles'>Cargar nueva consulta</h1>
 			<hr className='my-6 border-gray-500/30' />
 			<form onSubmit={saveConsulta}>
-				{/* <div className='flex items-center mb-8'>
-					<div className='w-1/4'>
-						<p>Avatar</p>
-					</div>
-					<div className='flex-1'>
-						<div className='relative mb-2'>
-							<img
-								src='https://img.freepik.com/foto-gratis/negocios-finanzas-empleo-concepto-mujeres-emprendedoras-exitosas-joven-empresaria-segura-anteojos-mostrando-gesto-pulgar-arriba-sostenga-computadora-portatil-garantice-mejor-calidad-servicio_1258-59118.jpg'
-								className='w-28 h-28 object-cover rounded-lg'
-							/>
-							<label
-								htmlFor='avatar'
-								className='absolute bg-gray-300 p-2 rounded-full hover:cursor-pointer -top-2 left-24'
-							>
-								<RiEdit2Line />
-							</label>
-							<input type='file' id='avatar' className='hidden' />
-						</div>
-						<p className='text-gray-500 text-sm'>
-							Allowed file types: png, jpg, jpeg.
-						</p>
-					</div>
-				</div> */}
+				
 				{/* NOMBRE */}
 				<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 					<div className='w-full md:w-1/4'>
@@ -353,16 +344,11 @@ function index() {
 							<option value='' disabled hidden>
 								Seleccione el tipo de consulta
 							</option>
-							<option value='ReintegroDeDinero'>Reintegro de dinero</option>
-							<option value='BajaDelServicio'>Baja del servicio</option>
-							<option value='CambioDelProducto'>Cambio del producto</option>
-							<option value='CancelacionDeLaDeuda'>
-								Cancelación de la deuda
-							</option>
-							<option value='Refacturacion'>Refacturación</option>
-							<option value='InformaciónClaraCiertaDetallada'>
-								Informacion clara, cierta y detallada
-							</option>
+							{tiposConsultas.map((solicitud) => (
+								<option key={solicitud.nombre} value={solicitud.nombre}>
+									{solicitud.nombre}
+								</option>
+							))}
 							<option value='otro'>Otros</option>
 						</select>
 						{errores.tipoConsultaError !== '' && (
@@ -384,7 +370,10 @@ function index() {
 							<input
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Descripción'
+								placeholder='Tipos de Consulta'
+								name='tipoConsulta'
+								value={tipoConsulta}
+								onChange={handleInputChange}
 							/>
 						</div>
 					</div>
@@ -406,14 +395,11 @@ function index() {
 							<option value='' disabled hidden>
 								Seleccione la empresa
 							</option>
-							<option value='Argentina' className='text-blue'>
-								Argentina
-							</option>
-							<option value='Colombia'>Colombia</option>
-							<option value='México'>Mexico</option>
-							<option value='Perú'>Perú</option>
-							<option value='Uruguay'>Uruguay</option>
-							<option value='Venezuela'>Venezuela</option>
+							{empresas.map((empresa) => (
+								<option key={empresa.nombre} value={empresa.nombre}>
+									{empresa.nombre}
+								</option>
+							))}
 						</select>
 						{errores.empresaError !== '' && (
 							<div className='text-red-500 '>
@@ -422,18 +408,18 @@ function index() {
 						)}
 					</div>
 				</div>
-				{/* Descripcion */}
+				{/* Hechos */}
 				<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 					<div className='w-full md:w-1/4'>
 						<p>
-							Descripción <span className='text-red-500'>*</span>
+							Hechos <span className='text-red-500'>*</span>
 						</p>
 					</div>
 					<div className='flex-1'>
 						<input
 							type='text'
 							className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-							placeholder='Descripción'
+							placeholder='Hechos'
 						/>
 					</div>
 				</div>
