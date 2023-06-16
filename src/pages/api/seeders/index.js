@@ -18,6 +18,7 @@ import {
 	users,
 	denunciantes,
 	consultas,
+	tipoSolicitudes
 } from '../../../common/seeders/data.js';
 import { HTTPMethod } from '../../../common/api/methods.js';
 import APIRouteHelper from '../../../common/api/APIRouteHelper';
@@ -39,8 +40,11 @@ async function onGET(req, res) {
 		// const tipoConsultaRef = collection(db, 'tipoConsulta');
 		// addDocumentsToCollection(tipoConsultaRef, tipoConsulta);
 
-		const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
-		await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
+		const tipoSolicitudesRef = collection(db, 'tipoSolicitudes');
+		addDocumentsToCollection(tipoSolicitudesRef, tipoSolicitudes);
+
+		// const empresasDenunciadasRef = collection(db, 'empresasDenunciadas');
+		// await seedWithLocalidad(empresasDenunciadasRef, empresasDenunciadas);
 
 		// const sectorOmicRef = collection(db, 'sectorOmic');
 		// addDocumentsToCollection(sectorOmicRef, sectorOmic);
@@ -61,7 +65,7 @@ async function addDocumentsToCollection(collectionRef, data) {
 	for (let obj of data) {
 		try {
 			const docRef = await addDoc(collectionRef, {
-				obj,
+				...obj,
 				createdAt: new Date(),
 			});
 			const id = docRef.id;
@@ -131,7 +135,7 @@ async function uploadConsultas(consultasRef, data) {
 
 	for (let obj of data) {
 		const estadoConsultaRef = await addDoc(estadoConsultaColRef, {
-			estadoConsulta,
+			...estadoConsulta,
 			createdAt: new Date(),
 		});
 		const estadoConsultaId = estadoConsultaRef.id;

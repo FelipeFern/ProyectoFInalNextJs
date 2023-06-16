@@ -102,19 +102,82 @@ export const localidad = [
 
 export const tipoConsulta = [
 	{
-		nombre: 'Consulta',
+		nombre: 'Solicitud',
 		descripcion:
-			'Consultas básicas sin reclamos, donde se brinda información al consumidor',
+			'La más básica, donde el ciudadano decide o pide por algo.',
 	},
 	{
-		nombre: 'Conciliaciones',
+		nombre: 'Mediacion Comunitaria',
 		descripcion:
 			'Gestiones de reclamos, donde se realiza una mediación entre las partes',
+	},
+	{
+		nombre: 'Registro de Administradores de Edificios',
+		descripcion:
+			'Audiencias de conciliación, donde se realiza una mediación y se realiza una audiencia (expecie de juicio)',
 	},
 	{
 		nombre: 'Audiencia',
 		descripcion:
 			'Audiencias de conciliación, donde se realiza una mediación y se realiza una audiencia (expecie de juicio)',
+	},
+];
+
+export const tipoSolicitudes = [
+	{
+		nombre: 'Reintegro de dinero',
+		documentacionObligatoria:[
+			'Factura de compra',
+			'Factura de servicio',
+			'Contrato',
+			'Certificado de garantía',
+			'Informes del servicio téccnico',
+			'Fotocopia de DNI'
+		]
+	},
+	{
+		nombre: 'Baja del servicio',
+		documentacionObligatoria:[
+			'Factura de compra',
+			'Factura de servicio',
+			'Contrato',
+			'Certificado de garantía',
+			'Informes del servicio téccnico',
+			'Fotocopia de DNI'
+		]
+	},
+	{
+		nombre: 'Cambio del producto',
+		documentacionObligatoria:[
+			'Factura de compra',
+			'Factura de servicio',
+			'Contrato',
+			'Certificado de garantía',
+			'Informes del servicio téccnico',
+			'Fotocopia de DNI'
+		]
+	},
+	{
+		nombre: 'Refacturación',
+		documentacionObligatoria:[
+			'Factura de compra',
+			'Factura de servicio',
+			'Contrato',
+			'Certificado de garantía',
+			'Informes del servicio téccnico',
+			'Fotocopia de DNI'
+		]
+	},
+	{
+		nombre: 'Cancelación de la deuda',
+		documentacionObligatoria:[
+			'Factura de compra',
+			'Factura de servicio',
+			'Contrato',
+			'Certificado de garantía',
+			'Informes del servicio téccnico',
+			'Fotocopia de DNI'
+		]
 	},
 ];
 
