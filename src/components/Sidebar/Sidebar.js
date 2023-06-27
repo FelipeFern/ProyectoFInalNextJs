@@ -77,6 +77,22 @@ export default function Sidebar() {
 									<RiFileUserLine /> Nueva Consulta
 								</Link>
 							</li>
+							<li>
+								<Link
+									href='/mediacion'
+									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
+								>
+									<RiFileUserLine /> Nueva Mediación
+								</Link>
+							</li>
+							<li>
+								<Link
+									href='/consorcioEdificio'
+									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
+								>
+									<RiFileUserLine /> Consorcio Edificio
+								</Link>
+							</li>
 						</ul>
 					</nav>
 					{/* Images and logoout */}
