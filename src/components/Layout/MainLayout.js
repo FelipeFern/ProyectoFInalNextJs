@@ -9,7 +9,9 @@ export default function MainLayout({ children }) {
 			{/* Content */}
 			<div className=' col-span-5 bg-gray-200'>
 				<HeaderDashboard />
-				<div className='h-[90vh] overflow-y-scroll'>{children}</div>
+				<div className='h-[90vh] overflow-y-scroll bg-gray-200 p-8'>
+					{children}
+				</div>
 				{/* {children} */}
 			</div>
 		</div>

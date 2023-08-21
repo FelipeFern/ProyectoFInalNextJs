@@ -1,5 +1,9 @@
-export const validateDataNuevaConsulta = (datos, localidad, empresa, tipoConsulta) => {
-	console.log('DATOS', datos);
+export const validateDataNuevaConsulta = (
+	datos,
+	localidad,
+	empresa,
+	tipoConsulta
+) => {
 	var regex = /^[a-zA-Z\s]+$/;
 	var regexdomicilio = /^[a-zA-Z0-9\s]+$/;
 	var regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -14,7 +18,7 @@ export const validateDataNuevaConsulta = (datos, localidad, empresa, tipoConsult
 		domicilioError: '',
 		emailError: '',
 		localidadError: '',
-		tipoConsultaError:'',
+		tipoConsultaError: '',
 		empresaError: '',
 	};
 
@@ -26,7 +30,10 @@ export const validateDataNuevaConsulta = (datos, localidad, empresa, tipoConsult
 		errores.nombreError = 'Ingrese un Nombre válido';
 	}
 
-	if ((datos.nombre == '' || !regex.test(datos.nombre))  && (datos.apellido == '' || !regex.test(datos.apellido))) {
+	if (
+		(datos.nombre == '' || !regex.test(datos.nombre)) &&
+		(datos.apellido == '' || !regex.test(datos.apellido))
+	) {
 		errores.nombreError = 'Ingrese Nombre y Apellido válidos';
 	}
 
@@ -46,7 +53,11 @@ export const validateDataNuevaConsulta = (datos, localidad, empresa, tipoConsult
 		errores.telefonoFijoError = 'Ingrese un Teléfono Fijo válido';
 	}
 
-	if (datos.domicilioNumero == '' || datos.domicilioNumero < 0 || !regexDomicilioNumero.test(datos.domicilioNumero)) {
+	if (
+		datos.domicilioNumero == '' ||
+		datos.domicilioNumero < 0 ||
+		!regexDomicilioNumero.test(datos.domicilioNumero)
+	) {
 		errores.domicilioError = 'Ingrese un Número de Dirección válido';
 	}
 
