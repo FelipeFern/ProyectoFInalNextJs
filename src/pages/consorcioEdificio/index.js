@@ -125,7 +125,7 @@ function index() {
 			}
 
 			console.log(files);
-			const response = await fetch('/api/solicitudes/tiposSolicitudes', {
+			const response = await fetch('/api/solicitudes/consorcioEdificio', {
 				method: 'POST',
 				body: formData,
 			});
