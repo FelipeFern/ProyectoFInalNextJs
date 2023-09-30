@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/validator';
+import { validateDataNuevoConsorcio } from '@/common/validation/nuevaPropiedadEdificio/validator';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -24,31 +24,29 @@ function index() {
 		telefonoCelular: '',
 		telefonoFijo: '',
 		email: '',
-		localidad: '',
 		partido: 'Bahía Blanca',
 		provincia: 'Buenos Aires',
 	});
 
 	const [localidad, setLocalidad] = useState('');
-	const [empresa, setEmpresa] = useState('');
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [files, setFiles] = useState([]);
 
-	const [errores, setErrores] = useState({
+	let [errores,setErrores] = useState({
 		nombreError: '',
 		dniError: '',
 		cuitError: '',
-		razonSocialError: '',
-		sexoError: '',
-		representanteLegalError: '',
+        razonSocialError: '',
+        representanteLegalError: '',
+		domicilioError: '',
+        codigoPostalError: '',
 		telefonoCelularError: '',
 		telefonoFijoError: '',
-		domicilioError: '',
 		emailError: '',
 		localidadError: '',
 		tipoConsultaError: '',
-		empresaError: '',
 	});
+
 
 	const handleInputChangeSolicitud = (event) => {
 		const target = event.target;
@@ -60,6 +58,12 @@ function index() {
 			[name]: value,
 		}));
 	};
+
+	function handleInputLocalidad(event){
+		const target = event.target;
+		const value = target.value;
+		setLocalidad(value)
+	}
 
 	const handleInputChangeDomicilio = (event) => {
 		const target = event.target;
@@ -79,106 +83,67 @@ function index() {
 		setFiles(_files);
 		const fileNames = Array.from(files).map((file) => file.name);
 		setSelectedFiles(fileNames);
-		for (let i = 0; i < files.length; i++) {
-			const file = files[i];
-			// Llamar a la función externa pasando el archivo como argumento
-			handleFileUpload(file);
-		}
-		// for (const file of files) {
-		// 	try {
-		// 		// Crea una referencia única para el archivo en Storage
-		// 		const storageRef = storage.ref(`ruta/del/archivo/${file.name}`);
 
-		// 		// Sube el archivo a Storage
-		// 		const snapshot = await storageRef.put(file);
-
-		// 		// Obtiene la URL del archivo cargado
-		// 		const downloadURL = await snapshot.ref.getDownloadURL();
-
-		// 		// Guarda la URL en Firebase Realtime Database (reemplaza 'ruta_en_database' y 'nombre_archivo')
-		// 		await database.ref('ruta_en_database/nombre_archivo').set(downloadURL);
-
-		// 		console.log(`Archivo ${file.name} cargado con éxito.`);
-		// 	} catch (error) {
-		// 		console.error(
-		// 			`Error al cargar el archivo ${file.name}: ${error.message}`
-		// 		);
-		// 	}
-		// }
-	};
-
-	// Agregar las funciones para que al hacer un save de la consulta, que se almacenen los archivos en la base de datos.
-	const handleFileUpload = (file) => {
-		// Agregar las acciones para enviar los files al backend y que los almacenen en la base de datos.
-
-		console.log('Archivo seleccionado:', file.name);
 	};
 
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		// let errors = validateDataNuevaConsulta(
-		// 	datosSolicitudInscripcion,
-		// 	localidad,
-		// 	empresa,
-		// 	tipoConsulta
-		// );
-		// setErrores(errors);
-		// for (let i = 0; i < errors.length; i++) {}
+		let errors = validateDataNuevoConsorcio(
+			datosSolicitudInscripcion,
+		 	datosDomicilio,
+			localidad
+		);
+		setErrores(errors);
+		for (let i = 0; i < errors.length; i++) {}
 
 		try {
-			const datosPersonales1 = {
-				nombre: 'Nombre',
-				apellido: 'Apellido',
-				dni: 'DNI',
-				cuit: 'CUIL',
-				telefonoCelular: 'Celular',
-				telefonoFijo: 'Fijo',
-				domicilioCalle: 'Direccion Calle',
-				domicilioNumero: 'Direccion Numero',
-				domicilioPiso: 'Direccion Piso',
-				email: 'email@gmail.com',
-			};
-
-			let consultaID = new Date();
 			const formData = new FormData();
-			for (let i = 0; i < files.length; i++) {
-				formData.append(`archivo${i}`, files[i]);
-			}
-			formData.append('nombre', 'Nombre');
-			formData.append('apellido', 'Apellido');
-			formData.append('dni', 'DNI');
-			formData.append('cuit', 'CUIL');
-			formData.append('telefonoCelular', 'Celular');
-			formData.append('telefonoFijo', 'Fijo');
-			formData.append('domicilioCalle', 'Direccion Calle');
-			formData.append('domicilioNumero', 'Direccion Numero');
-			formData.append('domicilioPiso', 'Direccion Piso');
-			formData.append('email', 'email@gmail.com');
+
+			formData.append('nombre', datosSolicitudInscripcion.nombre);
+			formData.append('apellido', datosSolicitudInscripcion.apellido);
+			formData.append('dni', datosSolicitudInscripcion.dni);
+			formData.append('cuit', datosSolicitudInscripcion.cuit);
+			formData.append('sexo', datosSolicitudInscripcion.sexo);
+			formData.append('razonSocial', datosSolicitudInscripcion.razonSocial);
+			formData.append('representanteLegal', datosSolicitudInscripcion.representanteLegal);
+
+
+			formData.append('telefonoCelular', datosDomicilio.telefonoCelular);
+			formData.append('telefonoFijo', datosDomicilio.telefonoFijo);
+			formData.append('domicilioCalle', datosDomicilio.domicilioCalle);
+			formData.append('domicilioNumero', datosDomicilio.domicilioNumero); 
+			formData.append('domicilioPiso', datosDomicilio.domicilioPiso);
+			formData.append('domicilioDpto', datosDomicilio.domicilioDpto);
+			formData.append('email', datosDomicilio.email);
 			formData.append('localidad', localidad);
-			formData.append('empresa', empresa);
-			formData.append('tipoConsulta', 'tipoConsulta1');
+			formData.append('partido', 'Bahía Blanca');
+			formData.append('provincia', 'Buenos Aires');
 
-			formData.forEach((value, key) => {
-				console.log(`Campo: ${key}, Valor: ${value}`);
-			});
+			for (let i = 0; i < files.length; i++) {
+				formData.append(`archivos`, files[i]);
+			}
 
+			console.log(files);
 			const response = await fetch('/api/solicitudes/tiposSolicitudes', {
 				method: 'POST',
-				// headers: {
-				// 	// 	'Content-Type': 'application/json',
-				// 	'Content-Type': 'multipart/form-data',
-				// },
 				body: formData,
 			});
 
 			if (response.ok) {
 				console.log('Solicitud POST exitosa');
 			} else {
-				console.log('Error en la solicitud POS: ' + response.status);
+				response.json().then((errorData) => {
+					setErrores((prevErrores) => ({
+						...prevErrores,
+						documentosError: errorData.error,
+					}));
+					console.log('Mensaje de error: ' + errorData.error);
+				});
 			}
 		} catch (error) {
 			console.error('Error en la solicitud POST:', error);
+
 			// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 		}
 	};
@@ -504,14 +469,14 @@ function index() {
 							<select
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
 								name='localidad'
-								value={datosDomicilio.localidad}
-								onChange={handleInputChangeDomicilio}
+								value={localidad}
+								onChange={handleInputLocalidad}
 							>
 								<option value='' disabled hidden>
 									Localidad
 								</option>
 								{localidades.map((localidad) => (
-									<option key={localidad.nombre} value={localidad.id}>
+									<option key={localidad.nombre} value={localidad}>
 										{localidad.nombre}
 									</option>
 								))}
@@ -594,6 +559,9 @@ function index() {
 								>
 									Seleccionar documentos
 								</label>
+								{errores.documentosError !== '' && (
+									<div className='text-red-500 '>{errores.documentosError}</div>
+								)}
 							</div>
 
 							<div
@@ -617,24 +585,24 @@ function index() {
 							<div className='w-full text-xs mt-4'>
 								{' '}
 								<ul>
-									<li>Inscripción en AFIP.</li>
-									<li>Inscripción en ARBA.</li>
+									<li>* Inscripción en AFIP.</li>
+									<li>* Inscripción en ARBA.</li>
 									<li>
-										Currículum Vitae con acreditación de: Documentación de
+										* Currículum Vitae con acreditación de: Documentación de
 										títulos y/o estudios relacionados con la actividad y
 										acreditación de experiencia (si los tuviera).
 									</li>
 									<li>
-										Nómima de consorcios administrados, indicando el domicilio
+										* Nómima de consorcios administrados, indicando el domicilio
 										de los mismos, detalle de Compañia Aseguradora, número de
 										póliza y cobertura vigente.
 									</li>
 									<li>
-										Certificado expedido por el Registro Nacional de
+										* Certificado expedido por el Registro Nacional de
 										Reincidencia.
 									</li>
 									<li>
-										Informe expedido por el Registro de Juicios Universales
+										* Informe expedido por el Registro de Juicios Universales
 									</li>
 								</ul>{' '}
 							</div>

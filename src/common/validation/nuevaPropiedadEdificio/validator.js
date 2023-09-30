@@ -92,3 +92,5 @@ export const validateDataNuevoConsorcio = (
 
 	return errores;
 };
+
+
