@@ -475,7 +475,7 @@ function index() {
 									Localidad
 								</option>
 								{localidades.map((localidad) => (
-									<option key={localidad.nombre} value={localidad}>
+									<option key={localidad.nombre} value={localidad.nombre}>
 										{localidad.nombre}
 									</option>
 								))}
