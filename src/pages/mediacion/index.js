@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/validator';
+import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -14,26 +14,27 @@ function index() {
 		domicilioCalle: '',
 		domicilioNumero: '',
 		domicilioPiso: '',
+		domicilioDpto: '',
 		email: '',
 		barrio: '',
-		motivos: '',
+		motivoRequerimiento: '',
 	});
 
 	const [localidad, setLocalidad] = useState('');
 	const [empresa, setEmpresa] = useState('');
-	const [documentos, setDocumentos] = useState([]);
+	const [selectedFiles, setSelectedFiles] = useState([]);
+	const [files, setFiles] = useState([]);
 
 	const [errores, setErrores] = useState({
 		nombreError: '',
 		dniError: '',
 		telefonoCelularError: '',
 		domicilioError: '',
+		barrioError: '',
 		emailError: '',
 		localidadError: '',
-		tipoConsultaError: '',
 		empresaError: '',
-		barrioError: '',
-		motivosError: '',
+		motivoRequerimientoError: '',
 	});
 
 	const handleInputChange = (event) => {
@@ -44,9 +45,8 @@ function index() {
 		if (name === 'localidad') {
 			setLocalidad(value);
 		} else if (name === 'empresa') {
+			console.log('empresa:' + value);
 			setEmpresa(value);
-		} else if (name === 'tipoConsulta') {
-			setTipoConsulta(value);
 		} else {
 			setDatosPersonales((prevDatosPersonales) => ({
 				...prevDatosPersonales,
@@ -55,63 +55,75 @@ function index() {
 		}
 	};
 
+	const handleFilesSelected = async (event) => {
+		const files = event.target.files;
+		const _files = Array.from(event.target.files);
+		console.log(files);
+		setFiles(_files);
+		const fileNames = Array.from(files).map((file) => file.name);
+		setSelectedFiles(fileNames);
+	};
+
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		let errors = validateDataNuevaConsulta(
+		let errors = await validateDataNuevaMediacion(
 			datosPersonales,
 			localidad,
-			empresa,
-			tipoConsulta
+			empresa
 		);
 		setErrores(errors);
-		for (let i = 0; i < errors.length; i++) {}
+		console.log(localidad + 'EMPreSA');
 
-		try {
-			const datosPersonales1 = {
-				nombre: 'Nombre',
-				apellido: 'Apellido',
-				dni: 'DNI',
-				cuil: 'CUIL',
-				telefonoCelular: 'Celular',
-				telefonoFijo: 'Fijo',
-				domicilioCalle: 'Direccion Calle',
-				domicilioNumero: 'Direccion Numero',
-				domicilioPiso: 'Direccion Piso',
-				email: 'email@gmail.com',
-			};
+		const noExistenErrores = Object.values(errors).every(
+			(valor) => valor === ''
+		);
+		console.log(noExistenErrores + 'No ecisten]');
+		console.log(Object.values(errors));
+		if (noExistenErrores) {
+			try {
+				const formData = new FormData();
 
-			let consultaID = new Date();
+				formData.append('nombre', datosPersonales.nombre);
+				formData.append('apellido', datosPersonales.apellido);
+				formData.append('dni', datosPersonales.dni);
+				formData.append('email', datosPersonales.email);
+				formData.append('barrio', datosPersonales.barrio);
+				formData.append(
+					'motivoRequerimiento',
+					datosPersonales.motivoRequerimiento
+				);
+				formData.append('telefonoCelular', datosPersonales.telefonoCelular);
+				formData.append('domicilioCalle', datosPersonales.domicilioCalle);
+				formData.append('domicilioNumero', datosPersonales.domicilioNumero);
+				formData.append('domicilioPiso', datosPersonales.domicilioPiso);
+				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
+				formData.append('empresa', empresa);
+				formData.append('localidad', localidad);
+				for (let i = 0; i < files.length; i++) {
+					formData.append(`archivos`, files[i]);
+				}
 
-			const response = await fetch('/api/solicitudes/tiposSolicitudes', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					...datosPersonales1,
-					localidad: localidad,
-					empresa: empresa,
-					tipoConsulta: tipoConsulta,
-				}),
-			});
+				const response = await fetch('/api/solicitudes/nuevaMediacion', {
+					method: 'POST',
+					body: formData,
+				});
 
-			if (response.ok) {
-				// La solicitud fue exitosa
-				console.log('Solicitud POST exitosa');
-				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de éxito
-			} else {
-				// La solicitud no fue exitosa
-				console.log('Error en la solicitud POST');
+				if (response.ok) {
+					// La solicitud fue exitosa
+					console.log('Solicitud POST exitosa');
+					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de éxito
+				} else {
+					// La solicitud no fue exitosa
+					console.log('Error en la solicitud POST');
+					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+				}
+			} catch (error) {
+				console.error('Error en la solicitud POST:', error);
 				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
-		} catch (error) {
-			console.error('Error en la solicitud POST:', error);
-			// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 		}
 	};
-
-	function checkErrors(errors) {}
 
 	useEffect(() => {
 		try {
@@ -151,7 +163,7 @@ function index() {
 			<div className='bg-white p-8 rounded-xl mb-8'>
 				<h2 className='text-xl text-titles'>Requirente</h2>
 				<hr className='my-4 border-gray-500/30' />
-				<form onSubmit={saveConsulta}>
+				<form onSubmit={saveConsulta} id='formMediacion'>
 					{/* NOMBRE */}
 					<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -283,29 +295,6 @@ function index() {
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
 							<p>
-								Teléfono Celular <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Teléfono celular *'
-								name='telefonoCelular'
-								value={datosPersonales.telefonoCelular}
-								onChange={handleInputChange}
-							/>
-							{errores.telefonoCelularError !== '' && (
-								<div className='text-red-500 '>
-									{errores.telefonoCelularError}
-								</div>
-							)}
-						</div>
-					</div>
-					{/* Email */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
 								Barrio <span className='text-red-500'>*</span>
 							</p>
 						</div>
@@ -323,6 +312,28 @@ function index() {
 							)}
 						</div>
 					</div>
+					{/* Email */}
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+						<div className='w-full md:w-1/4'>
+							<p>
+								Email <span className='text-red-500'>*</span>
+							</p>
+						</div>
+						<div className='flex-1'>
+							<input
+								type='email'
+								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+								placeholder='Email'
+								name='email'
+								value={datosPersonales.email}
+								onChange={handleInputChange}
+							/>
+							{errores.emailError !== '' && (
+								<div className='text-red-500 '> {errores.emailError}</div>
+							)}
+						</div>
+					</div>
+
 					{/* Localidad */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -341,7 +352,7 @@ function index() {
 									Localidad
 								</option>
 								{localidades.map((localidad) => (
-									<option key={localidad.nombre} value={localidad.id}>
+									<option key={localidad.nombre} value={localidad.nombre}>
 										{localidad.nombre}
 									</option>
 								))}
@@ -394,30 +405,56 @@ function index() {
 						<div className='flex-1 '>
 							<textarea
 								type='text'
-								name='motivos'
+								name='motivoRequerimiento'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
 								placeholder='Motivos del requerimiento'
+								onChange={handleInputChange}
 							/>
+							{errores.motivoRequerimientoError !== '' && (
+								<div className='text-red-500 '>
+									{errores.motivoRequerimientoError}
+								</div>
+							)}
 						</div>
 					</div>
+
 					{/* Documentos */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
 						<div className='w-full md:w-1/4'>
-							<p>
-								Documentos <span className='text-red-500'>*</span>
-							</p>
+							<p>Documentación adicional</p>
 						</div>
 						<div className='flex-1 '>
-							<select className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'>
-								<option value='Argentina'>Argentina</option>
-								<option value='Colombia'>Colombia</option>
-								<option value='México'>México</option>
-								<option value='Perú'>Perú</option>
-								<option value='Uruguay'>Uruguay</option>
-								<option value='Venezuela'>Venezuela</option>
-							</select>
+							<div>
+								<input
+									type='file'
+									id='archivos'
+									name='archivos'
+									className='hidden md:w-1/2'
+									multiple
+									onChange={handleFilesSelected}
+								/>
+								<label
+									htmlFor='archivos'
+									className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
+								>
+									Seleccionar documentos
+								</label>
+							</div>
+
+							<div
+								id='lista-archivos'
+								className='flex  flex-wrap gap-2 text-gray-400 text-sm mt-4'
+							>
+								{selectedFiles.map((fileName, index) => (
+									<React.Fragment key={fileName}>
+										{index > 0 && index < selectedFiles.length - 1 && '-'}
+										<span>{fileName}</span>
+									</React.Fragment>
+								))}
+							</div>
 						</div>
 					</div>
+
 					<hr className='my-8 border-gray-500/30' />
 					<div className='flex justify-end'>
 						<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>

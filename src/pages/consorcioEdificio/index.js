@@ -95,7 +95,6 @@ function index() {
 			localidad
 		);
 		setErrores(errors);
-		for (let i = 0; i < errors.length; i++) {}
 
 		try {
 			const formData = new FormData();
@@ -577,6 +576,7 @@ function index() {
 							</div>
 						</div>
 					</div>
+					{/* Documentacion */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
 							<p>Documentos obligatorios</p>
