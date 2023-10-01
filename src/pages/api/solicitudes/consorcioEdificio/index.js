@@ -86,8 +86,16 @@ async function onPOST(req, res) {
 				return;
 			}
 
-			const rutaAlmacenamiento = `${localidad}/${dni}/${empresa}/`;
+			const firebaseCollection = collection(db, 'SolicitudConsorcioEdificio');
+			const docRef = await addDoc(firebaseCollection, {
+				...req.body,
+				createdAt: new Date(),
+			});
+			const id = docRef.id;
+
+			const rutaAlmacenamiento = `ArchivosNuevoConsorcio/${dni}/${id}/`;
 			const storage = getStorage();
+
 			
 			// Itera sobre los archivos y realiza operaciones con cada uno.
 			for (const file of archivos) {
@@ -112,15 +120,11 @@ async function onPOST(req, res) {
 			}
 
 
-			const firebaseCollection = collection(db, 'SolicitudConsorcioEdificio');
-			const docRef = await addDoc(firebaseCollection, {
-				...req.body,
-				files: filesArray,
-				createdAt: new Date(),
-			});
-			const id = docRef.id;
+
 			await updateDoc(doc(firebaseCollection, id), { id });
-			console.log(`New Solicitud created with ID: ${id}`);
+			await updateDoc(doc(firebaseCollection, id), { archivos: filesArray });
+
+			console.log(`New Solicitud de Consorcio de Edificio created with ID: ${id}`);
 
 			res.status(200).json({ mensaje: 'Procesamiento completado' });
 		};

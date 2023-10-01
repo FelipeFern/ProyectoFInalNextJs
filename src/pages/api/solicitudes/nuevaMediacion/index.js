@@ -79,8 +79,15 @@ async function onPOST(req, res) {
 				tipoConsulta,
 			} = req.body;
 
+			const firebaseCollection = collection(db, 'SolicitudMediacion');
+			const docRef = await addDoc(firebaseCollection, {
+				...req.body,
+				createdAt: new Date(),
+			});
+			const id = docRef.id;
+
 			if (archivos.length > 0) {
-				const rutaAlmacenamiento = `${localidad}/${dni}/${empresa}/`;
+				const rutaAlmacenamiento = `ArchivosNuevaMediacion/${dni}/${id}/`;
 				const storage = getStorage();
 
 				// Itera sobre los archivos y realiza operaciones con cada uno.
@@ -105,15 +112,9 @@ async function onPOST(req, res) {
 					console.log(`Archivo ${fileName} cargado en ${rutaAlmacenamiento}`);
 				}
 			}
-
-			const firebaseCollection = collection(db, 'SolicitudMediacion');
-			const docRef = await addDoc(firebaseCollection, {
-				...req.body,
-				files: filesArray,
-				createdAt: new Date(),
-			});
-			const id = docRef.id;
 			await updateDoc(doc(firebaseCollection, id), { id });
+			await updateDoc(doc(firebaseCollection, id), { archivos: filesArray });
+
 			console.log(`New Mediacion created with ID: ${id}`);
 
 			res.status(200).json({ mensaje: 'Nueva Mediación creada' });
