@@ -86,7 +86,7 @@ export const validateDataNuevoConsorcio = (
 		errores.emailError = 'Ingrese un Email válido';
 	}
 
-	if (localidad == '' || !regex.test(localidad.nombre)) {
+	if (localidad == '' || !regex.test(localidad)) {
 		errores.localidadError = 'Seleccione una Localidad válida';
 	}
 

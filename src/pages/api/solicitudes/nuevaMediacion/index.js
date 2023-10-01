@@ -106,7 +106,7 @@ async function onPOST(req, res) {
 				}
 			}
 
-			const firebaseCollection = collection(db, 'Mediaciones');
+			const firebaseCollection = collection(db, 'SolicitudMediacion');
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				files: filesArray,

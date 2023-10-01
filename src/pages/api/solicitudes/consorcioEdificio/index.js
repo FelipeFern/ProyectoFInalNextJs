@@ -112,7 +112,7 @@ async function onPOST(req, res) {
 			}
 
 
-			const firebaseCollection = collection(db, 'Solicitudes');
+			const firebaseCollection = collection(db, 'SolicitudConsorcioEdificio');
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				files: filesArray,
