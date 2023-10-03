@@ -55,7 +55,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/nuevaconsulta'
+									href='/nuevaConsulta'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiBriefcase3Line /> Empresas
@@ -71,7 +71,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/nuevaconsulta'
+									href='/nuevaConsulta'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiFileUserLine /> Nueva Consulta
@@ -79,7 +79,7 @@ export default function Sidebar() {
 							</li>
 							<li>
 								<Link
-									href='/mediacion'
+									href='/nuevaMediacion'
 									className='flex items-center gap-4  hover:bg-purple-500 p-4 text-gray-500 hover:text-white rounded-lg transition-colors font-semibold'
 								>
 									<RiFileUserLine /> Nueva Mediación
