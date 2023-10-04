@@ -17,13 +17,16 @@ function index() {
 		domicilioCalle: '',
 		domicilioNumero: '',
 		domicilioPiso: '',
+		domicilioDpto: '',
 		email: '',
+		hechos: '',
 	});
 
 	const [localidad, setLocalidad] = useState('');
 	const [empresa, setEmpresa] = useState('');
-	const [tipoConsulta, setTipoConsulta] = useState('');
 	const [otroTipoDeConsulta, setOtroTipoDeConsulta] = useState('');
+	const [selectedFiles, setSelectedFiles] = useState([]);
+	const [files, setFiles] = useState([]);
 
 	const [errores, setErrores] = useState({
 		nombreError: '',
@@ -34,8 +37,8 @@ function index() {
 		domicilioError: '',
 		emailError: '',
 		localidadError: '',
-		tipoConsultaError: '',
 		empresaError: '',
+		hechosError: '',
 	});
 
 	const handleInputChange = (event) => {
@@ -47,14 +50,21 @@ function index() {
 			setLocalidad(value);
 		} else if (name === 'empresa') {
 			setEmpresa(value);
-		} else if (name === 'tipoConsulta') {
-			setTipoConsulta(value);
 		} else {
 			setDatosPersonales((prevDatosPersonales) => ({
 				...prevDatosPersonales,
 				[name]: value,
 			}));
 		}
+	};
+
+	const handleFilesSelected = async (event) => {
+		const files = event.target.files;
+		const _files = Array.from(event.target.files);
+		console.log(files);
+		setFiles(_files);
+		const fileNames = Array.from(files).map((file) => file.name);
+		setSelectedFiles(fileNames);
 	};
 
 	const saveConsulta = async (event) => {
@@ -64,7 +74,6 @@ function index() {
 			datosPersonales,
 			localidad,
 			empresa,
-			tipoConsulta
 		);
 		setErrores(errors);
 		for (let i = 0; i < errors.length; i++) {}
@@ -94,7 +103,6 @@ function index() {
 					...datosPersonales1,
 					localidad: localidad,
 					empresa: empresa,
-					tipoConsulta: tipoConsulta,
 				}),
 			});
 
@@ -150,7 +158,7 @@ function index() {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [tipoConsulta]);
+	}, []);
 
 	return (
 		<div>
@@ -376,55 +384,6 @@ function index() {
 						</div>
 					</div>
 
-					{/* Tipo de consulta */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Tipo de Consulta <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<select
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-								name='tipoConsulta'
-								value={tipoConsulta}
-								onChange={handleInputChange}
-							>
-								<option value='' disabled hidden>
-									Seleccione el tipo de consulta
-								</option>
-								{tiposConsultas.map((solicitud) => (
-									<option key={solicitud.nombre} value={solicitud.nombre}>
-										{solicitud.nombre}
-									</option>
-								))}
-								<option value='otro'>Otros</option>
-							</select>
-							{errores.tipoConsultaError !== '' && (
-								<div className='text-red-500 '>{errores.tipoConsultaError}</div>
-							)}
-						</div>
-					</div>
-					{/* Otro tipo de consulta */}
-					{tipoConsulta === 'otro' && (
-						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-							<div className='w-full md:w-1/4'>
-								<p>
-									Otro tipo de consulta <span className='text-red-500'>*</span>
-								</p>
-							</div>
-							<div className='flex-1'>
-								<input
-									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-									placeholder='Otro Tipo de Consulta'
-									name='otroTipoDeConsulta'
-									value={otroTipoDeConsulta}
-									onChange={handleInputChange}
-								/>
-							</div>
-						</div>
-					)}
 					{/* Empresa */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -462,6 +421,7 @@ function index() {
 						</div>
 						<div className='flex-1 '>
 							<textarea
+								name='hechos'
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
 								placeholder='Hechos'
@@ -469,21 +429,81 @@ function index() {
 						</div>
 					</div>
 					{/* Documentos */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+					<hr className='my-6 border-gray-500/30' />
+					<h3 className='text-xl  my-6 text-titles'>Documentación adjunta</h3>
+
+					{/* Documentos */}
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
 						<div className='w-full md:w-1/4'>
 							<p>
-								Documentos <span className='text-red-500'>*</span>
+								Documentos (Original y copia)
+								<span className='text-red-500'>*</span>
 							</p>
 						</div>
 						<div className='flex-1 '>
-							<select className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'>
-								<option value='Argentina'>Argentina</option>
-								<option value='Colombia'>Colombia</option>
-								<option value='México'>México</option>
-								<option value='Perú'>Perú</option>
-								<option value='Uruguay'>Uruguay</option>
-								<option value='Venezuela'>Venezuela</option>
-							</select>
+							<div>
+								<input
+									type='file'
+									id='archivos'
+									name='archivos'
+									className='hidden md:w-1/2'
+									multiple
+									onChange={handleFilesSelected}
+								/>
+								<label
+									htmlFor='archivos'
+									className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
+								>
+									Seleccionar documentos
+								</label>
+								{errores.documentosError !== '' && (
+									<div className='text-red-500 '>{errores.documentosError}</div>
+								)}
+							</div>
+
+							<div
+								id='lista-archivos'
+								className='flex  flex-wrap gap-2 text-gray-400 text-sm mt-4'
+							>
+								{selectedFiles.map((fileName, index) => (
+									<React.Fragment key={fileName}>
+										{index > 0 && index < selectedFiles.length - 1 && '-'}
+										<span>{fileName}</span>
+									</React.Fragment>
+								))}
+							</div>
+						</div>
+					</div>
+					{/* Documentacion */}
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+						<div className='w-full md:w-1/4'>
+							<p>Documentos obligatorios</p>
+						</div>
+						<div className='flex-1 '>
+							<div className='w-full text-xs mt-4'>
+								{' '}
+								<ul>
+									<li>* Inscripción en AFIP.</li>
+									<li>* Inscripción en ARBA.</li>
+									<li>
+										* Currículum Vitae con acreditación de: Documentación de
+										títulos y/o estudios relacionados con la actividad y
+										acreditación de experiencia (si los tuviera).
+									</li>
+									<li>
+										* Nómima de consorcios administrados, indicando el domicilio
+										de los mismos, detalle de Compañia Aseguradora, número de
+										póliza y cobertura vigente.
+									</li>
+									<li>
+										* Certificado expedido por el Registro Nacional de
+										Reincidencia.
+									</li>
+									<li>
+										* Informe expedido por el Registro de Juicios Universales
+									</li>
+								</ul>{' '}
+							</div>
 						</div>
 					</div>
 					<hr className='my-8 border-gray-500/30' />

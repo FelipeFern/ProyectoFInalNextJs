@@ -2,7 +2,6 @@ export const validateDataNuevaConsulta = (
 	datos,
 	localidad,
 	empresa,
-	tipoConsulta
 ) => {
 	var regex = /^[a-zA-Z\s]+$/;
 	var regexdomicilio = /^[a-zA-Z0-9\s]+$/;
@@ -18,7 +17,6 @@ export const validateDataNuevaConsulta = (
 		domicilioError: '',
 		emailError: '',
 		localidadError: '',
-		tipoConsultaError: '',
 		empresaError: '',
 	};
 
@@ -74,10 +72,6 @@ export const validateDataNuevaConsulta = (
 
 	if (localidad == '' || !regex.test(localidad)) {
 		errores.localidadError = 'Seleccione una Localidad válida';
-	}
-
-	if (tipoConsulta == '' || !regex.test(tipoConsulta)) {
-		errores.tipoConsultaError = 'Seleccione un Tipo de Consulta válida';
 	}
 
 	if (empresa == '' || !regex.test(empresa)) {
