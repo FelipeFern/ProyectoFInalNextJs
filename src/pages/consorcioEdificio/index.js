@@ -107,7 +107,6 @@ function index() {
 			formData.append('razonSocial', datosSolicitudInscripcion.razonSocial);
 			formData.append('representanteLegal', datosSolicitudInscripcion.representanteLegal);
 
-
 			formData.append('telefonoCelular', datosDomicilio.telefonoCelular);
 			formData.append('telefonoFijo', datosDomicilio.telefonoFijo);
 			formData.append('domicilioCalle', datosDomicilio.domicilioCalle);

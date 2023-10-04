@@ -34,7 +34,7 @@ export default async function (req, res) {
 
 async function onGET(req, res) {
 	try {
-		const firastoreCollection = collection(db, 'tipoSolicitudes');
+		const firastoreCollection = collection(db, 'SolicitudConsorcioEdificio');
 
 		const firebaseDocs = await getDocs(firastoreCollection);
 		const data = firebaseDocs.docs.map((doc) => doc.data());
