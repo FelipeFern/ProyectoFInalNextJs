@@ -4,7 +4,6 @@ import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/val
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
-	const [tiposConsultas, setTiposConsultas] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const [datosPersonales, setDatosPersonales] = useState({
@@ -70,50 +69,49 @@ function index() {
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		let errors = validateDataNuevaConsulta(
-			datosPersonales,
-			localidad,
-			empresa,
-		);
+		let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
 		setErrores(errors);
-		for (let i = 0; i < errors.length; i++) {}
 
+		console.log(datosPersonales);
+		console.log(localidad);
+		console.log(empresa);
 		try {
-			const datosPersonales1 = {
-				nombre: 'Nombre',
-				apellido: 'Apellido',
-				dni: 'DNI',
-				cuil: 'CUIL',
-				telefonoCelular: 'Celular',
-				telefonoFijo: 'Fijo',
-				domicilioCalle: 'Direccion Calle',
-				domicilioNumero: 'Direccion Numero',
-				domicilioPiso: 'Direccion Piso',
-				email: 'email@gmail.com',
-			};
+			const formData = new FormData();
 
-			let consultaID = new Date();
+			formData.append('nombre', datosPersonales.nombre);
+			formData.append('apellido', datosPersonales.apellido);
+			formData.append('dni', datosPersonales.dni);
+			formData.append('cuil', datosPersonales.cuil);
+			formData.append('telefonoCelular', datosPersonales.telefonoCelular);
+			formData.append('telefonoFijo', datosPersonales.telefonoFijo);
+			formData.append('domicilioCalle', datosPersonales.domicilioCalle);
+			formData.append('domicilioNumero', datosPersonales.domicilioNumero);
+			formData.append('domicilioPiso', datosPersonales.domicilioPiso);
+			formData.append('domicilioDpto', datosPersonales.domicilioDpto);
+			formData.append('email', datosPersonales.email);
+			formData.append('hechos', datosPersonales.hechos);
+			formData.append('localidad', localidad);
+			formData.append('empresa', empresa);
 
-			const response = await fetch('/api/solicitudes/tiposSolicitudes', {
+			for (let i = 0; i < files.length; i++) {
+				formData.append(`archivos`, files[i]);
+			}
+
+			const response = await fetch('/api/solicitudes/nuevaConsulta', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					...datosPersonales1,
-					localidad: localidad,
-					empresa: empresa,
-				}),
+				body: formData,
 			});
 
 			if (response.ok) {
-				// La solicitud fue exitosa
 				console.log('Solicitud POST exitosa');
-				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de éxito
 			} else {
-				// La solicitud no fue exitosa
-				console.log('Error en la solicitud POST');
-				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+				response.json().then((errorData) => {
+					setErrores((prevErrores) => ({
+						...prevErrores,
+						documentosError: errorData.error,
+					}));
+					console.log('Mensaje de error: ' + errorData.error);
+				});
 			}
 		} catch (error) {
 			console.error('Error en la solicitud POST:', error);
@@ -140,13 +138,6 @@ function index() {
 					a.nombre.localeCompare(b.nombre)
 				);
 				setEmpresas(empresasArray);
-
-				response = await fetch('/api/solicitudes/tiposSolicitudes');
-				data = await response.json();
-				let tiposArray = data.data.sort((a, b) =>
-					a.nombre.localeCompare(b.nombre)
-				);
-				setTiposConsultas(tiposArray);
 
 				setLoading(false);
 			};
@@ -373,7 +364,7 @@ function index() {
 									Localidad
 								</option>
 								{localidades.map((localidad) => (
-									<option key={localidad.nombre} value={localidad.id}>
+									<option key={localidad.nombre} value={localidad.nombre}>
 										{localidad.nombre}
 									</option>
 								))}
@@ -425,7 +416,11 @@ function index() {
 								type='text'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
 								placeholder='Hechos'
+								onChange={handleInputChange}
 							/>
+							{errores.hechosError !== '' && (
+								<div className='text-red-500 '>{errores.hechosError}</div>
+							)}
 						</div>
 					</div>
 					{/* Documentos */}
