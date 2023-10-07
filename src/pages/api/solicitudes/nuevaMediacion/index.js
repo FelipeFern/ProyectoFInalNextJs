@@ -83,6 +83,7 @@ async function onPOST(req, res) {
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				createdAt: new Date(),
+				tipo:'Nueva mediación'
 			});
 			const id = docRef.id;
 

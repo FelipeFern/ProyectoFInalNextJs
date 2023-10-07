@@ -34,7 +34,7 @@ export default async function (req, res) {
 
 async function onGET(req, res) {
 	try {
-		const firastoreCollection = collection(db, 'nuevaConsulta');
+		const firastoreCollection = collection(db, 'NuevaConsulta');
 
 		const firebaseDocs = await getDocs(firastoreCollection);
 		const data = firebaseDocs.docs.map((doc) => doc.data());
@@ -77,6 +77,8 @@ async function onPOST(req, res) {
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				createdAt: new Date(),
+				tipo:'Consulta general'
+
 			});
 			const id = docRef.id;
 
