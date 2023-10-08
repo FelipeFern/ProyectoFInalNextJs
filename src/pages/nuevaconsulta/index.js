@@ -155,6 +155,12 @@ function index() {
 		<div>
 			<div className='mb-8'>
 				<h1 className='text-3xl font-semibold'>Cargar nueva consulta</h1>
+				<br></br>
+				<h4 className='text-xl text-titles'>
+					Consultas generales a fin de brindar información y asesoramiento en
+					forma totalmente gratuita a los consumidores y usuarios acerca de los
+					derechos que les asisten como tales.
+				</h4>
 			</div>
 			<div className='bg-white p-8 rounded-xl mb-8'>
 				<h1 className='text-xl text-titles'>Información correspondiente</h1>

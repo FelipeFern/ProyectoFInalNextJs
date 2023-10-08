@@ -70,15 +70,18 @@ const TableCardResults = (props) => {
 					</Menu>
 				</div>
 			</div>
+
 			{/* Number of tickets */}
-			<div>
-				<h1 className='text-4xl text-gray-800 font-bold mb-4'>
+			<div className='h-18'>
+				<h1 className='text-3xl text-gray-800 font-bold mb-4'>
 					{totalTickets}
 				</h1>
-				<p className={textColor}>{text}</p>
+				<p>
+					Total: <span className={textColor}>{text}</span>
+				</p>
 			</div>
 			<hr className='border border-dashed border-gray-500/50 my-4' />
-			<div>
+			<div className='mb-0'>
 				<Link
 					href='/'
 					className='flex items-center gap-2 text-gray-800 hover:underline'
