@@ -29,7 +29,7 @@ const TicketCard = (props) => {
 	return (
 		<div className='grid grid-cols-1 md:grid-cols-5 gap-4 items-center mb-4 bg-gray-200 p-4 rounded-xl'>
 			<div>
-				<h5 className='md:hidden text-gray-400 font-bold mb-2'>Tipo Consulta:</h5>
+				<h5 className='md:hidden text-gray-400 font-bold mb-2'>Tipo de Consulta:</h5>
 				<span>{tipo}</span>
 			</div>
 			<div>

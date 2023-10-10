@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/validator';
+import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -10,34 +10,31 @@ function index() {
 		nombre: '',
 		apellido: '',
 		dni: '',
-		cuil: '',
 		telefonoCelular: '',
-		telefonoFijo: '',
 		domicilioCalle: '',
 		domicilioNumero: '',
 		domicilioPiso: '',
 		domicilioDpto: '',
 		email: '',
-		hechos: '',
+		barrio: '',
+		motivoRequerimiento: '',
 	});
 
 	const [localidad, setLocalidad] = useState('');
 	const [empresa, setEmpresa] = useState('');
-	const [otroTipoDeConsulta, setOtroTipoDeConsulta] = useState('');
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [files, setFiles] = useState([]);
 
 	const [errores, setErrores] = useState({
 		nombreError: '',
 		dniError: '',
-		cuilError: '',
 		telefonoCelularError: '',
-		telefonoFijoError: '',
 		domicilioError: '',
+		barrioError: '',
 		emailError: '',
 		localidadError: '',
 		empresaError: '',
-		hechosError: '',
+		motivoRequerimientoError: '',
 	});
 
 	const handleInputChange = (event) => {
@@ -48,6 +45,7 @@ function index() {
 		if (name === 'localidad') {
 			setLocalidad(value);
 		} else if (name === 'empresa') {
+			console.log('empresa:' + value);
 			setEmpresa(value);
 		} else {
 			setDatosPersonales((prevDatosPersonales) => ({
@@ -69,57 +67,63 @@ function index() {
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
+		let errors = await validateDataNuevaMediacion(
+			datosPersonales,
+			localidad,
+			empresa
+		);
 		setErrores(errors);
+		console.log(localidad + 'EMPreSA');
 
-		console.log(datosPersonales);
-		console.log(localidad);
-		console.log(empresa);
-		try {
-			const formData = new FormData();
+		const noExistenErrores = Object.values(errors).every(
+			(valor) => valor === ''
+		);
+		console.log(noExistenErrores + 'No ecisten]');
+		console.log(Object.values(errors));
+		if (noExistenErrores) {
+			try {
+				const formData = new FormData();
 
-			formData.append('nombre', datosPersonales.nombre);
-			formData.append('apellido', datosPersonales.apellido);
-			formData.append('dni', datosPersonales.dni);
-			formData.append('cuil', datosPersonales.cuil);
-			formData.append('telefonoCelular', datosPersonales.telefonoCelular);
-			formData.append('telefonoFijo', datosPersonales.telefonoFijo);
-			formData.append('domicilioCalle', datosPersonales.domicilioCalle);
-			formData.append('domicilioNumero', datosPersonales.domicilioNumero);
-			formData.append('domicilioPiso', datosPersonales.domicilioPiso);
-			formData.append('domicilioDpto', datosPersonales.domicilioDpto);
-			formData.append('email', datosPersonales.email);
-			formData.append('hechos', datosPersonales.hechos);
-			formData.append('localidad', localidad);
-			formData.append('empresa', empresa);
+				formData.append('nombre', datosPersonales.nombre);
+				formData.append('apellido', datosPersonales.apellido);
+				formData.append('dni', datosPersonales.dni);
+				formData.append('email', datosPersonales.email);
+				formData.append('barrio', datosPersonales.barrio);
+				formData.append(
+					'motivoRequerimiento',
+					datosPersonales.motivoRequerimiento
+				);
+				formData.append('telefonoCelular', datosPersonales.telefonoCelular);
+				formData.append('domicilioCalle', datosPersonales.domicilioCalle);
+				formData.append('domicilioNumero', datosPersonales.domicilioNumero);
+				formData.append('domicilioPiso', datosPersonales.domicilioPiso);
+				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
+				formData.append('empresa', empresa);
+				formData.append('localidad', localidad);
+				for (let i = 0; i < files.length; i++) {
+					formData.append(`archivos`, files[i]);
+				}
 
-			for (let i = 0; i < files.length; i++) {
-				formData.append(`archivos`, files[i]);
-			}
-
-			const response = await fetch('/api/solicitudes/nuevaConsulta', {
-				method: 'POST',
-				body: formData,
-			});
-
-			if (response.ok) {
-				console.log('Solicitud POST exitosa');
-			} else {
-				response.json().then((errorData) => {
-					setErrores((prevErrores) => ({
-						...prevErrores,
-						documentosError: errorData.error,
-					}));
-					console.log('Mensaje de error: ' + errorData.error);
+				const response = await fetch('/api/solicitudes/nuevaMediacion', {
+					method: 'POST',
+					body: formData,
 				});
+
+				if (response.ok) {
+					// La solicitud fue exitosa
+					console.log('Solicitud POST exitosa');
+					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de éxito
+				} else {
+					// La solicitud no fue exitosa
+					console.log('Error en la solicitud POST');
+					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+				}
+			} catch (error) {
+				console.error('Error en la solicitud POST:', error);
+				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
-		} catch (error) {
-			console.error('Error en la solicitud POST:', error);
-			// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 		}
 	};
-
-	function checkErrors(errors) {}
 
 	useEffect(() => {
 		try {
@@ -154,18 +158,18 @@ function index() {
 	return (
 		<div>
 			<div className='mb-8'>
-				<h1 className='text-3xl font-semibold'>Cargar nueva consulta</h1>
+				<h1 className='text-3xl font-semibold'>Cargar nueva mediación</h1>
 				<br></br>
 				<h4 className='text-xl text-titles'>
-					Consultas generales a fin de brindar información y asesoramiento en
-					forma totalmente gratuita a los consumidores y usuarios acerca de los
-					derechos que les asisten como tales.
+					Disponible para las personas y/o instituciones que se encuentran
+					implicados en un conflicto comunitario o vecinal y están
+					interesados en resolverlo a través de un acuerdo.
 				</h4>
 			</div>
 			<div className='bg-white p-8 rounded-xl mb-8'>
-				<h1 className='text-xl text-titles'>Información correspondiente</h1>
-				<hr className='my-6 border-gray-500/30' />
-				<form onSubmit={saveConsulta}>
+				<h2 className='text-xl text-titles'>Requirente</h2>
+				<hr className='my-4 border-gray-500/30' />
+				<form onSubmit={saveConsulta} id='formMediacion'>
 					{/* NOMBRE */}
 					<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -223,26 +227,6 @@ function index() {
 							)}
 						</div>
 					</div>
-					{/* CUIL */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>CUIL</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='CUIL *'
-								name='cuil'
-								value={datosPersonales.cuil}
-								onChange={handleInputChange}
-							/>
-
-							{errores.cuilError !== '' && (
-								<div className='text-red-500 '> {errores.cuilError}</div>
-							)}
-						</div>
-					</div>
 					{/* Telefono Celular */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -266,25 +250,7 @@ function index() {
 							)}
 						</div>
 					</div>
-					{/* Telefono Fijo */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>Teléfono Fijo</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Teléfono Fijo'
-								name='telefonoFijo'
-								value={datosPersonales.telefonoFijo}
-								onChange={handleInputChange}
-							/>
-							{errores.telefonoFijoError !== '' && (
-								<div className='text-red-500 '>{errores.telefonoFijoError}</div>
-							)}
-						</div>
-					</div>
+
 					{/* Domicilio */}
 					<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -331,6 +297,27 @@ function index() {
 							)}
 						</div>
 					</div>
+					{/* Barrio */}
+					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+						<div className='w-full md:w-1/4'>
+							<p>
+								Barrio <span className='text-red-500'>*</span>
+							</p>
+						</div>
+						<div className='flex-1'>
+							<input
+								type='text'
+								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+								placeholder='Barrio'
+								name='barrio'
+								value={datosPersonales.barrio}
+								onChange={handleInputChange}
+							/>
+							{errores.barrioError !== '' && (
+								<div className='text-red-500 '> {errores.barrioError}</div>
+							)}
+						</div>
+					</div>
 					{/* Email */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -352,6 +339,7 @@ function index() {
 							)}
 						</div>
 					</div>
+
 					{/* Localidad */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -381,6 +369,10 @@ function index() {
 						</div>
 					</div>
 
+					<h2 className='text-xl mt-8 text-titles'>
+						Entidad Intermedia interviniente
+					</h2>
+					<hr className='my-4 border-gray-500/30' />
 					{/* Empresa */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
@@ -409,37 +401,33 @@ function index() {
 							)}
 						</div>
 					</div>
-					{/* Hechos */}
+					{/* Motivos */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 						<div className='w-full md:w-1/4'>
 							<p>
-								Hechos <span className='text-red-500'>*</span>
+								Motivo del requerimiento <span className='text-red-500'>*</span>
 							</p>
 						</div>
 						<div className='flex-1 '>
 							<textarea
-								name='hechos'
 								type='text'
+								name='motivoRequerimiento'
 								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
-								placeholder='Hechos'
+								placeholder='Motivos del requerimiento'
 								onChange={handleInputChange}
 							/>
-							{errores.hechosError !== '' && (
-								<div className='text-red-500 '>{errores.hechosError}</div>
+							{errores.motivoRequerimientoError !== '' && (
+								<div className='text-red-500 '>
+									{errores.motivoRequerimientoError}
+								</div>
 							)}
 						</div>
 					</div>
-					{/* Documentos */}
-					<hr className='my-6 border-gray-500/30' />
-					<h3 className='text-xl  my-6 text-titles'>Documentación adjunta</h3>
 
 					{/* Documentos */}
 					<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
 						<div className='w-full md:w-1/4'>
-							<p>
-								Documentos (Original y copia)
-								<span className='text-red-500'>*</span>
-							</p>
+							<p>Documentación adicional</p>
 						</div>
 						<div className='flex-1 '>
 							<div>
@@ -457,9 +445,6 @@ function index() {
 								>
 									Seleccionar documentos
 								</label>
-								{errores.documentosError !== '' && (
-									<div className='text-red-500 '>{errores.documentosError}</div>
-								)}
 							</div>
 
 							<div
@@ -475,38 +460,7 @@ function index() {
 							</div>
 						</div>
 					</div>
-					{/* Documentacion */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>Documentos obligatorios</p>
-						</div>
-						<div className='flex-1 '>
-							<div className='w-full text-xs mt-4'>
-								{' '}
-								<ul>
-									<li>* Inscripción en AFIP.</li>
-									<li>* Inscripción en ARBA.</li>
-									<li>
-										* Currículum Vitae con acreditación de: Documentación de
-										títulos y/o estudios relacionados con la actividad y
-										acreditación de experiencia (si los tuviera).
-									</li>
-									<li>
-										* Nómima de consorcios administrados, indicando el domicilio
-										de los mismos, detalle de Compañia Aseguradora, número de
-										póliza y cobertura vigente.
-									</li>
-									<li>
-										* Certificado expedido por el Registro Nacional de
-										Reincidencia.
-									</li>
-									<li>
-										* Informe expedido por el Registro de Juicios Universales
-									</li>
-								</ul>{' '}
-							</div>
-						</div>
-					</div>
+
 					<hr className='my-8 border-gray-500/30' />
 					<div className='flex justify-end'>
 						<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>

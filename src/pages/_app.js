@@ -6,8 +6,12 @@ import Dashboard from '@/components/DashboardLocalidades/Dashboard';
 import Head from 'next/head';
 import MainLayout from '@/components/Layout/MainLayout';
 import { initFirebaseClient } from '@/common/db/firebase';
+import { SessionProvider } from 'next-auth/react';
 
-export default function App({ Component, pageProps }) {
+export default function App({
+	Component,
+	pageProps: { session, ...pageProps },
+}) {
 	// return (
 	// 	<AuthProvider>
 	// 		<Layout>
@@ -20,12 +24,14 @@ export default function App({ Component, pageProps }) {
 
 	return (
 		<>
-			<Head>
+			{/* <Head>
 				<title>OMIC</title>
-			</Head>
-			<MainLayout>
-				<Component {...pageProps} />
-			</MainLayout>
+			</Head>*/}
+			{/* <MainLayout> */}
+				<SessionProvider session={session}>
+					<Component {...pageProps} />
+				</SessionProvider>
+			{/* </MainLayout> */}
 		</>
 	);
 }
