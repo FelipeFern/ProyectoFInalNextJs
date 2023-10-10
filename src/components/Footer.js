@@ -3,7 +3,7 @@ export default function Footer() {
 		<div className='bg-white w-full p-8'>
 			<hr className='my-4' />
 
-			<div className='flex flex-col items-center gap-8 md:flex-row md:justify-between md:items-start '>
+			<div className='flex flex-col items-center gap-8 md:flex-row md:justify-between md:items-start mx-6'>
 				<div className='max-w-xs text-center md:text-left'>
 					<h1 className='text-3xl font-bold text-gray-900'>OMIC</h1>
 					<p className='text-gray-600 text-justify'>
@@ -22,7 +22,7 @@ export default function Footer() {
 								</a>
 							</li>
 							<li>
-								<a href='/quienes-somos'>Quienes somos</a>
+								<a href='/'>Quienes somos</a>
 							</li>
 						</ul>
 					</div>

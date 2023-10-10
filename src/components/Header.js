@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <header className="bg-white z-40 h-16 shadow-md px-6 fixed w-full flex items-center justify-between">
-      <div className="md:flex-1">
+      <div className="md:flex-1 ml-2">
         <Link href="/" className="block w-fit">
           {isPreviewEnv ? (
             <h1 className="font-bold text-xl">MaxWood QA</h1>
@@ -83,7 +83,7 @@ export default function Header() {
             <Link href="/consultas/nueva/consorcioEdificio">Nuevo Consorcio Edificio</Link>
           </li>
           <li className="link-animation">
-            <Link href="/">Sobre Nosotros</Link>
+            <Link href="/sobre-nosotros">Sobre Nosotros</Link>
           </li>
           <li className="link-animation">
             <Link href="/consultas">Buscar consulta</Link>
