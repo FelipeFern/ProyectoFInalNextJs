@@ -46,7 +46,7 @@ export default function Footer() {
 
 				<div className='w-1/4 md:col-span-4 xl:col-span-3'>
 					<h2 className='font-bold mb-6 uppercase'>Contacto</h2>
-					<div className='flex flex-col gap-4'>
+					<div className='flex flex-col gap-3'>
 						<p className='flex items-center gap-2'>
 							<svg
 								xmlns='http://www.w3.org/2000/svg'

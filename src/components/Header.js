@@ -193,15 +193,6 @@ export default function Header() {
 				<Link href='/cuenta/favoritos' prefetch={false}>
 					<BorderedHeartIcon />
 				</Link>
-				{/* <span className="cursor-pointer relative" onClick={openCartModal}> */}
-				<span className='cursor-pointer relative'>
-					<CartIcon />
-					{/* {cartItems.length > 0 && ( */}
-					<span className='absolute -top-1/3 -right-1/3 rounded-full h-4 w-4 flex items-center justify-center bg-secondary text-xs text-white'>
-						{/* {cartItems.length} */}
-					</span>
-					{/* )} */}
-				</span>
 				<span className='hidden md:block relative group'>
 					<UserIcon />
 					{status === 'authenticated' ? (
