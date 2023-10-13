@@ -4,38 +4,26 @@ export default function Footer() {
 			<hr className='my-4' />
 
 			<div className='flex flex-col items-center gap-8 md:flex-row md:justify-between md:items-start mx-6'>
-				<div className='max-w-xs text-center md:text-left'>
-					<h1 className='text-3xl font-bold text-gray-900'>OMIC</h1>
+				<div className='w-1/2 max-w-s text-center md:text-left'>
+					<h1 className='text-3xl font-bold text-gray-900 mb-6'>OMIC</h1>
 					<p className='text-gray-600 text-justify'>
 						La Oficina Municipal de Información al Consumidor es un organismo
 						público dependiente del Honorable Concejo Deliberante de Bahía
 						Blanca, instituida por medio de la Ordenanza Municipal 14.073
 					</p>
 				</div>
-				<div className='flex justify-center gap-8'>
+				<div className=' w-1/4 flex justify-center gap-8'>
+
 					<div>
-						<h6 className='font-bold mb-6 uppercase'>Información</h6>
+						<h6 className='font-bold mb-6 uppercase' >Oficina</h6>
 						<ul>
-							<li>
-								<a href='/' target='_blank'>
-									Inicio
-								</a>
-							</li>
-							<li>
-								<a href='/'>Quienes somos</a>
-							</li>
-						</ul>
-					</div>
-					<div>
-						<h6 className='font-bold mb-6 uppercase'>Oficina</h6>
-						<ul>
-							<li>
+							<li className="link-animation">
 								<a href='https://www.bahia.gob.ar/gobierno/'>Secretaría de Gobierno</a>
 							</li>
-							<li>
+							<li className="link-animation">
 								<a href='https://www.bahia.gob.ar/'>Bahía Blanca</a>
 							</li>
-							<li>
+							<li className="link-animation">
 								<a
 									href='https://maps.app.goo.gl/w2jBYxZ9XPrU7GBG6'
 									target='_blank'
@@ -44,11 +32,19 @@ export default function Footer() {
 									Maps
 								</a>
 							</li>
+							<li className="link-animation">
+								<a href='/' target='_blank'>
+									Inicio
+								</a>
+							</li>
+							<li className="link-animation">
+								<a href='/'>Quienes somos</a>
+							</li>
 						</ul>
 					</div>
 				</div>
 
-				<div className='md:col-span-4 xl:col-span-3'>
+				<div className='w-1/4 md:col-span-4 xl:col-span-3'>
 					<h2 className='font-bold mb-6 uppercase'>Contacto</h2>
 					<div className='flex flex-col gap-4'>
 						<p className='flex items-center gap-2'>
