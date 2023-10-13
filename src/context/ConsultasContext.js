@@ -56,7 +56,6 @@ function ConsultasProvider({ children }) {
 		let todasLasConsultas = [...consultas, ...mediaciones, ...consorcios];
 		let ultimasConsultas = ordenarPorFecha(todasLasConsultas);
 		setAllConsultas(ultimasConsultas);
-		console.log('Ultimas Conultas:', ultimasConsultas);
 	}
 
 	function ordenarPorFecha(arreglo) {
