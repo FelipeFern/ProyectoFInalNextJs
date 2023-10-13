@@ -23,7 +23,7 @@ export default function PageLayout({ title, children, className, footer = true }
       </Head>
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className={`mt-16 flex-1 ${className || ''}`} >{children}</main>
+        <main className={`flex-1 mt-16 ${className || ''}`} style={{marginTop:'4rem'}} >{children}</main>
         {footer && <Footer />}
       </div>
     </>

@@ -7,6 +7,7 @@ import Head from 'next/head';
 import MainLayout from '@/components/Layout/MainLayout';
 import { initFirebaseClient } from '@/common/db/firebase';
 import { SessionProvider } from 'next-auth/react';
+import { ConsultasProvider } from '@/context/ConsultasContext';
 
 export default function App({
 	Component,
@@ -28,9 +29,11 @@ export default function App({
 				<title>OMIC</title>
 			</Head>*/}
 			{/* <MainLayout> */}
-				<SessionProvider session={session}>
+			<SessionProvider session={session}>
+				<ConsultasProvider>
 					<Component {...pageProps} />
-				</SessionProvider>
+				</ConsultasProvider>
+			</SessionProvider>
 			{/* </MainLayout> */}
 		</>
 	);
