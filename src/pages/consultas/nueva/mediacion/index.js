@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
+import PageLayout from '@/layouts/PageLayout';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -156,320 +157,323 @@ function index() {
 	}, []);
 
 	return (
-		<div>
-			<div className='mb-8'>
-				<h1 className='text-3xl font-semibold'>Cargar nueva mediación</h1>
-				<br></br>
-				<h4 className='text-xl text-titles'>
-					Disponible para las personas y/o instituciones que se encuentran
-					implicados en un conflicto comunitario o vecinal y están
-					interesados en resolverlo a través de un acuerdo.
-				</h4>
-			</div>
-			<div className='bg-white p-8 rounded-xl mb-8'>
-				<h2 className='text-xl text-titles'>Requirente</h2>
-				<hr className='my-4 border-gray-500/30' />
-				<form onSubmit={saveConsulta} id='formMediacion'>
-					{/* NOMBRE */}
-					<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Nombre completo <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<div className='flex items-center gap-4'>
-								<div className='w-full'>
-									<input
-										type='text'
-										name='nombre'
-										value={datosPersonales.nombre}
-										className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
-										placeholder='Nombre(s) *'
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className='w-full'>
-									<input
-										type='text'
-										name='apellido'
-										value={datosPersonales.apellido}
-										className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-										placeholder='Apellido(s) *'
-										onChange={handleInputChange}
-									/>
-								</div>
-							</div>
-
-							{errores.nombreError !== '' && (
-								<div className='text-red-500 '> {errores.nombreError}</div>
-							)}
-						</div>
-					</div>
-					{/* DNI */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								DNI <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='DNI *'
-								name='dni'
-								value={datosPersonales.dni}
-								onChange={handleInputChange}
-							/>
-							{errores.dniError !== '' && (
-								<div className='text-red-500'> {errores.dniError}</div>
-							)}
-						</div>
-					</div>
-					{/* Telefono Celular */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Teléfono Celular <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Teléfono celular *'
-								name='telefonoCelular'
-								value={datosPersonales.telefonoCelular}
-								onChange={handleInputChange}
-							/>
-							{errores.telefonoCelularError !== '' && (
-								<div className='text-red-500 '>
-									{errores.telefonoCelularError}
-								</div>
-							)}
-						</div>
-					</div>
-
-					{/* Domicilio */}
-					<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Domicilio Constituido <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<div className='flex items-center gap-4'>
-								<div className='md:w-1/2 w-full'>
-									<input
-										type='text'
-										className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
-										placeholder='Dirección *'
-										name='domicilioCalle'
-										value={datosPersonales.domicilioCalle}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className='md:w-1/4 w-full '>
-									<input
-										type='text'
-										className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-										placeholder='Número *'
-										name='domicilioNumero'
-										value={datosPersonales.domicilioNumero}
-										onChange={handleInputChange}
-									/>
-								</div>
-								<div className='md:w-1/4 w-full'>
-									<input
-										type='text'
-										className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-										placeholder='Piso'
-										name='domicilioPiso'
-										value={datosPersonales.domicilioPiso}
-										onChange={handleInputChange}
-									/>
-								</div>
-							</div>
-
-							{errores.domicilioError !== '' && (
-								<div className='text-red-500 '> {errores.domicilioError}</div>
-							)}
-						</div>
-					</div>
-					{/* Barrio */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Barrio <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='text'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Barrio'
-								name='barrio'
-								value={datosPersonales.barrio}
-								onChange={handleInputChange}
-							/>
-							{errores.barrioError !== '' && (
-								<div className='text-red-500 '> {errores.barrioError}</div>
-							)}
-						</div>
-					</div>
-					{/* Email */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Email <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1'>
-							<input
-								type='email'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
-								placeholder='Email'
-								name='email'
-								value={datosPersonales.email}
-								onChange={handleInputChange}
-							/>
-							{errores.emailError !== '' && (
-								<div className='text-red-500 '> {errores.emailError}</div>
-							)}
-						</div>
-					</div>
-
-					{/* Localidad */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Localidad <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<select
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-								name='localidad'
-								value={localidad}
-								onChange={handleInputChange}
-							>
-								<option value='' disabled hidden>
-									Localidad
-								</option>
-								{localidades.map((localidad) => (
-									<option key={localidad.nombre} value={localidad.nombre}>
-										{localidad.nombre}
-									</option>
-								))}
-							</select>
-							{errores.localidadError !== '' && (
-								<div className='text-red-500 '>{errores.localidadError}</div>
-							)}
-						</div>
-					</div>
-
-					<h2 className='text-xl mt-8 text-titles'>
-						Entidad Intermedia interviniente
-					</h2>
+		<PageLayout title='Nueva mediación'>
+			<div className='mt-4 px-4  text-center md:px-8 md:mt-8  lg:px-20 lg:mt-10 md:text-left'>
+				<div className='mb-8'>
+					<h1 className='text-3xl font-semibold'>Cargar nueva mediación</h1>
+					<br></br>
+					<h4 className='text-xl text-titles'>
+						Disponible para las personas y/o instituciones que se encuentran
+						implicados en un conflicto comunitario o vecinal y están interesados
+						en resolverlo a través de un acuerdo.
+					</h4>
+				</div>
+				<div className='bg-white p-8 rounded-xl mb-8'>
+					<h2 className='text-xl text-titles'>Requirente</h2>
 					<hr className='my-4 border-gray-500/30' />
-					{/* Empresa */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Empresa <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<select
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
-								name='empresa'
-								value={empresa}
-								onChange={handleInputChange}
-							>
-								<option value='' disabled hidden>
-									Seleccione la empresa
-								</option>
-								{empresas.map((empresa) => (
-									<option key={empresa.nombre} value={empresa.nombre}>
-										{empresa.nombre}
-									</option>
-								))}
-							</select>
-							{errores.empresaError !== '' && (
-								<div className='text-red-500 '>{errores.empresaError}</div>
-							)}
-						</div>
-					</div>
-					{/* Motivos */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-						<div className='w-full md:w-1/4'>
-							<p>
-								Motivo del requerimiento <span className='text-red-500'>*</span>
-							</p>
-						</div>
-						<div className='flex-1 '>
-							<textarea
-								type='text'
-								name='motivoRequerimiento'
-								className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
-								placeholder='Motivos del requerimiento'
-								onChange={handleInputChange}
-							/>
-							{errores.motivoRequerimientoError !== '' && (
-								<div className='text-red-500 '>
-									{errores.motivoRequerimientoError}
+					<form onSubmit={saveConsulta} id='formMediacion'>
+						{/* NOMBRE */}
+						<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Nombre completo <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1 '>
+								<div className='flex items-center gap-4'>
+									<div className='w-full'>
+										<input
+											type='text'
+											name='nombre'
+											value={datosPersonales.nombre}
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border deault'
+											placeholder='Nombre(s) *'
+											onChange={handleInputChange}
+										/>
+									</div>
+									<div className='w-full'>
+										<input
+											type='text'
+											name='apellido'
+											value={datosPersonales.apellido}
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+											placeholder='Apellido(s) *'
+											onChange={handleInputChange}
+										/>
+									</div>
 								</div>
-							)}
-						</div>
-					</div>
 
-					{/* Documentos */}
-					<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
-						<div className='w-full md:w-1/4'>
-							<p>Documentación adicional</p>
+								{errores.nombreError !== '' && (
+									<div className='text-red-500 '> {errores.nombreError}</div>
+								)}
+							</div>
 						</div>
-						<div className='flex-1 '>
-							<div>
+						{/* DNI */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									DNI <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1'>
 								<input
-									type='file'
-									id='archivos'
-									name='archivos'
-									className='hidden md:w-1/2'
-									multiple
-									onChange={handleFilesSelected}
+									type='text'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+									placeholder='DNI *'
+									name='dni'
+									value={datosPersonales.dni}
+									onChange={handleInputChange}
 								/>
-								<label
-									htmlFor='archivos'
-									className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
-								>
-									Seleccionar documentos
-								</label>
-							</div>
-
-							<div
-								id='lista-archivos'
-								className='flex  flex-wrap gap-2 text-gray-400 text-sm mt-4'
-							>
-								{selectedFiles.map((fileName, index) => (
-									<React.Fragment key={fileName}>
-										{index > 0 && index < selectedFiles.length - 1 && '-'}
-										<span>{fileName}</span>
-									</React.Fragment>
-								))}
+								{errores.dniError !== '' && (
+									<div className='text-red-500'> {errores.dniError}</div>
+								)}
 							</div>
 						</div>
-					</div>
+						{/* Telefono Celular */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Teléfono Celular <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1'>
+								<input
+									type='text'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+									placeholder='Teléfono celular *'
+									name='telefonoCelular'
+									value={datosPersonales.telefonoCelular}
+									onChange={handleInputChange}
+								/>
+								{errores.telefonoCelularError !== '' && (
+									<div className='text-red-500 '>
+										{errores.telefonoCelularError}
+									</div>
+								)}
+							</div>
+						</div>
 
-					<hr className='my-8 border-gray-500/30' />
-					<div className='flex justify-end'>
-						<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>
-							Guardar
-						</button>
-					</div>
-				</form>
+						{/* Domicilio */}
+						<div className='flex flex-col gap-y-2 md:flex-row md:items-center mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Domicilio Constituido <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1 '>
+								<div className='flex items-center gap-4'>
+									<div className='md:w-1/2 w-full'>
+										<input
+											type='text'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border deault'
+											placeholder='Dirección *'
+											name='domicilioCalle'
+											value={datosPersonales.domicilioCalle}
+											onChange={handleInputChange}
+										/>
+									</div>
+									<div className='md:w-1/4 w-full '>
+										<input
+											type='text'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+											placeholder='Número *'
+											name='domicilioNumero'
+											value={datosPersonales.domicilioNumero}
+											onChange={handleInputChange}
+										/>
+									</div>
+									<div className='md:w-1/4 w-full'>
+										<input
+											type='text'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+											placeholder='Piso'
+											name='domicilioPiso'
+											value={datosPersonales.domicilioPiso}
+											onChange={handleInputChange}
+										/>
+									</div>
+								</div>
+
+								{errores.domicilioError !== '' && (
+									<div className='text-red-500 '> {errores.domicilioError}</div>
+								)}
+							</div>
+						</div>
+						{/* Barrio */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Barrio <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1'>
+								<input
+									type='text'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+									placeholder='Barrio'
+									name='barrio'
+									value={datosPersonales.barrio}
+									onChange={handleInputChange}
+								/>
+								{errores.barrioError !== '' && (
+									<div className='text-red-500 '> {errores.barrioError}</div>
+								)}
+							</div>
+						</div>
+						{/* Email */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Email <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1'>
+								<input
+									type='email'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
+									placeholder='Email'
+									name='email'
+									value={datosPersonales.email}
+									onChange={handleInputChange}
+								/>
+								{errores.emailError !== '' && (
+									<div className='text-red-500 '> {errores.emailError}</div>
+								)}
+							</div>
+						</div>
+
+						{/* Localidad */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Localidad <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1 '>
+								<select
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
+									name='localidad'
+									value={localidad}
+									onChange={handleInputChange}
+								>
+									<option value='' disabled hidden>
+										Localidad
+									</option>
+									{localidades.map((localidad) => (
+										<option key={localidad.nombre} value={localidad.nombre}>
+											{localidad.nombre}
+										</option>
+									))}
+								</select>
+								{errores.localidadError !== '' && (
+									<div className='text-red-500 '>{errores.localidadError}</div>
+								)}
+							</div>
+						</div>
+
+						<h2 className='text-xl mt-8 text-titles'>
+							Entidad Intermedia interviniente
+						</h2>
+						<hr className='my-4 border-gray-500/30' />
+						{/* Empresa */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Empresa <span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1 '>
+								<select
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
+									name='empresa'
+									value={empresa}
+									onChange={handleInputChange}
+								>
+									<option value='' disabled hidden>
+										Seleccionar la empresa
+									</option>
+									{empresas.map((empresa) => (
+										<option key={empresa.nombre} value={empresa.nombre}>
+											{empresa.nombre}
+										</option>
+									))}
+								</select>
+								{errores.empresaError !== '' && (
+									<div className='text-red-500 '>{errores.empresaError}</div>
+								)}
+							</div>
+						</div>
+						{/* Motivos */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+							<div className='w-full md:w-1/4'>
+								<p>
+									Motivo del requerimiento{' '}
+									<span className='text-red-500'>*</span>
+								</p>
+							</div>
+							<div className='flex-1 '>
+								<textarea
+									type='text'
+									name='motivoRequerimiento'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border h-48'
+									placeholder='Motivos del requerimiento'
+									onChange={handleInputChange}
+								/>
+								{errores.motivoRequerimientoError !== '' && (
+									<div className='text-red-500 '>
+										{errores.motivoRequerimientoError}
+									</div>
+								)}
+							</div>
+						</div>
+
+						{/* Documentos */}
+						<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
+							<div className='w-full md:w-1/4'>
+								<p>Documentación adicional</p>
+							</div>
+							<div className='flex-1 '>
+								<div>
+									<input
+										type='file'
+										id='archivos'
+										name='archivos'
+										className='hidden md:w-1/2'
+										multiple
+										onChange={handleFilesSelected}
+									/>
+									<label
+										htmlFor='archivos'
+										className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white  leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
+									>
+										Seleccionar documentos
+									</label>
+								</div>
+
+								<div
+									id='lista-archivos'
+									className='flex  flex-wrap gap-2 text-gray-400 text-sm mt-4'
+								>
+									{selectedFiles.map((fileName, index) => (
+										<React.Fragment key={fileName}>
+											{index > 0 && index < selectedFiles.length - 1 && '-'}
+											<span>{fileName}</span>
+										</React.Fragment>
+									))}
+								</div>
+							</div>
+						</div>
+
+						<hr className='my-8 border-gray-500/30' />
+						<div className='flex justify-end'>
+							<button className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'>
+								Guardar
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
+		</PageLayout>
 	);
 }
 

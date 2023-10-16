@@ -204,7 +204,7 @@ function index() {
 											type='text'
 											name='nombre'
 											value={datosSolicitudInscripcion.nombre}
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border deault'
 											placeholder='Nombre(s) *'
 											onChange={handleInputChangeSolicitud}
 										/>
@@ -214,7 +214,7 @@ function index() {
 											type='text'
 											name='apellido'
 											value={datosSolicitudInscripcion.apellido}
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Apellido(s) *'
 											onChange={handleInputChangeSolicitud}
 										/>
@@ -236,7 +236,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='DNI *'
 									name='dni'
 									value={datosSolicitudInscripcion.dni}
@@ -255,7 +255,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='CUIT *'
 									name='cuit'
 									value={datosSolicitudInscripcion.cuit}
@@ -274,7 +274,7 @@ function index() {
 							</div>
 							<div className='flex-1'>
 								<select
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
 									name='sexo'
 									value={datosSolicitudInscripcion.sexo}
 									onChange={handleInputChangeSolicitud}
@@ -299,7 +299,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Razón Social *'
 									name='razonSocial'
 									value={datosSolicitudInscripcion.razonSocial}
@@ -322,7 +322,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Representante Legal *'
 									name='representanteLegal'
 									value={datosSolicitudInscripcion.representanteLegal}
@@ -353,7 +353,7 @@ function index() {
 									<div className='md:w-1/8 w-full'>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border deault'
 											placeholder='Dirección *'
 											name='domicilioCalle'
 											value={datosDomicilio.domicilioCalle}
@@ -363,7 +363,7 @@ function index() {
 									<div className='md:w-1/2 w-full '>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Número *'
 											name='domicilioNumero'
 											value={datosDomicilio.domicilioNumero}
@@ -373,7 +373,7 @@ function index() {
 									<div className='md:w-1/2 w-full'>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Piso'
 											name='domicilioPiso'
 											value={datosDomicilio.domicilioPiso}
@@ -383,7 +383,7 @@ function index() {
 									<div className='md:w-1/2 w-full'>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Depto'
 											name='domicilioDpto'
 											value={datosDomicilio.domicilioDpto}
@@ -408,7 +408,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Teléfono celular *'
 									name='telefonoCelular'
 									value={datosDomicilio.telefonoCelular}
@@ -429,7 +429,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Teléfono Fijo'
 									name='telefonoFijo'
 									value={datosDomicilio.telefonoFijo}
@@ -453,7 +453,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Email'
 									name='email'
 									value={datosDomicilio.email}
@@ -473,7 +473,7 @@ function index() {
 							</div>
 							<div className='flex-1 '>
 								<select
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
 									name='localidad'
 									value={localidad}
 									onChange={handleInputLocalidad}
@@ -503,7 +503,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Partido'
 									name='partido'
 									value={datosDomicilio.partido}
@@ -525,7 +525,7 @@ function index() {
 							<div className='flex-1 '>
 								<input
 									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Provincia'
 									name='provincia'
 									value={datosDomicilio.provincia}
@@ -561,7 +561,7 @@ function index() {
 									/>
 									<label
 										htmlFor='archivos'
-										className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
+										className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white  leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
 									>
 										Seleccionar documentos
 									</label>

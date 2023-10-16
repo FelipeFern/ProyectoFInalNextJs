@@ -156,10 +156,10 @@ function index() {
 	return (
 		<PageLayout title='Nueva consulta general'>
 			<div className='mt-4 px-4  text-center md:px-8 md:mt-8  lg:px-20 lg:mt-10 md:text-left'>
-				<div className='mb-8'>
-					<h1 className='text-3xl font-semibold'>Cargar nueva consulta</h1>
+				<div className=' p-8'>
+					<h1 className='text-4xl font-semibold'>Cargar nueva consulta</h1>
 					<br></br>
-					<h4 className='text-xl text-titles'>
+					<h4 className='text-lg text-titles'>
 						Consultas generales a fin de brindar información y asesoramiento en
 						forma totalmente gratuita a los consumidores y usuarios acerca de
 						los derechos que les asisten como tales.
@@ -178,12 +178,12 @@ function index() {
 							</div>
 							<div className='flex-1 '>
 								<div className='flex items-center gap-4'>
-									<div className='w-full'>
+									<div className='w-full rounded-lg '>
 										<input
 											type='text'
 											name='nombre'
 											value={datosPersonales.nombre}
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
+											className='w-full py-2 px-4  rounded-lg border-gray-400 border  '
 											placeholder='Nombre(s) *'
 											onChange={handleInputChange}
 										/>
@@ -193,7 +193,7 @@ function index() {
 											type='text'
 											name='apellido'
 											value={datosPersonales.apellido}
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border '
 											placeholder='Apellido(s) *'
 											onChange={handleInputChange}
 										/>
@@ -215,7 +215,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='DNI *'
 									name='dni'
 									value={datosPersonales.dni}
@@ -234,7 +234,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='CUIL *'
 									name='cuil'
 									value={datosPersonales.cuil}
@@ -256,7 +256,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Teléfono celular *'
 									name='telefonoCelular'
 									value={datosPersonales.telefonoCelular}
@@ -277,7 +277,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Teléfono Fijo'
 									name='telefonoFijo'
 									value={datosPersonales.telefonoFijo}
@@ -302,7 +302,7 @@ function index() {
 									<div className='md:w-1/2 w-full'>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 deault'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border default'
 											placeholder='Dirección *'
 											name='domicilioCalle'
 											value={datosPersonales.domicilioCalle}
@@ -312,7 +312,7 @@ function index() {
 									<div className='md:w-1/4 w-full '>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Número *'
 											name='domicilioNumero'
 											value={datosPersonales.domicilioNumero}
@@ -322,7 +322,7 @@ function index() {
 									<div className='md:w-1/4 w-full'>
 										<input
 											type='text'
-											className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+											className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 											placeholder='Piso'
 											name='domicilioPiso'
 											value={datosPersonales.domicilioPiso}
@@ -346,7 +346,7 @@ function index() {
 							<div className='flex-1'>
 								<input
 									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Email'
 									name='email'
 									value={datosPersonales.email}
@@ -366,7 +366,7 @@ function index() {
 							</div>
 							<div className='flex-1 '>
 								<select
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
 									name='localidad'
 									value={localidad}
 									onChange={handleInputChange}
@@ -395,13 +395,13 @@ function index() {
 							</div>
 							<div className='flex-1 '>
 								<select
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 appearance-none'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
 									name='empresa'
 									value={empresa}
 									onChange={handleInputChange}
 								>
 									<option value='' disabled hidden>
-										Seleccione la empresa
+										Seleccionar la empresa
 									</option>
 									{empresas.map((empresa) => (
 										<option key={empresa.nombre} value={empresa.nombre}>
@@ -425,7 +425,7 @@ function index() {
 								<textarea
 									name='hechos'
 									type='text'
-									className='w-full py-2 px-4 outline-none rounded-lg bg-gray-200 h-48'
+									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border h-48'
 									placeholder='Hechos'
 									onChange={handleInputChange}
 								/>
@@ -458,7 +458,7 @@ function index() {
 									/>
 									<label
 										htmlFor='archivos'
-										className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
+										className='w-full md:w-1/2 flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer bg-white  leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out'
 									>
 										Seleccionar documentos
 									</label>
