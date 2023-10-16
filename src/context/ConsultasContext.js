@@ -32,7 +32,6 @@ function ConsultasProvider({ children }) {
 				let dataConsultas = await response.json();
 				let consultas = dataConsultas.data;
 				setAllConsultasGenerales(consultas);
-				console.log('Consultas', consultas);
 
 				response = await fetch('/api/solicitudes/nuevaMediacion');
 				let dataMediaciones = await response.json();
