@@ -1,10 +1,6 @@
 import React from 'react';
 
-type Props = {
-  size?: number;
-};
-
-export default function Loader({ size = 32 }: Props) {
+export default function Loader({ size = 32 }) {
   return (
     <div role="status" className="flex justify-center items-center">
       <svg
