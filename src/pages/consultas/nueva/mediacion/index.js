@@ -159,17 +159,17 @@ function index() {
 	return (
 		<PageLayout title='Nueva mediación'>
 			<div className='mt-4 px-4  text-center md:px-8 md:mt-8  lg:px-20 lg:mt-10 md:text-left'>
-				<div className='mb-8'>
+				<div className='px-8'>
 					<h1 className='text-3xl font-semibold'>Cargar nueva mediación</h1>
 					<br></br>
-					<h4 className='text-xl text-titles'>
+					<h4 className='text-lg text-titles'>
 						Disponible para las personas y/o instituciones que se encuentran
 						implicados en un conflicto comunitario o vecinal y están interesados
 						en resolverlo a través de un acuerdo.
 					</h4>
 				</div>
 				<div className='bg-white p-8 rounded-xl mb-8'>
-					<h2 className='text-xl text-titles'>Requirente</h2>
+					<h2 className='text-xl font-bold'>Requirente</h2>
 					<hr className='my-4 border-gray-500/30' />
 					<form onSubmit={saveConsulta} id='formMediacion'>
 						{/* NOMBRE */}

@@ -176,18 +176,18 @@ function index() {
 	return (
 		<PageLayout title='Nuevo consorcio edificio'>
 			<div className='mt-4 px-4  text-center md:px-8 md:mt-8  lg:px-20 lg:mt-10 md:text-left'>
-				<div className='mb-8 px-8'>
+				<div className='px-8'>
 					<h1 className='text-3xl font-semibold'>
 						Cargar registro propiedad de edificios
 					</h1>
 					<br></br>
-					<h4 className='text-xl text-titles'>
+					<h4 className='text-lg text-titles'>
 						Programa de Información y Ordenamiento de la Actividad de
 						Administradores de Consorcios de Propiedad Horizontal
 					</h4>
 				</div>
-				<div className='bg-white px-8 py-4 rounded-xl mb-8'>
-					<h3 className='text-xl text-titles'>Solicitud de Inscripción</h3>
+				<div className='bg-white p-8 rounded-xl mb-8'>
+					<h3 className='text-xl font-bold'>Solicitud de Inscripción</h3>
 					<hr className='my-6 border-gray-500/30' />
 					<form onSubmit={saveConsulta} encType='multipart/form-data'>
 						{/* NOMBRE */}
