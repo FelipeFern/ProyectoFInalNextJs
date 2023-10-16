@@ -30,10 +30,10 @@ async function onGET(req, res) {
 		const consorcios = consorciosDocs.docs.map((doc) => doc.data());
 
 		const consultas = consultasGenerales.concat(mediaciones, consorcios);
-		console.log(consultas)
-
+	
 		const consulta = consultas.find((doc) => doc.id === id);
 		if (consulta) {
+
 			return res.status(200).json({ consulta });
 		} else {
 			console.log('Objeto no encontrado');
