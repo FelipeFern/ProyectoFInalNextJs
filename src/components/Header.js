@@ -52,16 +52,10 @@ export default function Header() {
 					<li className='link-animation'>
 						<Link href='/'>Inicio</Link>
 					</li>
-					<li className='link-animation'>
-						<Link href='/consultas'>Consultas</Link>
-					</li>
+
 					<li>
 						<div className='relative group'>
-							<button
-								className=' link-animation'
-							>
-								Crear nuevo reclamo
-							</button>
+							<button className=' link-animation'>Crear nuevo reclamo</button>
 							<ul className='absolute bg-white text-gray-800 mt-2 p-2 space-y-1 w-40 border border-gray-200 rounded-lg opacity-0 invisible transition-all duration-300 transform scale-0 group-hover:opacity-100 group-hover:visible group-hover:scale-100'>
 								<li>
 									<a
@@ -98,7 +92,9 @@ export default function Header() {
 							</ul>
 						</div>
 					</li>
-
+					<li className='link-animation'>
+						<Link href='/consultas'>Consultas</Link>
+					</li>
 					{/* <li className='link-animation'>
 						<Link href='/consultas/nueva/consultaGeneral'>
 							Nueva Consulta General
