@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/validator';
 import PageLayout from '@/layouts/PageLayout';
+import { useRouter } from 'next/router';
 
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const router = useRouter();
 
 	const [datosPersonales, setDatosPersonales] = useState({
 		nombre: '',
@@ -71,12 +74,9 @@ function index() {
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
-		setErrores(errors);
+		// let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
+		// setErrores(errors);
 
-		console.log(datosPersonales);
-		console.log(localidad);
-		console.log(empresa);
 		try {
 			const formData = new FormData();
 
@@ -105,7 +105,9 @@ function index() {
 			});
 
 			if (response.ok) {
-				console.log('Solicitud POST exitosa');
+				const data = await response.json();
+				const id = data.id; 
+				router.push(`/consultas/detalles/${id}`);
 			} else {
 				response.json().then((errorData) => {
 					setErrores((prevErrores) => ({

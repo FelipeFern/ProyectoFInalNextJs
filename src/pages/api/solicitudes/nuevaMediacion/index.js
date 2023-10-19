@@ -118,7 +118,7 @@ async function onPOST(req, res) {
 
 			console.log(`New Mediacion created with ID: ${id}`);
 
-			res.status(200).json({ mensaje: 'Nueva Mediación creada' });
+			res.status(200).json({ id: id });
 		};
 
 		await processForm();

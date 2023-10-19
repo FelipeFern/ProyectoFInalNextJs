@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 import PageLayout from '@/layouts/PageLayout';
+import { useRouter } from 'next/router';
+
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const router = useRouter();
+
 
 	const [datosPersonales, setDatosPersonales] = useState({
 		nombre: '',
@@ -111,13 +116,17 @@ function index() {
 				});
 
 				if (response.ok) {
-					// La solicitud fue exitosa
-					console.log('Solicitud POST exitosa');
-					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de éxito
+					const data = await response.json();
+					const id = data.id; 
+					router.push(`/consultas/detalles/${id}`);
 				} else {
-					// La solicitud no fue exitosa
-					console.log('Error en la solicitud POST');
-					// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+					response.json().then((errorData) => {
+						setErrores((prevErrores) => ({
+							...prevErrores,
+							documentosError: errorData.error,
+						}));
+						console.log('Mensaje de error: ' + errorData.error);
+					});
 				}
 			} catch (error) {
 				console.error('Error en la solicitud POST:', error);

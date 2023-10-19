@@ -19,7 +19,6 @@ import APIRouteHelper from '../../../../common/api/APIRouteHelper';
 import { db } from '../../../../common/db/firebase';
 import multer from 'multer';
 
-const upload = multer({ dest: 'uploads/' });
 
 export default async function (req, res) {
 	return new APIRouteHelper(req, res, permissionName.API_tipoSolicitudes)
@@ -120,14 +119,12 @@ async function onPOST(req, res) {
 				console.log(`Archivo ${fileName} cargado en ${rutaAlmacenamiento}`);
 			}
 
-
-
 			await updateDoc(doc(firebaseCollection, id), { id });
-			await updateDoc(doc(firebaseCollection, id), { archivos: filesArray });
+			await updateDoc(doc(firebaseCollection, id), { files: filesArray });
 
 			console.log(`New Solicitud de Consorcio de Edificio created with ID: ${id}`);
 
-			res.status(200).json({ mensaje: 'Procesamiento completado' });
+			res.status(200).json({ id: id });
 		};
 
 		await processForm();

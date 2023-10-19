@@ -112,7 +112,7 @@ async function onPOST(req, res) {
 
 			console.log(`New Consulta created with ID: ${id}`);
 
-			res.status(200).json({ mensaje: 'Procesamiento completado' });
+			res.status(200).json({ id: id });
 		};
 
 		await processForm();

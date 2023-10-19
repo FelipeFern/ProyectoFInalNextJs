@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { validateDataNuevoConsorcio } from '@/common/validation/nuevaPropiedadEdificio/validator';
 import PageLayout from '@/layouts/PageLayout';
+import { useRouter } from 'next/router';
+
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const router = useRouter();
+
 
 	const [datosSolicitudInscripcion, setDatosSolicitudInscripcion] = useState({
 		nombre: '',
@@ -131,7 +135,9 @@ function index() {
 			});
 
 			if (response.ok) {
-				console.log('Solicitud POST exitosa');
+				const data = await response.json();
+				const id = data.id; 
+				router.push(`/consultas/detalles/${id}`);
 			} else {
 				response.json().then((errorData) => {
 					setErrores((prevErrores) => ({
