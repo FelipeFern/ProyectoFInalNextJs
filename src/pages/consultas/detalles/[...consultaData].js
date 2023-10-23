@@ -616,25 +616,23 @@ function index() {
 												</div>
 												<div className='flex-1 '>
 													<div>
-														<ol>
-															{estado.archivos.map((file) => (
-																<li key={file.fileName} className='list-item'>
-																	<a
-																		key={file.fileName}
-																		href={file.downloadURL}
-																		target='_blank'
-																		className='text-blue-500 underline'
-																	>
-																		{file.fileName}
-																	</a>
-																</li>
-															))}
-														</ol>
+														{estado.archivos.map((file) => (
+															<div key={file.fileName} className='list-item'>
+																<a
+																	key={file.fileName}
+																	href={file.downloadURL}
+																	target='_blank'
+																	className='text-blue-500 underline'
+																>
+																	{`${file.fileName}\n`}
+																</a>
+															</div>
+														))}
 													</div>
 												</div>
 											</div>
 										) : null}
-										<hr class="w-72 h-1 my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700" />
+										<hr class='w-72 h-1 my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700' />
 									</div>
 								))}
 							</div>
