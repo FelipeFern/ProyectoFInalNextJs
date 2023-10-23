@@ -77,8 +77,12 @@ async function onPOST(req, res) {
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				createdAt: new Date(),
-				tipo:'Consulta general'
-
+				tipo:'Consulta general',
+				estados: {
+					estado: 'Pendiente de Revisión',
+					updateAt: new Date(),
+					responsable: nombre + ' ' + apellido,
+				}
 			});
 			const id = docRef.id;
 

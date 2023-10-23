@@ -19,7 +19,6 @@ import APIRouteHelper from '../../../../common/api/APIRouteHelper';
 import { db } from '../../../../common/db/firebase';
 import multer from 'multer';
 
-
 export default async function (req, res) {
 	return new APIRouteHelper(req, res, permissionName.API_tipoSolicitudes)
 		.setMethod(HTTPMethod.GET, {
@@ -43,7 +42,6 @@ async function onGET(req, res) {
 		res.status(400).json({ error });
 	}
 }
-
 
 async function onPOST(req, res) {
 	try {
@@ -89,14 +87,18 @@ async function onPOST(req, res) {
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				createdAt: new Date(),
-				tipo:'Consorcio edificio'
+				tipo: 'Consorcio edificio',
+				estados: {
+					estado: 'Pendiente de Revisión',
+					updateAt: new Date(),
+					responsable: nombre + ' ' + apellido,
+				},
 			});
 			const id = docRef.id;
 
 			const rutaAlmacenamiento = `ArchivosNuevoConsorcio/${dni}/${id}/`;
 			const storage = getStorage();
 
-			
 			// Itera sobre los archivos y realiza operaciones con cada uno.
 			for (const file of archivos) {
 				const fileName = file.originalname;
@@ -113,7 +115,7 @@ async function onPOST(req, res) {
 				let uploadFile = await uploadBytes(fileRef, fileBuffer, metadata);
 				await getDownloadURL(uploadFile.ref).then((downloadURL) => {
 					console.log('File available at', downloadURL);
-					filesArray.push({fileName, downloadURL});
+					filesArray.push({ fileName, downloadURL });
 				});
 
 				console.log(`Archivo ${fileName} cargado en ${rutaAlmacenamiento}`);
@@ -122,7 +124,9 @@ async function onPOST(req, res) {
 			await updateDoc(doc(firebaseCollection, id), { id });
 			await updateDoc(doc(firebaseCollection, id), { files: filesArray });
 
-			console.log(`New Solicitud de Consorcio de Edificio created with ID: ${id}`);
+			console.log(
+				`New Solicitud de Consorcio de Edificio created with ID: ${id}`
+			);
 
 			res.status(200).json({ id: id });
 		};
@@ -139,4 +143,3 @@ export const config = {
 		bodyParser: false,
 	},
 };
-

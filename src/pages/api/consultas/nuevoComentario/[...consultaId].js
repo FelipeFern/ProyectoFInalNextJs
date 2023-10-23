@@ -5,7 +5,9 @@ import {
 	getDocs,
 	doc,
 	addDoc,
+	getDoc,
 	updateDoc,
+	query,
 } from 'firebase/firestore';
 import {
 	getStorage,
@@ -19,30 +21,12 @@ import APIRouteHelper from '../../../../common/api/APIRouteHelper';
 import { db } from '../../../../common/db/firebase';
 import multer from 'multer';
 
-const upload = multer({ dest: 'uploads/' });
-
 export default async function (req, res) {
-	return new APIRouteHelper(req, res, permissionName.API_tipoSolicitudes)
-		.setMethod(HTTPMethod.GET, {
-			handle: onGET,
-		})
+	return new APIRouteHelper(req, res, permissionName.API_empresas)
 		.setMethod(HTTPMethod.POST, {
 			handle: onPOST,
 		})
 		.handle();
-}
-
-async function onGET(req, res) {
-	try {
-		const firastoreCollection = collection(db, 'SolicitudMediacion');
-
-		const firebaseDocs = await getDocs(firastoreCollection);
-		const data = firebaseDocs.docs.map((doc) => doc.data());
-
-		res.status(200).json({ data });
-	} catch (error) {
-		res.status(400).json({ error });
-	}
 }
 
 async function onPOST(req, res) {
@@ -50,11 +34,11 @@ async function onPOST(req, res) {
 		const filesArray = [];
 		const processForm = async () => {
 			await new Promise(async (resolve, reject) => {
-				const upload = multer().array('archivos', 15);
+				const upload = multer().array('archivos', 5);
 				await upload(req, res, (err) => {
 					if (err) {
 						console.error(err);
-						res.status(500).json({ error: 'Error al procesar el formulario' });
+						return res.status(500).json({ error: err.message });
 						reject(err);
 					} else {
 						resolve();
@@ -63,40 +47,50 @@ async function onPOST(req, res) {
 			});
 			// Accede a los archivos cargados a través de req.files, que será un array.
 			const archivos = req.files;
-			const {
-				nombre,
-				apellido,
-				dni,
-				cuil,
-				telefonoCelular,
-				telefonoFijo,
-				domicilioCalle,
-				domicilioNumero,
-				domicilioPiso,
-				email,
-				localidad,
-				empresa,
-				tipoConsulta,
-			} = req.body;
+			const { estado, comentarios, dni, responsable, tipo } = req.body;
 
-			const firebaseCollection = collection(db, 'SolicitudMediacion');
-			const docRef = await addDoc(firebaseCollection, {
-				...req.body,
-				createdAt: new Date(),
-				tipo:'Nueva mediación',
-				estados: {
-					estado: 'Pendiente de Revisión',
-					updateAt: new Date(),
-					responsable: nombre + ' ' + apellido,
-				},
-			});
-			const id = docRef.id;
+			// Verifica si se cargaron archivos.
+			// if (!archivos || archivos.length === 0) {
+			// 	res.status(400).json({ error: 'No se han seleccionado archivos.' });
+			// 	return;
+			// }
 
+			const consultaId = req.query.consultaId;
+			const idConsulta = consultaId.join('');
+			let collectionType = '';
+
+			switch (tipo) {
+				case 'Consorcio edificio':
+					collectionType = 'SolicitudConsorcioEdificio';
+					break;
+				case 'Consulta general':
+					collectionType = 'NuevaConsulta';
+					break;
+				case 'Solicitud mediación':
+					collectionType = 'SolicitudMediacion';
+					break;
+				// case 'Cancelada':
+				// 	textColor = 'text-red-500';
+				// 	break;
+			}
+
+			// const tipoConsultaQuery = query(
+			// 	tipoConsultaRef,
+			// 	where('id', '==', idConsulta)
+			// );
+			console.log('tipo: ', tipo)
+			console.log('Llegue hasta aca ', collectionType);
+			const docRef = doc(db, collectionType, idConsulta);
+			const docSnap = await getDoc(docRef);
+			let consulta = docSnap.data();
+
+			console.log(consulta)
+
+			const rutaAlmacenamiento = `ArchivosComentarios/${idConsulta}/`;
+			const storage = getStorage();
+
+			// Itera sobre los archivos y realiza operaciones con cada uno.
 			if (archivos.length > 0) {
-				const rutaAlmacenamiento = `ArchivosNuevaMediacion/${dni}/${id}/`;
-				const storage = getStorage();
-
-				// Itera sobre los archivos y realiza operaciones con cada uno.
 				for (const file of archivos) {
 					const fileName = file.originalname;
 					const fileBuffer = file.buffer; // Búfer del archivo
@@ -118,12 +112,23 @@ async function onPOST(req, res) {
 					console.log(`Archivo ${fileName} cargado en ${rutaAlmacenamiento}`);
 				}
 			}
-			await updateDoc(doc(firebaseCollection, id), { id });
-			await updateDoc(doc(firebaseCollection, id), { archivos: filesArray });
 
-			console.log(`New Mediacion created with ID: ${id}`);
+			let estados = consulta.estados;
 
-			res.status(200).json({ id: id });
+			let nuevoEstado = {
+				comentarios: comentarios,
+				estado: estado,
+				responsable: responsable,
+				archivos: filesArray,
+				createdAt: new Date(),
+			};
+			let nuevosEstados = estados.concat(nuevoEstado);
+			console.log(nuevosEstados);
+			await updateDoc(doc(db, collectionType, idConsulta), {
+				estados: nuevosEstados,
+			});
+
+			return res.status(200).json({ consulta });
 		};
 
 		await processForm();
@@ -132,6 +137,7 @@ async function onPOST(req, res) {
 		res.status(500).json({ error: 'Error al procesar' });
 	}
 }
+
 
 export const config = {
 	api: {
