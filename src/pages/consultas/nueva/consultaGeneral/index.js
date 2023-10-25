@@ -3,7 +3,6 @@ import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/val
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
 
-
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
@@ -74,52 +73,57 @@ function index() {
 	const saveConsulta = async (event) => {
 		event.preventDefault();
 
-		// let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
-		// setErrores(errors);
+		let errors = validateDataNuevaConsulta(datosPersonales, localidad, empresa);
+		setErrores(errors);
 
-		try {
-			const formData = new FormData();
+		const noExistenErrores = Object.values(errors).every(
+			(valor) => valor === ''
+		);
+		if (noExistenErrores) {
+			try {
+				const formData = new FormData();
 
-			formData.append('nombre', datosPersonales.nombre);
-			formData.append('apellido', datosPersonales.apellido);
-			formData.append('dni', datosPersonales.dni);
-			formData.append('cuil', datosPersonales.cuil);
-			formData.append('telefonoCelular', datosPersonales.telefonoCelular);
-			formData.append('telefonoFijo', datosPersonales.telefonoFijo);
-			formData.append('domicilioCalle', datosPersonales.domicilioCalle);
-			formData.append('domicilioNumero', datosPersonales.domicilioNumero);
-			formData.append('domicilioPiso', datosPersonales.domicilioPiso);
-			formData.append('domicilioDpto', datosPersonales.domicilioDpto);
-			formData.append('email', datosPersonales.email);
-			formData.append('hechos', datosPersonales.hechos);
-			formData.append('localidad', localidad);
-			formData.append('empresa', empresa);
+				formData.append('nombre', datosPersonales.nombre);
+				formData.append('apellido', datosPersonales.apellido);
+				formData.append('dni', datosPersonales.dni);
+				formData.append('cuil', datosPersonales.cuil);
+				formData.append('telefonoCelular', datosPersonales.telefonoCelular);
+				formData.append('telefonoFijo', datosPersonales.telefonoFijo);
+				formData.append('domicilioCalle', datosPersonales.domicilioCalle);
+				formData.append('domicilioNumero', datosPersonales.domicilioNumero);
+				formData.append('domicilioPiso', datosPersonales.domicilioPiso);
+				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
+				formData.append('email', datosPersonales.email);
+				formData.append('hechos', datosPersonales.hechos);
+				formData.append('localidad', localidad);
+				formData.append('empresa', empresa);
 
-			for (let i = 0; i < files.length; i++) {
-				formData.append(`archivos`, files[i]);
-			}
+				for (let i = 0; i < files.length; i++) {
+					formData.append(`archivos`, files[i]);
+				}
 
-			const response = await fetch('/api/solicitudes/nuevaConsulta', {
-				method: 'POST',
-				body: formData,
-			});
-
-			if (response.ok) {
-				const data = await response.json();
-				const id = data.id; 
-				router.push(`/consultas/detalles/${id}`);
-			} else {
-				response.json().then((errorData) => {
-					setErrores((prevErrores) => ({
-						...prevErrores,
-						documentosError: errorData.error,
-					}));
-					console.log('Mensaje de error: ' + errorData.error);
+				const response = await fetch('/api/solicitudes/nuevaConsulta', {
+					method: 'POST',
+					body: formData,
 				});
+
+				if (response.ok) {
+					const data = await response.json();
+					const id = data.id;
+					router.push(`/consultas/detalles/${id}`);
+				} else {
+					response.json().then((errorData) => {
+						setErrores((prevErrores) => ({
+							...prevErrores,
+							documentosError: errorData.error,
+						}));
+						console.log('Mensaje de error: ' + errorData.error);
+					});
+				}
+			} catch (error) {
+				console.error('Error en la solicitud POST:', error);
+				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
-		} catch (error) {
-			console.error('Error en la solicitud POST:', error);
-			// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 		}
 	};
 

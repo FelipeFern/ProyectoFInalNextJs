@@ -3,12 +3,10 @@ import { validateDataNuevoConsorcio } from '@/common/validation/nuevaPropiedadEd
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
 
-
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
-
 
 	const [datosSolicitudInscripcion, setDatosSolicitudInscripcion] = useState({
 		nombre: '',
@@ -98,59 +96,63 @@ function index() {
 			localidad
 		);
 		setErrores(errors);
+		const noExistenErrores = Object.values(errors).every(
+			(valor) => valor === ''
+		);
+		if (noExistenErrores) {
+			try {
+				const formData = new FormData();
 
-		try {
-			const formData = new FormData();
+				formData.append('nombre', datosSolicitudInscripcion.nombre);
+				formData.append('apellido', datosSolicitudInscripcion.apellido);
+				formData.append('dni', datosSolicitudInscripcion.dni);
+				formData.append('cuit', datosSolicitudInscripcion.cuit);
+				formData.append('sexo', datosSolicitudInscripcion.sexo);
+				formData.append('razonSocial', datosSolicitudInscripcion.razonSocial);
+				formData.append(
+					'representanteLegal',
+					datosSolicitudInscripcion.representanteLegal
+				);
 
-			formData.append('nombre', datosSolicitudInscripcion.nombre);
-			formData.append('apellido', datosSolicitudInscripcion.apellido);
-			formData.append('dni', datosSolicitudInscripcion.dni);
-			formData.append('cuit', datosSolicitudInscripcion.cuit);
-			formData.append('sexo', datosSolicitudInscripcion.sexo);
-			formData.append('razonSocial', datosSolicitudInscripcion.razonSocial);
-			formData.append(
-				'representanteLegal',
-				datosSolicitudInscripcion.representanteLegal
-			);
+				formData.append('telefonoCelular', datosDomicilio.telefonoCelular);
+				formData.append('telefonoFijo', datosDomicilio.telefonoFijo);
+				formData.append('domicilioCalle', datosDomicilio.domicilioCalle);
+				formData.append('domicilioNumero', datosDomicilio.domicilioNumero);
+				formData.append('domicilioPiso', datosDomicilio.domicilioPiso);
+				formData.append('domicilioDpto', datosDomicilio.domicilioDpto);
+				formData.append('email', datosDomicilio.email);
+				formData.append('localidad', localidad);
+				formData.append('partido', 'Bahía Blanca');
+				formData.append('provincia', 'Buenos Aires');
 
-			formData.append('telefonoCelular', datosDomicilio.telefonoCelular);
-			formData.append('telefonoFijo', datosDomicilio.telefonoFijo);
-			formData.append('domicilioCalle', datosDomicilio.domicilioCalle);
-			formData.append('domicilioNumero', datosDomicilio.domicilioNumero);
-			formData.append('domicilioPiso', datosDomicilio.domicilioPiso);
-			formData.append('domicilioDpto', datosDomicilio.domicilioDpto);
-			formData.append('email', datosDomicilio.email);
-			formData.append('localidad', localidad);
-			formData.append('partido', 'Bahía Blanca');
-			formData.append('provincia', 'Buenos Aires');
+				for (let i = 0; i < files.length; i++) {
+					formData.append(`archivos`, files[i]);
+				}
 
-			for (let i = 0; i < files.length; i++) {
-				formData.append(`archivos`, files[i]);
-			}
-
-			console.log(files);
-			const response = await fetch('/api/solicitudes/consorcioEdificio', {
-				method: 'POST',
-				body: formData,
-			});
-
-			if (response.ok) {
-				const data = await response.json();
-				const id = data.id; 
-				router.push(`/consultas/detalles/${id}`);
-			} else {
-				response.json().then((errorData) => {
-					setErrores((prevErrores) => ({
-						...prevErrores,
-						documentosError: errorData.error,
-					}));
-					console.log('Mensaje de error: ' + errorData.error);
+				console.log(files);
+				const response = await fetch('/api/solicitudes/consorcioEdificio', {
+					method: 'POST',
+					body: formData,
 				});
-			}
-		} catch (error) {
-			console.error('Error en la solicitud POST:', error);
 
-			// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+				if (response.ok) {
+					const data = await response.json();
+					const id = data.id;
+					router.push(`/consultas/detalles/${id}`);
+				} else {
+					response.json().then((errorData) => {
+						setErrores((prevErrores) => ({
+							...prevErrores,
+							documentosError: errorData.error,
+						}));
+						console.log('Mensaje de error: ' + errorData.error);
+					});
+				}
+			} catch (error) {
+				console.error('Error en la solicitud POST:', error);
+
+				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
+			}
 		}
 	};
 
