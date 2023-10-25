@@ -90,6 +90,6 @@ body {
   }
 
   .input {
-    @apply bg-transparent text-black border-2 border-black w-full rounded-md px-2 py-1 text-lg leading-none outline-none;
+    @apply bg-transparent text-black border  border-gray-600 w-80 rounded-md px-2 py-1.5 text-lg leading-none outline-none;
   }
 }
