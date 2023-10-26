@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { validateDataNuevoConsorcio } from '@/common/validation/nuevaPropiedadEdificio/validator';
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
+import { toast } from 'sonner';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -138,6 +139,9 @@ function index() {
 				if (response.ok) {
 					const data = await response.json();
 					const id = data.id;
+					toast.success(
+						'Nuevo solicitud de Registro de Administradored de Edificio guardada correctamente!'
+					);
 					router.push(`/consultas/detalles/${id}`);
 				} else {
 					response.json().then((errorData) => {
@@ -153,6 +157,8 @@ function index() {
 
 				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
+		} else {
+			toast.error('Se han encontrado errores en el formulario');
 		}
 	};
 

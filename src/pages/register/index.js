@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import PageLayout from '@/layouts/PageLayout';
+import { toast } from 'sonner';
 import {
 	AtIcon,
 	CheckIcon,
@@ -67,6 +68,7 @@ export default function RegisterPage() {
 				if (response.ok) {
 					const data = await response.json();
 					const id = data.id;
+					toast.success('¡Usuario registrado correctamente!');
 					router.push(`/`);
 				} else {
 					response.json().then((errorData) => {

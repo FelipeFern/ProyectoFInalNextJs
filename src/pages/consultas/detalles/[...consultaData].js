@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import { useRouter } from 'next/router';
-
 import PageLayout from '@/layouts/PageLayout';
-import { useConsultasContext } from '@/context/ConsultasContext';
 import LoadingPage from '@/components/pages/LoadingPage';
-import { connectStorageEmulator } from 'firebase/storage';
+import { toast } from 'sonner';
+
 
 function index() {
 	const [addNewCommentSection, setAddNewCommentSection] = useState(false);
@@ -44,7 +42,9 @@ function index() {
 			);
 
 			if (response.ok) {
-				console.log('Solicitud POST exitosa');
+				toast.success(
+					'Nuevo comentario guardado correctamente!'
+				);
 				router.reload();
 			} else {
 				response.json().then((errorData) => {

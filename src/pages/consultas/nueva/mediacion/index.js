@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
+import {toast } from 'sonner';
 
 
 function index() {
@@ -118,6 +119,7 @@ function index() {
 				if (response.ok) {
 					const data = await response.json();
 					const id = data.id; 
+					toast.success('Nueva solicitud de Mediación guardada correctamente!');
 					router.push(`/consultas/detalles/${id}`);
 				} else {
 					response.json().then((errorData) => {
@@ -132,6 +134,9 @@ function index() {
 				console.error('Error en la solicitud POST:', error);
 				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
+		}else {
+			toast.error('Se han encontrado errores en el formulario');
+
 		}
 	};
 
