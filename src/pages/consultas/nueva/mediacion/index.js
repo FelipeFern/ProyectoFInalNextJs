@@ -3,12 +3,14 @@ import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/v
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
 import {toast } from 'sonner';
+import { useSession, signOut } from 'next-auth/react';
 
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const { data: session, status, update } = useSession();
 
 	const router = useRouter();
 
@@ -107,6 +109,8 @@ function index() {
 				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
 				formData.append('empresa', empresa);
 				formData.append('localidad', localidad);
+				formData.append('responsable', session.user.id)
+
 				for (let i = 0; i < files.length; i++) {
 					formData.append(`archivos`, files[i]);
 				}

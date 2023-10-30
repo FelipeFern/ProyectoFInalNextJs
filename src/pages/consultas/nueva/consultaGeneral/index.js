@@ -3,6 +3,7 @@ import { validateDataNuevaConsulta } from '@/common/validation/nuevaConsulta/val
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
 import { toast } from 'sonner';
+import { useSession, signOut } from 'next-auth/react';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -97,6 +98,7 @@ function index() {
 				formData.append('email', datosPersonales.email);
 				formData.append('hechos', datosPersonales.hechos);
 				formData.append('localidad', localidad);
+				formData.append('responsable', session.user.id)
 				formData.append('empresa', empresa);
 
 				for (let i = 0; i < files.length; i++) {
@@ -107,7 +109,6 @@ function index() {
 					method: 'POST',
 					body: formData,
 				});
-
 				if (response.ok) {
 					const data = await response.json();
 					const id = data.id;
@@ -472,11 +473,11 @@ function index() {
 									>
 										Seleccionar documentos
 									</label>
-									{errores.documentosError !== '' && (
+									{/* {errores.documentosError !== '' && (
 										<div className='text-red-500 '>
 											{errores.documentosError}
 										</div>
-									)}
+									)} */}
 								</div>
 
 								<div

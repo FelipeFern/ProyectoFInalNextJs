@@ -3,11 +3,14 @@ import { validateDataNuevoConsorcio } from '@/common/validation/nuevaPropiedadEd
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
 import { toast } from 'sonner';
+import { useSession, signOut } from 'next-auth/react';
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const { data: session, status, update } = useSession();
+
 
 	const [datosSolicitudInscripcion, setDatosSolicitudInscripcion] = useState({
 		nombre: '',
@@ -125,6 +128,8 @@ function index() {
 				formData.append('localidad', localidad);
 				formData.append('partido', 'Bahía Blanca');
 				formData.append('provincia', 'Buenos Aires');
+				formData.append('responsable', session.user.id)
+
 
 				for (let i = 0; i < files.length; i++) {
 					formData.append(`archivos`, files[i]);
