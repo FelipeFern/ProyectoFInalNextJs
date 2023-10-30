@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PageLayout from '@/layouts/PageLayout';
 import LoadingPage from '@/components/pages/LoadingPage';
 import { toast } from 'sonner';
-
+import { useSession, signOut } from 'next-auth/react';
 
 function index() {
 	const [addNewCommentSection, setAddNewCommentSection] = useState(false);
@@ -17,16 +17,20 @@ function index() {
 	const [consulta, setConsulta] = useState();
 
 	const router = useRouter();
+	const { data: session, status, update } = useSession();
 
 	const saveNewComment = async () => {
 		try {
 			const formData = new FormData();
+			let nombre = session.user.nombre;
+			let apellido = session.user.apellido;
+			let nombreCompleto = nombre + ' ' + apellido;
 
 			formData.append('estado', nuevoEstado);
 			formData.append('comentarios', comentario);
-			formData.append('responsable', 'Felipe Fernandez');
+			formData.append('responsable', nombreCompleto);
 			// formData.append('consultaId', consultaId);
-			formData.append('consultaId', 'cdLFiWT6C5jVcq4EQ6wF');
+			formData.append('consultaId', consultaId);
 			formData.append('tipo', consulta.tipo);
 
 			for (let i = 0; i < files.length; i++) {
@@ -42,9 +46,7 @@ function index() {
 			);
 
 			if (response.ok) {
-				toast.success(
-					'Nuevo comentario guardado correctamente!'
-				);
+				toast.success('Nuevo comentario guardado correctamente!');
 				router.reload();
 			} else {
 				response.json().then((errorData) => {
@@ -88,24 +90,26 @@ function index() {
 	};
 
 	function formatDate(createdAt) {
-		const fecha = new Date(
-			createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
-		);
+		if (createdAt !== undefined) {
+			const fecha = new Date(
+				createdAt.seconds * 1000 + createdAt.nanoseconds / 1000000
+			);
 
-		// Obtiene los componentes de la fecha (día, mes, año)
-		const dia = fecha.getDate();
-		const mes = fecha.getMonth() + 1; // Los meses en JavaScript son 0-based (0 = enero)
-		const año = fecha.getFullYear();
-		const horas = fecha.getHours();
-		const minutos = fecha.getMinutes();
+			// Obtiene los componentes de la fecha (día, mes, año)
+			const dia = fecha.getDate();
+			const mes = fecha.getMonth() + 1; // Los meses en JavaScript son 0-based (0 = enero)
+			const año = fecha.getFullYear();
+			const horas = fecha.getHours();
+			const minutos = fecha.getMinutes();
 
-		// Formatea la fecha y la hora como DD/MM/AAAA HH:MM
-		const fechaFormateada = `${dia.toString().padStart(2, '0')}/${mes
-			.toString()
-			.padStart(2, '0')}/${año} - ${horas.toString().padStart(2, '0')}:${minutos
-			.toString()
-			.padStart(2, '0')}`;
-		return fechaFormateada;
+			// Formatea la fecha y la hora como DD/MM/AAAA HH:MM
+			const fechaFormateada = `${dia.toString().padStart(2, '0')}/${mes
+				.toString()
+				.padStart(2, '0')}/${año} - ${horas
+				.toString()
+				.padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+			return fechaFormateada;
+		}
 	}
 
 	useEffect(() => {
@@ -566,7 +570,7 @@ function index() {
 						{consulta.estados ? (
 							<div>
 								{consulta.estados.map((estado) => (
-									<div>
+									<div key={estado.updatedAt}>
 										<MyComponent estado={estado} key={estado.updatedAt} />
 										<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 											<div className='w-full md:w-1/4'>
@@ -632,7 +636,7 @@ function index() {
 												</div>
 											</div>
 										) : null}
-										<hr class='w-72 h-1 my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700' />
+										<hr className='w-72 h-1 my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700' />
 									</div>
 								))}
 							</div>

@@ -1,25 +1,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-
 import {
 	BorderedHeartIcon,
 	BurgerMenuIcon,
-	CartIcon,
 	CloseIcon,
 	UserIcon,
 } from '@/components/shared/Icons';
-import { useProductsContext } from '@/common/context/Context';
-
-// import Search from './Search';
-// import CartModal from './CartModal';
+import { toast } from 'sonner';
 
 export default function Header() {
-	//   const { openCartModal, cartItems } = useProductsContext();
-	const { status } = useSession();
-	const [isDropdownOpen, setDropdownOpen] = useState(false);
+	const { data: session, status, update } = useSession();
 	const [menuOpen, setMenuOpen] = useState(false);
-
 	const handleMenu = () => {
 		setMenuOpen(!menuOpen);
 		if (!menuOpen) {
@@ -30,6 +22,7 @@ export default function Header() {
 	};
 
 	const handleSignOut = () => {
+		toast.error('¡Sesión finalizada correctamente!');
 		signOut();
 	};
 
@@ -52,74 +45,62 @@ export default function Header() {
 					<li className='link-animation'>
 						<Link href='/'>Inicio</Link>
 					</li>
+					{status === 'authenticated' && session.user.role === 'Ciudadano' ? (
+						<li>
+							<div className='relative group'>
+								<button className=' link-animation'>Crear nuevo reclamo</button>
+								<ul className='absolute bg-white text-gray-800 mt-2 p-2 space-y-1 w-40 border border-gray-200 rounded-lg opacity-0 invisible transition-all duration-300 transform scale-0 group-hover:opacity-100 group-hover:visible group-hover:scale-100'>
+									<li>
+										<a
+											href='/consultas/nueva/consultaGeneral'
+											className=' px-4 py-2 hover:bg-gray-100 link-animation hidden group-hover:block'
+										>
+											Consulta General
+										</a>
+									</li>{' '}
+									<li>
+										<a
+											href='/consultas/nueva/mediacion'
+											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
+										>
+											Mediación
+										</a>
+									</li>
+									<li>
+										<a
+											href='/consultas/nueva/denuncia'
+											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
+										>
+											Denuncia
+										</a>
+									</li>
+									<li>
+										<a
+											href='/consultas/nueva/consorcioEdificio'
+											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
+										>
+											Registro Consorcio Edificio
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					) : null}
 
-					<li>
-						<div className='relative group'>
-							<button className=' link-animation'>Crear nuevo reclamo</button>
-							<ul className='absolute bg-white text-gray-800 mt-2 p-2 space-y-1 w-40 border border-gray-200 rounded-lg opacity-0 invisible transition-all duration-300 transform scale-0 group-hover:opacity-100 group-hover:visible group-hover:scale-100'>
-								<li>
-									<a
-										href='/consultas/nueva/consultaGeneral'
-										className=' px-4 py-2 hover:bg-gray-100 link-animation hidden group-hover:block'
-									>
-										Consulta General
-									</a>
-								</li>{' '}
-								<li>
-									<a
-										href='/consultas/nueva/mediacion'
-										className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
-									>
-										Mediación
-									</a>
-								</li>
-								<li>
-									<a
-										href='/consultas/nueva/denuncia'
-										className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
-									>
-										Denuncia
-									</a>
-								</li>
-								<li>
-									<a
-										href='/consultas/nueva/consorcioEdificio'
-										className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
-									>
-										Registro Consorcio Edificio
-									</a>
-								</li>
-							</ul>
-						</div>
-					</li>
-					<li className='link-animation'>
-						<Link href='/consultas'>Consultas</Link>
-					</li>
-					{/* <li className='link-animation'>
-						<Link href='/consultas/nueva/consultaGeneral'>
-							Nueva Consulta General
-						</Link>
-					</li>
-					<li className='link-animation'>
-						<Link href='/consultas/nueva/mediacion'>Nueva Mediacion</Link>
-					</li>
-					<li className='link-animation'>
-						<Link href='/consultas/nueva/denuncia'>Nueva Denuncia</Link>
-					</li>
-					<li className='link-animation'>
-						<Link href='/consultas/nueva/consorcioEdificio'>
-							Nuevo Consorcio Edificio
-						</Link>
-					</li> */}
+					{status === 'authenticated' && session.user.role === 'Ciudadano' ? (
+						<li className='link-animation'>
+							<Link href='/consultas'> Mis Consultas</Link>
+						</li>
+					) : null}
+					{status === 'authenticated' && session.user.role === 'Admin' ? (
+						<li className='link-animation'>
+							<Link href='/consultas'>Consultas</Link>
+						</li>
+					) : null}
+
 					<li className='link-animation'>
 						<Link href='/sobre-nosotros'>Sobre Nosotros</Link>
 					</li>
-					<li className='link-animation'>
-						<Link href='/consultas'> Mis Consultas</Link>
-					</li>
-					{/* <li className="link-animation">
-            <Link href="/localidades">Localidades</Link>
-          </li> */}
 				</ul>
 
 				<ul
@@ -186,13 +167,18 @@ export default function Header() {
 
 			<div className='flex items-center gap-4 md:flex-1 md:justify-end'>
 				{/* <Search /> */}
-				<Link href='/cuenta/favoritos' prefetch={false}>
-					<BorderedHeartIcon />
-				</Link>
-				<span className='hidden md:block relative group'>
+				<span className='hidden md:flex items-center relative group  '>
+					{status === 'authenticated' && session.user ? (
+						<span className='ml-2 pr-2'>
+							{session.user.nombre} {session.user.apellido}{' '}
+						</span>
+					) : (
+						<span className='ml-2 pr-2'>Iniciar sesión</span>
+					)}
+
 					<UserIcon />
 					{status === 'authenticated' ? (
-						<div className='opacity-0 top-full absolute -right-36 bg-gray-50 rounded-md shadow-md py-2 px-4 w-32 items-end gap-1 flex flex-col group-hover:-right-4 group-hover:opacity-100 transition-all duration-300'>
+						<div className='opacity-0 top-full absolute -right-36 bg-gray-50 rounded-md shadow-md py-4 px-4 w-36 items-end gap-1 flex flex-col group-hover:-right-4 group-hover:opacity-100 transition-all duration-300'>
 							<Link href='/cuenta' className='link-animation'>
 								Mi cuenta
 							</Link>
@@ -205,7 +191,7 @@ export default function Header() {
 							</button>
 						</div>
 					) : (
-						<div className='opacity-0 top-full absolute -right-36 bg-gray-50 rounded-md shadow-md py-2 px-4 w-32 items-end gap-1 flex flex-col group-hover:-right-4 group-hover:opacity-100 transition-all duration-300'>
+						<div className='opacity-0 top-full absolute -right-36 bg-gray-50 rounded-md shadow-md py-4 px-4 w-36 items-end gap-1 flex flex-col group-hover:-right-4 group-hover:opacity-100 transition-all duration-300'>
 							<Link href='/login' className='link-animation'>
 								Iniciar sesión
 							</Link>
