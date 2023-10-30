@@ -89,7 +89,7 @@ export default function Header() {
 
 					{status === 'authenticated' && session.user.role === 'Ciudadano' ? (
 						<li className='link-animation'>
-							<Link href='consultas/misConsultas'> Mis Consultas</Link>
+							<Link href='/consultas/misConsultas'> Mis Consultas</Link>
 						</li>
 					) : null}
 					{status === 'authenticated' && session.user.role === 'Admin' ? (
