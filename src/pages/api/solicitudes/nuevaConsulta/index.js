@@ -46,6 +46,7 @@ async function onGET(req, res) {
 }
 
 async function onPOST(req, res) {
+
 	try {
 		const filesArray = [];
 		const processForm = async () => {
@@ -63,9 +64,7 @@ async function onPOST(req, res) {
 			});
 			// Accede a los archivos cargados a través de req.files, que será un array.
 			const archivos = req.files;
-			const {
-				dni,
-			} = req.body;
+			const { dni, nombre, apellido } = req.body;
 
 			// Verifica si se cargaron archivos.
 			if (!archivos || archivos.length === 0) {
@@ -77,12 +76,13 @@ async function onPOST(req, res) {
 			const docRef = await addDoc(firebaseCollection, {
 				...req.body,
 				createdAt: new Date(),
-				tipo:'Consulta general',
-				estados: {
+				tipo: 'Consulta general',
+				estados: [{
 					estado: 'Pendiente de Revisión',
-					updateAt: new Date(),
+					createdAt: new Date(),
 					responsable: nombre + ' ' + apellido,
-				}
+					comentarios: 'Primer estado de la consulta'
+				}],
 			});
 			const id = docRef.id;
 
@@ -122,7 +122,7 @@ async function onPOST(req, res) {
 		await processForm();
 	} catch (error) {
 		console.log(error);
-		res.status(500).json({ error: 'Error al procesar' });
+		res.status(500).json({ error: error });
 	}
 }
 

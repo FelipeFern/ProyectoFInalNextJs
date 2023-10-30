@@ -67,16 +67,6 @@ async function onPOST(req, res) {
 				nombre,
 				apellido,
 				dni,
-				cuil,
-				telefonoCelular,
-				telefonoFijo,
-				domicilioCalle,
-				domicilioNumero,
-				domicilioPiso,
-				email,
-				localidad,
-				empresa,
-				tipoConsulta,
 			} = req.body;
 
 			const firebaseCollection = collection(db, 'SolicitudMediacion');
@@ -84,11 +74,12 @@ async function onPOST(req, res) {
 				...req.body,
 				createdAt: new Date(),
 				tipo:'Nueva mediación',
-				estados: {
+				estados: [{
 					estado: 'Pendiente de Revisión',
-					updateAt: new Date(),
+					createdAt: new Date(),
 					responsable: nombre + ' ' + apellido,
-				},
+					comentarios: 'Primer estado de la consulta'
+				}],
 			});
 			const id = docRef.id;
 
