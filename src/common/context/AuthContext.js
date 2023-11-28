@@ -39,7 +39,6 @@ export function AuthProvider({ children }) {
 						createdAt: new Date(),
 					});
 				})
-				//we need to catch the whole sign up process if it fails too.
 				.catch((error) => {
 					console.log('Something went wrong with sign up: ', error);
 				})
@@ -81,7 +80,7 @@ export function AuthProvider({ children }) {
 	return (
 		<authContext.Provider value={value}>
 			{!loading && children}
-			{/* {loading ? <Login /> : childen} */}
+			{/* {loading ? <Login /> : children} */}
 		</authContext.Provider>
 	);
 
