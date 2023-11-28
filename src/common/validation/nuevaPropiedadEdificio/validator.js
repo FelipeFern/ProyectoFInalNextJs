@@ -19,7 +19,6 @@ export const validateDataNuevoConsorcio = (
         codigoPostalError: '',
 		telefonoCelularError: '',
 		telefonoFijoError: '',
-		emailError: '',
 		localidadError: '',
 	};
 
@@ -82,9 +81,6 @@ export const validateDataNuevoConsorcio = (
 		errores.domicilioError = 'Ingrese un Domicilio válida';
 	}
 
-	if (datosDomicilio.email == '' || !regexEmail.test(datosDomicilio.email)) {
-		errores.emailError = 'Ingrese un Email válido';
-	}
 
 	if (localidad == '' || !regex.test(localidad)) {
 		errores.localidadError = 'Seleccione una Localidad válida';

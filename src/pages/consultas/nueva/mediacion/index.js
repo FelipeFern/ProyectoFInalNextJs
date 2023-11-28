@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 import PageLayout from '@/layouts/PageLayout';
 import { useRouter } from 'next/router';
-import {toast } from 'sonner';
+import { toast } from 'sonner';
 import { useSession, signOut } from 'next-auth/react';
-
 
 function index() {
 	const [localidades, setLocalidades] = useState([]);
@@ -13,7 +12,6 @@ function index() {
 	const { data: session, status, update } = useSession();
 
 	const router = useRouter();
-
 
 	const [datosPersonales, setDatosPersonales] = useState({
 		nombre: '',
@@ -24,7 +22,6 @@ function index() {
 		domicilioNumero: '',
 		domicilioPiso: '',
 		domicilioDpto: '',
-		email: '',
 		barrio: '',
 		motivoRequerimiento: '',
 	});
@@ -40,7 +37,6 @@ function index() {
 		telefonoCelularError: '',
 		domicilioError: '',
 		barrioError: '',
-		emailError: '',
 		localidadError: '',
 		empresaError: '',
 		motivoRequerimientoError: '',
@@ -96,7 +92,6 @@ function index() {
 				formData.append('nombre', datosPersonales.nombre);
 				formData.append('apellido', datosPersonales.apellido);
 				formData.append('dni', datosPersonales.dni);
-				formData.append('email', datosPersonales.email);
 				formData.append('barrio', datosPersonales.barrio);
 				formData.append(
 					'motivoRequerimiento',
@@ -109,7 +104,8 @@ function index() {
 				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
 				formData.append('empresa', empresa);
 				formData.append('localidad', localidad);
-				formData.append('responsable', session.user.id)
+				formData.append('responsable', session.user.id);
+				formData.append('email', session.user.email);
 
 				for (let i = 0; i < files.length; i++) {
 					formData.append(`archivos`, files[i]);
@@ -122,7 +118,7 @@ function index() {
 
 				if (response.ok) {
 					const data = await response.json();
-					const id = data.id; 
+					const id = data.id;
 					toast.success('Nueva solicitud de Mediación guardada correctamente!');
 					router.push(`/consultas/detalles/${id}`);
 				} else {
@@ -138,9 +134,8 @@ function index() {
 				console.error('Error en la solicitud POST:', error);
 				// Realizar cualquier acción adicional aquí, como mostrar un mensaje de error
 			}
-		}else {
+		} else {
 			toast.error('Se han encontrado errores en el formulario');
-
 		}
 	};
 
@@ -338,28 +333,6 @@ function index() {
 								)}
 							</div>
 						</div>
-						{/* Email */}
-						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-							<div className='w-full md:w-1/4'>
-								<p>
-									Email <span className='text-red-500'>*</span>
-								</p>
-							</div>
-							<div className='flex-1'>
-								<input
-									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
-									placeholder='Email'
-									name='email'
-									value={datosPersonales.email}
-									onChange={handleInputChange}
-								/>
-								{errores.emailError !== '' && (
-									<div className='text-red-500 '> {errores.emailError}</div>
-								)}
-							</div>
-						</div>
-
 						{/* Localidad */}
 						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 							<div className='w-full md:w-1/4'>

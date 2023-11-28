@@ -11,7 +11,6 @@ export const validateDataNuevaConsulta = (datos, localidad, empresa) => {
 		telefonoCelularError: '',
 		telefonoFijoError: '',
 		domicilioError: '',
-		emailError: '',
 		localidadError: '',
 		empresaError: '',
 		hechosError: '',
@@ -67,12 +66,6 @@ export const validateDataNuevaConsulta = (datos, localidad, empresa) => {
 		errores.domicilioError = 'Ingrese una Dirección válida';
 	} else {
 		errores.domicilioError = '';
-	}
-
-	if (datos.email == '' || !regexEmail.test(datos.email)) {
-		errores.emailError = 'Ingrese un Email válido';
-	} else {
-		errores.emailError = '';
 	}
 
 	if (localidad == '' || !regex.test(localidad)) {

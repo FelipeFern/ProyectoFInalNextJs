@@ -10,7 +10,6 @@ export const validateDataNuevaMediacion = async (datos, localidad, empresa) => {
 		telefonoCelularError: '',
 		domicilioError: '',
 		barrioError: '',
-		emailError: '',
 		localidadError: '',
 		empresaError: '',
 		motivoRequerimientoError: '',
@@ -62,11 +61,6 @@ export const validateDataNuevaMediacion = async (datos, localidad, empresa) => {
 		errores.barrioError = '';
 	}
 
-	if (datos.email == '' || !regexEmail.test(datos.email)) {
-		errores.emailError = 'Ingrese un Email válido';
-	} else {
-		errores.emailError = '';
-	}
 
 	if (localidad == '' || !regex.test(localidad)) {
 		errores.localidadError = 'Seleccione una Localidad válida';

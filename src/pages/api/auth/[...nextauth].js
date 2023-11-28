@@ -67,6 +67,7 @@ export const getNextAuthOptions = (req, res) => {
 					token.id = user.id;
 					token.apellido = user.apellido;
 					token.nombre = user.nombre;
+					token.email = user.email;
 				}
 				return token;
 			},
@@ -76,6 +77,7 @@ export const getNextAuthOptions = (req, res) => {
 					session.user.id = token.id;
 					session.user.apellido = token.apellido;
 					session.user.nombre = token.nombre;
+					session.user.email = token.email;
 				}
 				return session;
 			},

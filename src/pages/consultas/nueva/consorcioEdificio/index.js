@@ -30,7 +30,6 @@ function index() {
 		codigoPostal: '',
 		telefonoCelular: '',
 		telefonoFijo: '',
-		email: '',
 		partido: 'Bahía Blanca',
 		provincia: 'Buenos Aires',
 	});
@@ -124,12 +123,11 @@ function index() {
 				formData.append('domicilioNumero', datosDomicilio.domicilioNumero);
 				formData.append('domicilioPiso', datosDomicilio.domicilioPiso);
 				formData.append('domicilioDpto', datosDomicilio.domicilioDpto);
-				formData.append('email', datosDomicilio.email);
 				formData.append('localidad', localidad);
 				formData.append('partido', 'Bahía Blanca');
 				formData.append('provincia', 'Buenos Aires');
 				formData.append('responsable', session.user.id)
-
+				formData.append('email', session.user.email)
 
 				for (let i = 0; i < files.length; i++) {
 					formData.append(`archivos`, files[i]);
@@ -462,27 +460,7 @@ function index() {
 							</div>
 						</div>
 
-						{/* Email */}
-						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-							<div className='w-full md:w-1/4'>
-								<p>
-									Email <span className='text-red-500'>*</span>
-								</p>
-							</div>
-							<div className='flex-1'>
-								<input
-									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
-									placeholder='Email'
-									name='email'
-									value={datosDomicilio.email}
-									onChange={handleInputChangeDomicilio}
-								/>
-								{errores.emailError !== '' && (
-									<div className='text-red-500 '> {errores.emailError}</div>
-								)}
-							</div>
-						</div>
+				
 						{/* Localidad */}
 						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 							<div className='w-full md:w-1/4'>
@@ -521,7 +499,6 @@ function index() {
 							</div>
 							<div className='flex-1'>
 								<input
-									type='email'
 									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Partido'
 									name='partido'
@@ -543,7 +520,6 @@ function index() {
 							</div>
 							<div className='flex-1 '>
 								<input
-									type='email'
 									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
 									placeholder='Provincia'
 									name='provincia'

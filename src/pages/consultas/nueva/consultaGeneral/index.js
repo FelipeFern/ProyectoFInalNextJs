@@ -9,6 +9,7 @@ function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const { data: session, status, update } = useSession();
 
 	const router = useRouter();
 
@@ -23,7 +24,6 @@ function index() {
 		domicilioNumero: '',
 		domicilioPiso: '',
 		domicilioDpto: '',
-		email: '',
 		hechos: '',
 	});
 
@@ -95,10 +95,10 @@ function index() {
 				formData.append('domicilioNumero', datosPersonales.domicilioNumero);
 				formData.append('domicilioPiso', datosPersonales.domicilioPiso);
 				formData.append('domicilioDpto', datosPersonales.domicilioDpto);
-				formData.append('email', datosPersonales.email);
 				formData.append('hechos', datosPersonales.hechos);
 				formData.append('localidad', localidad);
 				formData.append('responsable', session.user.id)
+				formData.append('email', session.user.email)
 				formData.append('empresa', empresa);
 
 				for (let i = 0; i < files.length; i++) {
@@ -347,27 +347,7 @@ function index() {
 								)}
 							</div>
 						</div>
-						{/* Email */}
-						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-							<div className='w-full md:w-1/4'>
-								<p>
-									Email <span className='text-red-500'>*</span>
-								</p>
-							</div>
-							<div className='flex-1'>
-								<input
-									type='email'
-									className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border'
-									placeholder='Email'
-									name='email'
-									value={datosPersonales.email}
-									onChange={handleInputChange}
-								/>
-								{errores.emailError !== '' && (
-									<div className='text-red-500 '> {errores.emailError}</div>
-								)}
-							</div>
-						</div>
+					
 						{/* Localidad */}
 						<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 							<div className='w-full md:w-1/4'>
