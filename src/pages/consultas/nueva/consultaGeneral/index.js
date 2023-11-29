@@ -482,25 +482,13 @@ function index() {
 								<div className='w-full text-xs mt-4'>
 									{' '}
 									<ul>
-										<li>* Inscripción en AFIP.</li>
-										<li>* Inscripción en ARBA.</li>
-										<li>
-											* Currículum Vitae con acreditación de: Documentación de
-											títulos y/o estudios relacionados con la actividad y
-											acreditación de experiencia (si los tuviera).
-										</li>
-										<li>
-											* Nómima de consorcios administrados, indicando el
-											domicilio de los mismos, detalle de Compañia Aseguradora,
-											número de póliza y cobertura vigente.
-										</li>
-										<li>
-											* Certificado expedido por el Registro Nacional de
-											Reincidencia.
-										</li>
-										<li>
-											* Informe expedido por el Registro de Juicios Universales
-										</li>
+
+										<li>* Fotocopia DNI.</li>
+										<li> Factura de Compra.</li>
+										<li> Última factura del servicio.</li>
+										<li> Contrato realizado.</li>
+										<li> Certificado de garantía.</li>
+										<li> Informe de servicio técnico.</li>
 									</ul>{' '}
 								</div>
 							</div>
