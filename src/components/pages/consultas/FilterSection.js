@@ -90,7 +90,7 @@ export default function FilterSection({
 						Borrar filtros
 					</button>
 					<div className='flex flex-col gap-4'>
-          <FilterItem title='Tipo Consulta'>
+          <FilterItem title='Tipo de Consulta'>
 							{filters?.tipoConsultas
 								.filter((tipoConsulta) => tipoConsulta !== undefined)
 								.map((tipoConsulta) => (
@@ -114,7 +114,7 @@ export default function FilterSection({
 								))}
 						</FilterItem>
 
-						<FilterItem title='Localidades'>
+						<FilterItem title='Localidad'>
 							{filters?.localidades
 								.filter((empresa) => empresa !== 'undefined')
 								.map((localidad) => (
@@ -137,7 +137,7 @@ export default function FilterSection({
 									</label>
 								))}
 						</FilterItem>
-						<FilterItem title='Empresas'>
+						<FilterItem title='Empresa'>
 							{filters?.empresas
 								.filter((empresa) => empresa !== undefined)
 								.map((empresa) => (
