@@ -10,8 +10,19 @@ function index() {
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const { data: session, status, update } = useSession();
-
 	const router = useRouter();
+
+	if (status === 'loading') {
+		return <p>Cargando...</p>;
+	}
+
+	const isAuthenticated = (session?.user && session.user.role === 'Ciudadano') || (session?.user && session.user.role === 'Admin');
+	if (typeof window !== 'undefined') {
+		if (!isAuthenticated) {
+			router.push('/');
+		}
+	}
+
 
 	const [datosPersonales, setDatosPersonales] = useState({
 		nombre: '',

@@ -145,27 +145,6 @@ function ProductsProvider({ children }) {
   };
 
   const handleFavorite = (productId) => {
-    // if (status !== 'authenticated') {
-    //   toast.custom((t) => (
-    //     <CustomToast
-    //       msg="Para agregar favoritos, ingresá a tu cuenta"
-    //       linkBtn={{ href: '/login', label: 'Ingresá', extraFunction: () => toast.dismiss(t) }}
-    //       closeBtn={<button onClick={() => toast.dismiss(t)}>Cerrar</button>}
-    //     />
-    //   ));
-    //   return;
-    // }
-
-    // const isAlreadyFavorite = favoriteProducts.find((product) => product.id === productId);
-
-    // if (isAlreadyFavorite) {
-    //   const newFavorites = favoriteProducts.filter((product) => productId !== product.id);
-    //   setFavoriteProducts(newFavorites);
-    // } else {
-    //   const newFavoriteProduct = allProducts.find((product) => product.id === productId);
-    //   if (!newFavoriteProduct) return;
-    //   setFavoriteProducts([...favoriteProducts, newFavoriteProduct]);
-    // }
   };
 
   return (

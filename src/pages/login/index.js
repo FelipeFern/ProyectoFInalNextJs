@@ -68,7 +68,7 @@ export default function LoginPage() {
 
 		if (result?.ok && submittingForm) {
 			toast.success('¡Sesión iniciada correctamente!');
-			router.back();
+			router.push(`/`);
 		}
 	};
 

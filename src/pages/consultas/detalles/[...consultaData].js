@@ -29,7 +29,6 @@ function index() {
 			formData.append('estado', nuevoEstado);
 			formData.append('comentarios', comentario);
 			formData.append('responsable', nombreCompleto);
-			// formData.append('consultaId', consultaId);
 			formData.append('consultaId', consultaId);
 			formData.append('tipo', consulta.tipo);
 
@@ -570,8 +569,8 @@ function index() {
 						{consulta.estados ? (
 							<div>
 								{consulta.estados.map((estado) => (
-									<div key={estado.updatedAt}>
-										<MyComponent estado={estado} key={estado.updatedAt} />
+									<div key={estado.createdAt}>
+										<MyComponent estado={estado} key={estado.createdAt} />
 										<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 											<div className='w-full md:w-1/4'>
 												<p>Fecha actualización</p>
@@ -594,7 +593,7 @@ function index() {
 													type='text'
 													name='responsable'
 													className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border h-12'
-													value='Felipe Fernandez'
+													value={estado.responsable}
 													readOnly
 												/>
 											</div>
@@ -607,7 +606,7 @@ function index() {
 												<textarea
 													type='text'
 													name='motivoRequerimiento'
-													className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border h-12'
+													className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border h-18'
 													value={estado.comentarios}
 													readOnly
 												/>
@@ -645,37 +644,41 @@ function index() {
 						<div className='relative group'>
 							{addNewCommentSection && (
 								<form onSubmit={saveNewComment} encType='multipart/form-data'>
-									<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
-										<div className='w-full md:w-1/4'>
-											<p>
-												Nuevo Estado <span className='text-red-500'>*</span>
-											</p>
+									{status === 'authenticated' &&
+									session.user.role === 'Admin' ? (
+										<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
+											<div className='w-full md:w-1/4'>
+												<p>
+													Nuevo Estado <span className='text-red-500'>*</span>
+												</p>
+											</div>
+											<div className='flex-1 '>
+												<select
+													className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
+													name='nuevoEstado'
+													value={nuevoEstado}
+													onChange={handleInputChange}
+												>
+													<option key='pendiente' value='Pendiente de Revisión'>
+														Pendiente de Revisión
+													</option>
+
+													<option key='En Curso' value='En Curso'>
+														En Curso
+													</option>
+
+													<option key='Finalizada' value='Finalizada'>
+														Finalizada
+													</option>
+
+													<option key='Cancelada' value='Cancelada'>
+														Cancelada
+													</option>
+												</select>
+											</div>
 										</div>
-										<div className='flex-1 '>
-											<select
-												className='w-full py-2 px-4 outline-none rounded-lg border-gray-400 border appearance-none'
-												name='nuevoEstado'
-												value={nuevoEstado}
-												onChange={handleInputChange}
-											>
-												<option key='pendiente' value='Pendiente de Revisión'>
-													Pendiente de Revisión
-												</option>
+									) : null}
 
-												<option key='En Curso' value='En Curso'>
-													En Curso
-												</option>
-
-												<option key='Finalizada' value='Finalizada'>
-													Finalizada
-												</option>
-
-												<option key='Cancelada' value='Cancelada'>
-													Cancelada
-												</option>
-											</select>
-										</div>
-									</div>
 									<div className='flex flex-col md:flex-row md:items-center gap-y-2 mb-6'>
 										<div className='w-full md:w-1/4'>
 											<p>
@@ -696,7 +699,6 @@ function index() {
 										<div className='w-full md:w-1/4'>
 											<p>
 												Nuevos Documentos a incluir
-												<span className='text-red-500'>*</span>
 											</p>
 										</div>
 										<div className='flex-1 '>
@@ -740,7 +742,7 @@ function index() {
 								className='bg-primary/80 text-black py-2 px-4 rounded-lg hover:bg-primary transition-colors'
 								onClick={handleAddNewComment}
 							>
-								Agregar nuevo detalle
+								Agregar nuevo comentario
 							</button>
 						</div>
 					</div>

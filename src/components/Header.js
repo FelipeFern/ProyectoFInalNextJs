@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import {
 	BorderedHeartIcon,
 	BurgerMenuIcon,
@@ -9,8 +10,10 @@ import {
 } from '@/components/shared/Icons';
 import { toast } from 'sonner';
 
+
 export default function Header() {
 	const { data: session, status, update } = useSession();
+	const router = useRouter();
 	const [menuOpen, setMenuOpen] = useState(false);
 	const handleMenu = () => {
 		setMenuOpen(!menuOpen);
@@ -23,6 +26,17 @@ export default function Header() {
 
 	const handleSignOut = () => {
 		toast.error('¡Sesión finalizada correctamente!');
+		if (status === 'loading') {
+			return <p>Cargando...</p>;
+		}
+		
+		const isAuthenticated = session?.user && session.user.role === 'Ciudadano';
+		if (typeof window !== 'undefined') {
+			if (!isAuthenticated) {
+				router.push('/');
+			}
+		}
+	
 		signOut();
 	};
 

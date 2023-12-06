@@ -78,8 +78,6 @@ async function onPOST(req, res) {
 			// 	tipoConsultaRef,
 			// 	where('id', '==', idConsulta)
 			// );
-			console.log('tipo: ', tipo)
-			console.log('Llegue hasta aca ', collectionType);
 			const docRef = doc(db, collectionType, idConsulta);
 			const docSnap = await getDoc(docRef);
 			let consulta = docSnap.data();

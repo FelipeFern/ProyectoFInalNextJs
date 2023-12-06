@@ -8,8 +8,19 @@ import { useSession, signOut } from 'next-auth/react';
 function index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const router = useRouter();
 	const { data: session, status, update } = useSession();
+	const router = useRouter();
+
+	if (status === 'loading') {
+		return <p>Cargando...</p>;
+	}
+
+	const isAuthenticated = (session?.user && session.user.role === 'Ciudadano') || session.user.role === 'Admin';
+	if (typeof window !== 'undefined') {
+		if (!isAuthenticated) {
+			router.push('/');
+		}
+	}
 
 
 	const [datosSolicitudInscripcion, setDatosSolicitudInscripcion] = useState({

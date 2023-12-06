@@ -114,7 +114,7 @@ async function onPOST(req, res) {
 			}
 
 			await updateDoc(doc(firebaseCollection, id), { id });
-			await updateDoc(doc(firebaseCollection, id), { files: filesArray });
+			await updateDoc(doc(firebaseCollection, id), { archivos: filesArray });
 
 			console.log(
 				`New Solicitud de Consorcio de Edificio created with ID: ${id}`

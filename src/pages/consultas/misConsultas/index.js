@@ -7,18 +7,20 @@ export default function ConsultasPage() {
 	const { data: session, status, update } = useSession();
 	const { allConsultas } = useConsultasContext();
 	const router = useRouter();
-
+	if (status === 'loading') {
+		return <p>Cargando...</p>;
+	}
+	const isAuthenticated = session?.user && session.user.role === 'Ciudadano';
+	if (typeof window !== 'undefined') {
+		if (!isAuthenticated) {
+			router.push('/');
+			return
+		}
+	}
 	let consultas = [];
-	if (session !== undefined) {
+	if (session !== undefined && session.user !== undefined) {
 		let id = session.user.id;
 		consultas = allConsultas.filter((objeto) => objeto.responsable === id);
-	}
-
-	const isAuthenticated = session?.user && session.user.role === 'Ciudadano';
-
-	if (!isAuthenticated) {
-		router.push('/404');
-		return null;
 	}
 
 	return <ConsultasLayout allConsultas={consultas} query='' />;
