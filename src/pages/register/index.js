@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { getSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import PageLayout from '@/layouts/PageLayout';
 import { toast } from 'sonner';
@@ -68,8 +68,21 @@ export default function RegisterPage() {
 				if (response.ok) {
 					const data = await response.json();
 					const id = data.id;
-					toast.success('¡Usuario registrado correctamente!');
-					router.push(`/`);
+					
+					const result = await signIn('credentials', {
+						email: datosUsuario.email,
+						password: datosUsuario.password,
+						redirect: false,
+					});
+
+					if (result?.ok ) {
+						toast.success('¡Usuario registrado correctamente!');
+						router.push(`/`);
+					}
+
+
+					// toast.success('¡Usuario registrado correctamente!');
+					// router.push(`/`);
 				} else {
 					response.json().then((errorData) => {
 						setErrores((prevErrores) => ({
@@ -170,7 +183,7 @@ export default function RegisterPage() {
 										: 'opacity-0 h-0'
 								}`}
 							>
-								<span >{errores.emailError}</span>
+								<span>{errores.emailError}</span>
 							</div>
 						</div>
 						<div className='pb-8 w-full flex justify-start relative'>

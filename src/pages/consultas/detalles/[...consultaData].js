@@ -16,8 +16,19 @@ function index() {
 	const [loading, setLoading] = useState(true);
 	const [consulta, setConsulta] = useState();
 
-	const router = useRouter();
 	const { data: session, status, update } = useSession();
+	const router = useRouter();
+
+	if (status === 'loading') {
+		return <p>Cargando...</p>;
+	}
+
+	const isAuthenticated = session?.user && session.user.role === 'Admin';
+	if (typeof window !== 'undefined') {
+		if (!isAuthenticated) {
+			router.push('/');
+		}
+	}
 
 	const saveNewComment = async () => {
 		try {
