@@ -26,24 +26,36 @@ function formatDate(createdAt) {
 export default function ConsultaCard({ consulta }) {
 	let status = '';
 	let textColor = '';
+	let estadoConsulta= '';
 
-	switch (consulta.status) {
-		case 'Pendiente de revisión':
-			status = 'bg-yellow-500/10 text-yellow-500';
-			textColor = 'text-yellow-500';
-			break;
-		case 'En proceso':
-			status = 'bg-blue-500/10 text-blue-500';
-			textColor = 'text-blue-500';
-			break;
-		case 'Cerrado':
-			status = 'bg-green-500/10 text-green-500';
-			textColor = 'text-green-500';
-			break;
-		case 'Cancelada':
-			status = 'bg-pink-500/10 text-pink-500';
-			textColor = 'text-red-500';
-			break;
+
+	if (consulta.estados !== undefined) {
+		const largo = consulta.estados.length;
+		if (largo < 1) {
+			estadoConsulta = 'Estado';
+		} else {
+			if (consulta.estados[largo - 1].estado !== undefined) {
+				estadoConsulta = consulta.estados[largo - 1].estado;
+			}
+			switch (estadoConsulta) {
+				case 'Pendiente de Revisión':
+					status = 'bg-yellow-500/10 text-yellow-500';
+					textColor = 'text-yellow-500';
+					break;
+				case 'En Curso':
+					status = 'bg-blue-500/10 text-blue-500';
+					textColor = 'text-blue-500';
+					break;
+				case 'Finalizada':
+					status = 'bg-green-500/10 text-green-500';
+					textColor = 'text-green-500';
+					break;
+				case 'Cancelada':
+					status = 'bg-pink-500/10 text-pink-500';
+					textColor = 'text-pink-500';
+					break;
+			}
+		}
 	}
 
 	return (
@@ -70,11 +82,11 @@ export default function ConsultaCard({ consulta }) {
 				</div>
 			</div>
 			<div className='flex items-center justify-between bg-gray-100 p-4 rounded-xl'>
-				<h2 className={`text-xl font-medium text-blue-500 ${textColor}`}>
-					Estado
+				<h2 className={`text-xl font-medium  ${textColor}`}>
+					{estadoConsulta}
 				</h2>
-				<a	
-					href={'/consultas/detalles/'+consulta.id}
+				<a
+					href={'/consultas/detalles/' + consulta.id}
 					type='button'
 					className='flex items-center gap-2 p-2 rounded-lg hover:bg-white transition-colors'
 				>

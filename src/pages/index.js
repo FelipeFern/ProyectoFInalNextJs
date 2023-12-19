@@ -165,7 +165,7 @@ export default function Home() {
 
 			<div className='max-w-6xl mx-auto my-32 px-8 sm:px-16'>
 				<h2 className='font-bold text-3xl md:text-4xl mb-8 uppercase'>
-					Denuncias
+					Reclamos
 				</h2>
 				<div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-10'>
 					<div className='w-full'>

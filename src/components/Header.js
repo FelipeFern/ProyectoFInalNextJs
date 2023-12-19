@@ -80,14 +80,14 @@ export default function Header() {
 											Mediación
 										</a>
 									</li>
-									<li>
+									{/* <li>
 										<a
 											href='/consultas/nueva/denuncia'
 											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
 										>
 											Denuncia
 										</a>
-									</li>
+									</li> */}
 									<li>
 										<a
 											href='/consultas/nueva/consorcioEdificio'
