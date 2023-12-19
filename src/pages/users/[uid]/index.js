@@ -34,3 +34,6 @@
 
 // // Ponerlo derecho> 2:53:00 explica.
 // // Poner la barra izq y la de arriba fijas.
+export default function Empty() {
+	return null;
+  }

@@ -13,7 +13,7 @@ import APIRouteHelper from '@/common/api/APIRouteHelper';
 import { db } from '@/common/db/firebase';
 
 
-export default async function (req, res) {
+export default async function handler(req, res) {
 	return new APIRouteHelper(req, res, permissionName.API_users)
 		.setMethod(HTTPMethod.GET, {
 			handle: onGET,
