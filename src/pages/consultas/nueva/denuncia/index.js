@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { validateDataNuevaMediacion } from '@/common/validation/nuevaMediacion/validator';
 
-function index() {
+function Index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -473,4 +473,4 @@ function index() {
 	);
 }
 
-export default index;
+export default Index;

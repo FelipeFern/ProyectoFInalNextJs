@@ -12,7 +12,7 @@ import { permissionName } from '@/common/types/permissions';
 import { HTTPMethod } from '@/common/api/methods';
 import { hash } from 'bcryptjs';
 
-export default async function (req, res) {
+export default async function handler(req, res) {
 	return new APIRouteHelper(req, res, permissionName.API_empresas)
 		.setMethod(HTTPMethod.POST, {
 			handle: onPOST,

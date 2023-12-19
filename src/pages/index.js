@@ -173,8 +173,8 @@ export default function Home() {
 							¿Cómo iniciar un reclamo?
 						</h3>
 						<p className='text-lg'>
-							Simplemente inicie sesión, seleccione la opción 'registrar
-							reclamo' y complete el formulario.
+							Simplemente inicie sesión, seleccione la opción &apos;registrar
+							reclamo&apos; y complete el formulario.
 						</p>
 					</div>
 					<div className='w-full'>
@@ -207,8 +207,6 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-
-
 		</PageLayout>
 	);
 }

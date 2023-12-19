@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'sonner';
 import { useSession, signOut } from 'next-auth/react';
 
-function index() {
+function Index() {
 	const [localidades, setLocalidades] = useState([]);
 	const [empresas, setEmpresas] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -517,4 +517,4 @@ function index() {
 	);
 }
 
-export default index;
+export default Index;

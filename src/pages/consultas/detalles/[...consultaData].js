@@ -4,8 +4,10 @@ import PageLayout from '@/layouts/PageLayout';
 import LoadingPage from '@/components/pages/LoadingPage';
 import { toast } from 'sonner';
 import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 
-function index() {
+
+function Index() {
 	const [addNewCommentSection, setAddNewCommentSection] = useState(false);
 	const [nuevoEstado, setNuevoEstado] = useState('Pendiente de Revisión');
 	const [comentario, setComentario] = useState();
@@ -152,9 +154,9 @@ function index() {
 				className='flex flex-col justify-center items-center gap-4'
 			>
 				<span>Consulta no encontrado</span>
-				<a href='/consultas' className='button-primary bg-secondary text-white'>
+				<Link  href='/consultas' className='button-primary bg-secondary text-white'>
 					Volver
-				</a>
+				</Link>
 			</PageLayout>
 		);
 	}
@@ -557,14 +559,14 @@ function index() {
 								<div>
 									{consulta.archivos.map((file) => (
 										<div key={file.fileName} className='list-item'>
-											<a
+											<Link 
 												key={file.fileName}
 												href={file.downloadURL}
 												target='_blank'
 												className='text-blue-500 underline'
 											>
 												{`${file.fileName}\n`}
-											</a>
+											</Link>
 										</div>
 									))}
 								</div>
@@ -631,14 +633,14 @@ function index() {
 													<div>
 														{estado.archivos.map((file) => (
 															<div key={file.fileName} className='list-item'>
-																<a
+																<Link 
 																	key={file.fileName}
 																	href={file.downloadURL}
 																	target='_blank'
 																	className='text-blue-500 underline'
 																>
 																	{`${file.fileName}\n`}
-																</a>
+																</Link>
 															</div>
 														))}
 													</div>
@@ -762,7 +764,7 @@ function index() {
 	);
 }
 
-export default index;
+export default Index;
 
 const MyComponent = ({ estado }) => {
 	let textColor;

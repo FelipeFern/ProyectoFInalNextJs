@@ -1,11 +1,3 @@
-import Image from 'next/image';
-
-import CarpinteroTrabajando from '@/assets/carpintero-trabajando.avif';
-import AbueloYNieto from '@/assets/abuelo-y-nieto.avif';
-import Forest from '@/assets/forest.avif';
-import PersonasTrabajando from '@/assets/personas-trabajando.avif';
-import AtencionCliente from '@/assets/chica-atencion-al-cliente.avif';
-import AprentonManos from '@/assets/apreton-de-manos.avif';
 import PageLayout from '@/layouts/PageLayout';
 
 export default function AboutUsPage() {
@@ -36,7 +28,7 @@ export default function AboutUsPage() {
 							<b>brindar información y asesoramiento</b> en forma totalmente
 							gratuita a los consumidores y usuarios acerca de los derechos que
 							les asisten como tales. Otra función importante de esta Oficina es
-							la <b>educación </b> que se brinda también en forma gratuita a los
+							la <b>educación</b> que se brinda también en forma gratuita a los
 							consumidores y usuarios en general, sabiendo que a partir del
 							conocimiento de nuestros derechos, podemos defendernos mejor
 							frente a los abusos de los proveedores.
@@ -181,8 +173,8 @@ export default function AboutUsPage() {
 							¿Cómo iniciar un reclamo?
 						</h3>
 						<p className='text-lg'>
-							Simplemente inicie sesión, seleccione la opción 'registrar
-							reclamo' y complete el formulario.
+							Simplemente inicie sesión, seleccione la opción  &apos;registrar
+							reclamo &apos; y complete el formulario.
 						</p>
 					</div>
 					<div className='w-full'>
@@ -215,8 +207,6 @@ export default function AboutUsPage() {
 					</div>
 				</div>
 			</div>
-
-
 		</PageLayout>
 	);
 }
