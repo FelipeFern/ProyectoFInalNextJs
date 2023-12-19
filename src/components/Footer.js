@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
 	return (
 		<div className='bg-white w-full p-8'>
@@ -18,27 +20,27 @@ export default function Footer() {
 						<h6 className='font-bold mb-6 uppercase' >Oficina</h6>
 						<ul>
 							<li className="link-animation">
-								<a href='https://www.bahia.gob.ar/gobierno/'>Secretaría de Gobierno</a>
+								<Link href='https://www.bahia.gob.ar/gobierno/'>Secretaría de Gobierno</Link>
 							</li>
 							<li className="link-animation">
-								<a href='https://www.bahia.gob.ar/'>Bahía Blanca</a>
+								<Link href='https://www.bahia.gob.ar/'>Bahía Blanca</Link>
 							</li>
 							<li className="link-animation">
-								<a
+								<Link
 									href='https://maps.app.goo.gl/w2jBYxZ9XPrU7GBG6'
 									target='_blank'
 									referrerPolicy='no-referrer'
 								>
 									Maps
-								</a>
+								</Link>
 							</li>
 							<li className="link-animation">
-								<a href='/' target='_blank'>
+								<Link href='/' target='_blank'>
 									Inicio
-								</a>
+								</Link>
 							</li>
 							<li className="link-animation">
-								<a href='/'>Quienes somos</a>
+								<Link href='/'>Quienes somos</Link>
 							</li>
 						</ul>
 					</div>
@@ -78,14 +80,14 @@ export default function Footer() {
 								stroke='currentColor'
 								strokeWidth={2}
 							>
-								'
+								
 								<path
 									strokeLinecap='round'
 									strokeLinejoin='round'
 									strokeWidth={2}
 									d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
 								/>
-								'
+								
 							</svg>
 							Lunes a viernes de 8:00 a 13:00 horas.
 						</p>

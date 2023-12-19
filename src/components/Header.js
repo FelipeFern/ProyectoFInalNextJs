@@ -65,36 +65,36 @@ export default function Header() {
 								<button className=' link-animation'>Crear nueva consulta</button>
 								<ul className='absolute bg-white text-gray-800 mt-2 p-2 space-y-1 w-40 border border-gray-200 rounded-lg opacity-0 invisible transition-all duration-300 transform scale-0 group-hover:opacity-100 group-hover:visible group-hover:scale-100'>
 									<li>
-										<a
+										< Link 
 											href='/consultas/nueva/consultaGeneral'
 											className=' px-4 py-2 hover:bg-gray-100 link-animation hidden group-hover:block'
 										>
 											Consulta General
-										</a>
+										</Link>
 									</li>{' '}
 									<li>
-										<a
+										< Link 
 											href='/consultas/nueva/mediacion'
 											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
 										>
 											Mediación
-										</a>
+										</Link>
 									</li>
 									{/* <li>
-										<a
+										< Link 
 											href='/consultas/nueva/denuncia'
 											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
 										>
 											Denuncia
-										</a>
+										</Link>
 									</li> */}
 									<li>
-										<a
+										< Link 
 											href='/consultas/nueva/consorcioEdificio'
 											className='hidden group-hover:block link-animation px-4 py-2 hover:bg-gray-100'
 										>
 											Registro Consorcio Edificio
-										</a>
+										</Link>
 									</li>
 								</ul>
 							</div>

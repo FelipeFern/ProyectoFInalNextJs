@@ -7,7 +7,7 @@ import { useSession, signOut } from 'next-auth/react';
 
 function index() {
 	const [addNewCommentSection, setAddNewCommentSection] = useState(false);
-	const [nuevoEstado, setNuevoEstado] = useState();
+	const [nuevoEstado, setNuevoEstado] = useState('Pendiente de Revisión');
 	const [comentario, setComentario] = useState();
 	const [selectedFiles, setSelectedFiles] = useState([]);
 	const [files, setFiles] = useState([]);
@@ -19,16 +19,16 @@ function index() {
 	const { data: session, status, update } = useSession();
 	const router = useRouter();
 
-	if (status === 'loading') {
-		return <p>Cargando...</p>;
-	}
+	// if (status === 'loading') {
+	// 	return <p>Cargando...</p>;
+	// }
 
-	const isAuthenticated = session?.user && session.user.role === 'Admin';
-	if (typeof window !== 'undefined') {
-		if (!isAuthenticated) {
-			router.push('/');
-		}
-	}
+	// const isAuthenticated = session?.user && session.user.role === 'Admin';
+	// if (typeof window !== 'undefined') {
+	// 	if (!isAuthenticated) {
+	// 		router.push('/');
+	// 	}
+	// }
 
 	const saveNewComment = async () => {
 		try {
@@ -36,7 +36,6 @@ function index() {
 			let nombre = session.user.nombre;
 			let apellido = session.user.apellido;
 			let nombreCompleto = nombre + ' ' + apellido;
-
 			formData.append('estado', nuevoEstado);
 			formData.append('comentarios', comentario);
 			formData.append('responsable', nombreCompleto);
