@@ -3,83 +3,11 @@ import PageLayout from '@/layouts/PageLayout';
 export default function AboutUsPage() {
 	return (
 		<PageLayout title='Sobre nosotros'>
-			<div className='max-w-6xl mx-auto mb-28 mt-14 px-8 sm:px-16'>
-				<h2 className='font-bold text-3xl md:text-4xl mb-8 uppercase'>
-					Quienes Somos?
-				</h2>
-				<div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-10'>
-					<div className='w-full'>
-						<p className='text-lg'>
-							La Oficina Municipal de Información al Consumidor es un organismo
-							público dependiente del Honorable Concejo Deliberante de Bahía
-							Blanca, instituida por medio de la Ordenanza Municipal 14.073,
-							encontrándose dentro de sus competencias ser la autoridad de
-							aplicación de la Ley Nacional Nº 24.240 de Defensa del Consumidor
-							y de la Ley Provincial Nº 13.133, denominada “Código Provincial de
-							Implementación de los Derechos de los Usuarios y Consumidores”,
-							entre otras.
-						</p>
-					</div>
 
-					<div className='w-full'>
-						<p className='text-lg'>
-							Dentro de las numerosas funciones y competencias que tiene la
-							O.M.I.C., una de las más destacadas es la de{' '}
-							<b>brindar información y asesoramiento</b> en forma totalmente
-							gratuita a los consumidores y usuarios acerca de los derechos que
-							les asisten como tales. Otra función importante de esta Oficina es
-							la <b>educación</b> que se brinda también en forma gratuita a los
-							consumidores y usuarios en general, sabiendo que a partir del
-							conocimiento de nuestros derechos, podemos defendernos mejor
-							frente a los abusos de los proveedores.
-						</p>
-					</div>
-				</div>
-			</div>
-			<div className='max-w-6xl mx-auto my-32 px-8 sm:px-16'>
-				<h2 className='font-bold text-3xl md:text-4xl mb-8 uppercase'>
-					Derechos básicos de los consumidores y usuarios
-				</h2>
-				<div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-10'>
-					<div className='w-full'>
-						<span className='text-lg'>
-							<ol className='list-disc pl-5'>
-								<li>Protección de su salud y seguridad.</li>
-								<li>Protección de sus intereses económicos.</li>
-								<li>Contar con información adecuada y veraz.</li>
-								<li>Libertad de elección.</li>
-								<li>Recibir condiciones de trato digno y equitativo.</li>
-								<li>Educación para el consumo.</li>
-								<li>Calidad y eficiencia de los servicios públicos.</li>
-							</ol>
-						</span>
-					</div>
 
-					<div className='w-full'>
-						<span className='text-lg'>
-							<ol className='list-disc pl-5'>
-								<li>
-									Constitución de asociaciones de consumidores y usuarios.
-								</li>
-								<li>
-									Contar con procedimientos eficaces para la prevención y
-									solución de conflictos.
-								</li>
-								<li>
-									La comuna establece que en los lugares de atención de
-									establecimientos comerciales, y empresas de servicios
-									públicos, deben exhibirse en forma visible y de fácil lectura
-									los derechos básicos de consumidores y usuarios.
-								</li>
-							</ol>
-						</span>
-					</div>
-				</div>
-			</div>
-
-			<div className='max-w-6xl mx-auto my-32 px-8 sm:px-16'>
+			<div className='max-w-6xl mx-auto my-14 px-8 sm:px-16'>
 				<h2 className='font-bold text-3xl md:text-4xl mb-8 uppercase'>
-					Más de nosotros
+					Sobre Nosotros
 				</h2>
 				<div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-10'>
 					<div className='w-full'>
