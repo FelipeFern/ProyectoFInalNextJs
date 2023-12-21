@@ -5,6 +5,7 @@ const INITIAL_CONSULTAS_FILTERS = {
 	empresas: [],
 	localidades: [],
 	ciudadanos: [],
+	estados: [],
 };
 
 export default function useFilters(consultas) {
@@ -32,16 +33,20 @@ export default function useFilters(consultas) {
 					.filter((value, index, self) => self.indexOf(value) === index);
 
 				const ciudadanosUnicosNombre = consultas
-					.map((consulta) => (consulta.nombre + ' '+ consulta.apellido))
+					.map((consulta) => consulta.nombre + ' ' + consulta.apellido)
 					.filter((value, index, self) => self.indexOf(value) === index);
-				
+
+				const estadosUnicas = consultas
+					.map((consulta) => consulta.estado)
+					.filter((value, index, self) => self.indexOf(value) === index);
 
 
 				setConsultasFilters({
 					tipoConsultas: tipoConsultas,
 					empresas: empresas,
 					localidades: localidadesUnicas,
-					ciudadanos: ciudadanosUnicosNombre
+					ciudadanos: ciudadanosUnicosNombre,
+					estados: estadosUnicas
 				});
 			}
 		};
@@ -49,9 +54,13 @@ export default function useFilters(consultas) {
 	}, [consultas]);
 
 	useEffect(() => {
-		const { tipoConsultas, empresas, localidades, ciudadanos } = applyFilters;
+		const { tipoConsultas, empresas, localidades, ciudadanos , estados} = applyFilters;
 		const isAnyFilter =
-			!!tipoConsultas.length || !!empresas.length || !!localidades.length || !!ciudadanos.length;
+			!!tipoConsultas.length ||
+			!!empresas.length ||
+			!!localidades.length ||
+			!!ciudadanos.length ||
+			!!estados.length;
 
 		if (isAnyFilter) {
 			const newConsultas = consultas.filter((consulta) => {
@@ -67,16 +76,27 @@ export default function useFilters(consultas) {
 					? localidades.includes(consulta.localidad)
 					: true;
 
-				let name = consulta.nombre + ' ' + consulta.apellido
+				let name = consulta.nombre + ' ' + consulta.apellido;
 				const hasCiudadanoFilter = !!ciudadanos.length
 					? ciudadanos.includes(name)
 					: true;
+
+				const hasEstadoFilter = !!estados.length
+					? estados.includes(consulta.estado)
+					: true;
+
 				// const hasMatchingPrice =
 				// 	!!minPrice && !!maxPrice
 				// 		? consulta.precio >= minPrice && consulta.precio <= maxPrice
 				// 		: true;
 
-				return hasTipoConsultaFilter && hasEmpresaFilter && hasLocalidadFilter && hasCiudadanoFilter;
+				return (
+					hasTipoConsultaFilter &&
+					hasEmpresaFilter &&
+					hasLocalidadFilter &&
+					hasCiudadanoFilter &&
+					hasEstadoFilter
+				);
 			});
 			setConsultasFiltered(newConsultas);
 		} else {
@@ -144,6 +164,20 @@ export default function useFilters(consultas) {
 			}));
 
 			updateFiltersValues(ciudadano, isChecked);
+		},
+		updateEstados: (e) => {
+			const estado = e.target.name;
+			const isChecked = e.target.checked;
+			console.log(estado);
+
+			setApplyFilters((prevFilters) => ({
+				...prevFilters,
+				estados: isChecked
+					? [...prevFilters.estados, estado]
+					: prevFilters.estados.filter((cat) => cat !== estado),
+			}));
+
+			updateFiltersValues(estado, isChecked);
 		},
 	};
 

@@ -6,7 +6,6 @@ import { toast } from 'sonner';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-
 function Index() {
 	const [addNewCommentSection, setAddNewCommentSection] = useState(false);
 	const [nuevoEstado, setNuevoEstado] = useState('Pendiente de Revisión');
@@ -154,7 +153,10 @@ function Index() {
 				className='flex flex-col justify-center items-center gap-4'
 			>
 				<span>Consulta no encontrado</span>
-				<Link  href='/consultas' className='button-primary bg-secondary text-white'>
+				<Link
+					href='/consultas'
+					className='button-primary bg-secondary text-white'
+				>
 					Volver
 				</Link>
 			</PageLayout>
@@ -557,18 +559,22 @@ function Index() {
 							</div>
 							<div className='flex-1 '>
 								<div>
-									{consulta.archivos.map((file) => (
-										<div key={file.fileName} className='list-item'>
-											<Link 
-												key={file.fileName}
-												href={file.downloadURL}
-												target='_blank'
-												className='text-blue-500 underline'
-											>
-												{`${file.fileName}\n`}
-											</Link>
-										</div>
-									))}
+									{consulta.archivos ? (
+										consulta.archivos.map((file) => (
+											<div key={file.fileName} className='list-item'>
+												<Link
+													key={file.fileName}
+													href={file.downloadURL}
+													target='_blank'
+													className='text-blue-500 underline'
+												>
+													{`${file.fileName}\n`}
+												</Link>
+											</div>
+										))
+									) : (
+										<p>No hay documentos almacenados.</p>
+									)}
 								</div>
 							</div>
 						</div>
@@ -633,7 +639,7 @@ function Index() {
 													<div>
 														{estado.archivos.map((file) => (
 															<div key={file.fileName} className='list-item'>
-																<Link 
+																<Link
 																	key={file.fileName}
 																	href={file.downloadURL}
 																	target='_blank'
@@ -709,9 +715,7 @@ function Index() {
 									</div>
 									<div className='flex flex-col md:flex-row md:items-center gap-y-2 '>
 										<div className='w-full md:w-1/4'>
-											<p>
-												Nuevos Documentos a incluir
-											</p>
+											<p>Nuevos Documentos a incluir</p>
 										</div>
 										<div className='flex-1 '>
 											<div>

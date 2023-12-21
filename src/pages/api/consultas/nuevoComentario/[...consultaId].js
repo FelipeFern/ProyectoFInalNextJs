@@ -121,9 +121,11 @@ async function onPOST(req, res) {
 				createdAt: new Date(),
 			};
 			let nuevosEstados = estados.concat(nuevoEstado);
+			
 			console.log(nuevosEstados);
 			await updateDoc(doc(db, collectionType, idConsulta), {
 				estados: nuevosEstados,
+				estado: estado
 			});
 
 			return res.status(200).json({ consulta });

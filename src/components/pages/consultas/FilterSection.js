@@ -79,7 +79,8 @@ export default function FilterSection({
 							!!updateFilters.tipoConsultas.length ||
 							!!updateFilters.empresas.length ||
 							!!updateFilters.localidades.length ||
-              !! updateFilters.ciudadanos.length
+							!!updateFilters.ciudadanos.length ||
+							!!updateFilters.estados.length
 								? // updateFilters.fechaMinMax[0] !== filters.fechaMinMax[0] ||
 								  // updateFilters.fechaMinMax[1] !== filters.fechaMinMax[1]
 								  'md:block'
@@ -90,7 +91,7 @@ export default function FilterSection({
 						Borrar filtros
 					</button>
 					<div className='flex flex-col gap-4'>
-          <FilterItem title='Tipo de Consulta'>
+						<FilterItem title='Tipo de Consulta'>
 							{filters?.tipoConsultas
 								.filter((tipoConsulta) => tipoConsulta !== undefined)
 								.map((tipoConsulta) => (
@@ -109,6 +110,30 @@ export default function FilterSection({
 										/>
 										<span className='first-letter:capitalize inline-block'>
 											{tipoConsulta}
+										</span>
+									</label>
+								))}
+						</FilterItem>
+
+						<FilterItem title='Estados'>
+							{filters?.estados
+								.filter((estado) => estado !== undefined)
+								.map((estado) => (
+									<label
+										key={estado}
+										className='cursor-pointer'
+										htmlFor={estado}
+									>
+										<input
+											id={estado}
+											type='checkbox'
+											name={estado}
+											className='mr-2'
+											onChange={applyFilters.updateEstados}
+											checked={!!filterValues[estado]}
+										/>
+										<span className='first-letter:capitalize inline-block'>
+											{estado}
 										</span>
 									</label>
 								))}
@@ -162,7 +187,7 @@ export default function FilterSection({
 						</FilterItem>
 
 						<FilterItem title='Ciudadano'>
-            {filters?.ciudadanos
+							{filters?.ciudadanos
 								.filter((ciudadano) => ciudadano !== undefined)
 								.map((ciudadano) => (
 									<label
